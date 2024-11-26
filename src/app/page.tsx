@@ -5,7 +5,15 @@ export default function Home() {
   return (
     <div className="px-10">
       <Date />
-      <FilmItem />
+      <div className="flex flex-wrap ">
+        {[...Array(7)].map((item, id) => {
+          return (
+            <div key={id}>
+              <FilmItem />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

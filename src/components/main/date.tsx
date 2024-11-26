@@ -12,7 +12,7 @@ export default function Date() {
         return (
           <div
             className={`${
-              active == id && 'text-white cursor-default bg-[#5a861d]'
+              active == id && 'text-white cursor-auto hover:border-transparent  bg-[#5A861D]'
             }   text-sm p-1 px-3 bg-white border-[1px] border-transparent cursor-pointer mr-2 hover:border-[#86c232] rounded-2xl`}
             key={id}
             onClick={() => setActive(id)}>
