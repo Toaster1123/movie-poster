@@ -1,0 +1,1 @@
+export const key = 'QXH7WES-08KMJYM-NW88RJH-KGZSCMQ';
