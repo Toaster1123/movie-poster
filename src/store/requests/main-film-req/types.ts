@@ -1,7 +1,4 @@
-type ObjName = {
-  name: string;
-};
-export type FilmItem = {
+type FilmItem = {
   id: number;
   name: string;
   poster?: {
@@ -35,10 +32,18 @@ export type FilmItem = {
   seriesLength: number;
   ratingMpaa?: string;
   ageRating: number;
-  genres: ObjName[];
-  countries: ObjName[];
+  genres: string[];
+  countries: string[];
   top10?: number;
   top250?: number;
   isSeries: boolean;
   ticketsOnSale: boolean;
+};
+export type MovieState = {
+  movie: FilmItem[];
+  loading: boolean;
+  fetchItems: () => Promise<void>;
+};
+export type ApiResponse = {
+  docs: FilmItem[];
 };

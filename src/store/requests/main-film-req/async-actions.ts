@@ -1,15 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import { key } from '@/store/key';
-import { FilmItem } from './types';
+import { MovieState, ApiResponse } from './types';
 
-export type MovieState = {
-  movie: FilmItem[];
-  loading: boolean;
-};
-interface ApiResponse {
-  docs: FilmItem[];
-}
 export const UseMovie = create<MovieState>((set) => ({
   movie: [],
   loading: true,
@@ -17,12 +10,18 @@ export const UseMovie = create<MovieState>((set) => ({
     try {
       set({ loading: true });
       const { data } = await axios.get<ApiResponse>(
-        'https://api.kinopoisk.dev/v1.4/movie?type=movie&year=2024&notNullFields=name&genres.name=!музыка&genres.name=!концерт&limit=12&notNullFields=poster.url&notNullFields=ageRating',
+        'https://api.kinopoisk.dev/v1.4/movie',
         {
           headers: {
             'X-API-KEY': key,
             'Content-Type': 'application/json',
           },
+          params: {
+            type: 'movie',
+            year: 2024,
+            limit: 12,
+          },
+  
         },
       );
       set({

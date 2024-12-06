@@ -1,4 +1,4 @@
-export type FilmType = {
+type FilmType = {
   id: number;
   name: string;
   alternativeName: string;
@@ -45,4 +45,12 @@ export type FilmType = {
   lists: [];
   createdAt: string;
   updatedAt: string;
+};
+export type MovieState = {
+  movie: FilmType[];
+  loading: boolean;
+  fetchItems: (id:number) => Promise<void>;
+};
+export type ApiResponse = {
+  docs: FilmType[];
 };
