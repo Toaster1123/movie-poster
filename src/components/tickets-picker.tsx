@@ -33,27 +33,33 @@ const price = (time: string) => {
   }
   return 450;
 };
-export default function TicketsPicker({ age }: { age: number }) {
+export default function TicketsPicker({ age, loading }: { age: number; loading: boolean }) {
   const hall = chooseHall(age);
   return (
     <div className="flex flex-wrap ">
-      {objHall[hall].map((item, id) => {
+      {(loading ? [...Array(5)] : objHall[hall]).map((item, id) => {
         return (
-          <div key={id} className="py-3 w-fit mr-3">
-            <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
-              {item}
-            </p>
-            <div className="flex text-sm justify-around border-[1px] border-lime-600">
-              <p>
-                {(item.includes('21') && age > 12) ||
-                (item == '17' && age == 18) ||
-                (item == '17' && age == 16)
-                  ? '3D'
-                  : '2D'}
-              </p>
-              <p>{price(item)}₽</p>
-            </div>
-            <p className="text-center pt-1 mb-2">Зал {hall + 1}</p>
+          <div key={id} className="py-3 h-[118px] w-[70.2px]  mr-3">
+            {loading ? (
+              <div className="bg-gray-300 h-full w-full"></div>
+            ) : (
+              <>
+                <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
+                  {item}
+                </p>
+                <div className="flex text-sm justify-around border-[1px] border-lime-600">
+                  <p>
+                    {(item.includes('21') && age > 12) ||
+                    (item == '17' && age == 18) ||
+                    (item == '17' && age == 16)
+                      ? '3D'
+                      : '2D'}
+                  </p>
+                  <p>{price(item)}₽</p>
+                </div>
+                <p className="text-center pt-1 mb-2">Зал {hall + 1}</p>
+              </>
+            )}
           </div>
         );
       })}

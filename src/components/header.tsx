@@ -1,16 +1,14 @@
 'use client';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useState } from 'react';
-
 const categories = [
   { name: 'Афиша', link: '/' },
   { name: 'Сеансы', link: '/seances' },
   { name: 'О нас', link: '/about' },
   { name: 'Контакты', link: '/contacts' },
 ];
-
 export default function Header() {
-  const [active, setActive] = useState(0);
+  const path = usePathname();
   return (
     <header className="flex justify-between py-3 px-10 bg-[#222629]">
       <div className="flex-row flex">
@@ -18,11 +16,8 @@ export default function Header() {
           return (
             <Link key={id} href={name.link}>
               <div
-                onClick={() => {
-                  setActive(id);
-                }}
                 className={`mr-4  text-white  text-lg border-b-[4px]  border-transparent hover:border-b-lime-500 ${
-                  active == id && 'border-b-lime-500'
+                  name.link == path && 'border-b-lime-500'
                 } `}>
                 {name.name}
               </div>

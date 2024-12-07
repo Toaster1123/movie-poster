@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import TicketsPicker from './tickets-picker';
+import { UseMovie } from '@/store/requests/main-film-req/async-actions';
 interface FilmItemProps {
   image: string;
   title: string;
@@ -11,8 +12,10 @@ interface FilmItemProps {
 }
 
 export default function FilmItem({ image, title, genres, age, id }: FilmItemProps) {
+  const loading = UseMovie((state) => state.loading);
+
   return (
-    <div className="h-full rounded-2xl overflow-hidden">
+    <div className="h-full  overflow-hidden">
       <Link href={'/movie/' + id}>
         <div className="h-[374px] overflow-hidden">
           <img className="w-[265px] h-[374px] hover:scale-105" src={image} alt="картинка" />
@@ -29,7 +32,7 @@ export default function FilmItem({ image, title, genres, age, id }: FilmItemProp
               );
             })}
           </div>
-          <TicketsPicker age={age} />
+          <TicketsPicker loading={loading} age={age} />
         </div>
       </Link>
     </div>

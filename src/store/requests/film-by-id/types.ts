@@ -1,4 +1,4 @@
-type FilmType = {
+export type FilmType = {
   id: number;
   name: string;
   alternativeName: string;
@@ -17,7 +17,9 @@ type FilmType = {
   seriesLength: number;
   ratingMpaa: number;
   ageRating: number;
-  poster: string[];
+  poster: {
+    url: string;
+  };
   genres: { name: string }[];
   countries: { name: string }[];
   persons: {
@@ -47,10 +49,7 @@ type FilmType = {
   updatedAt: string;
 };
 export type MovieState = {
-  movie: FilmType[];
+  movie: FilmType;
   loading: boolean;
-  fetchItems: (id:number) => Promise<void>;
-};
-export type ApiResponse = {
-  docs: FilmType[];
+  fetchItems: (id: number) => Promise<void>;
 };
