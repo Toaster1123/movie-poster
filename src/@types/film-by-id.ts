@@ -48,8 +48,3 @@ export type FilmType = {
   createdAt: string;
   updatedAt: string;
 };
-export type MovieState = {
-  movie: FilmType;
-  loading: boolean;
-  fetchItems: (id: number) => Promise<void>;
-};

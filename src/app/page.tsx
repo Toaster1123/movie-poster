@@ -1,29 +1,41 @@
-'use client';
+import { ApiResponse } from '@/@types/main-films';
 import Date from '@/components/date';
 import FilmItem from '@/components/film-item';
-import { UseMovie } from '@/store/requests/main-film-req/async-actions';
-import { useEffect } from 'react';
+import { key } from '@/store/key';
+import axios from 'axios';
 
-export default function Home() {
-  const { fetchItems, movie, loading } = UseMovie((state) => state);
-  useEffect(() => {
-    fetchItems();
-  }, []);
+async function fetchData() {
+  const { data } = await axios.get<ApiResponse>(
+    'https://api.kinopoisk.dev/v1.4/movie?notNullFields=name&genres.name=!музыка&genres.name=!концерт&notNullFields=poster.url&notNullFields=ageRating',
+    {
+      headers: {
+        'X-API-KEY': key,
+        'Content-Type': 'application/json',
+      },
+      params: {
+        type: 'movie',
+        year: 2024,
+        limit: 12,
+        movieLength: '100-400',
+      },
+    },
+  );
+  return data.docs;
+}
+
+export default async function Home() {
+  const movie = await fetchData();
 
   return (
-    <div className="px-10 bg-slate-800 ">
-      <Date loading={loading} />
+    <div className="px-10  ">
+      <Date />
       <div className="flex flex-wrap ">
-        {(loading ? [...Array(8)] : movie).map((item, id) => (
-          <div key={id} className="w-[265px] mr-4 mb-11 rounded-lg overflow-hidden bg-white">
-            {loading ? (
-              <div className="h-[848px] w-[265px] p-4">
-                <div className="bg-gray-300 w-[233px] h-[374px] "></div>
-                <div className="bg-gray-300 h-12 my-2"></div>
-                <div className="bg-gray-300 h-[40px] mb-10"></div>
-                <div className="bg-gray-300 h-[80px]"></div>
-              </div>
-            ) : (
+        {movie.map((item, id) => {
+          if (!item) {
+            return null;
+          }
+          return (
+            <div key={id} className="w-[265px] mr-4 mb-11 rounded-lg overflow-hidden bg-white">
               <FilmItem
                 id={item.id}
                 image={item.poster.url}
@@ -31,9 +43,9 @@ export default function Home() {
                 genres={item.genres}
                 age={item.ageRating}
               />
-            )}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

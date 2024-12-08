@@ -1,3 +1,4 @@
+'use client';
 import { CircleChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
