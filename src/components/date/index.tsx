@@ -10,7 +10,7 @@ export default function Date() {
     <div className=" flex py-3">
       {date.map((item, id) => {
         return (
-          <div
+          <button
             className={`text-sm p-1 px-3 ${
               active == id
                 ? 'bg-lime-600 cursor-auto hover:border-transparent text-white'
@@ -19,7 +19,7 @@ export default function Date() {
             key={id}
             onClick={() => setActive(id)}>
             {item}
-          </div>
+          </button>
         );
       })}
     </div>

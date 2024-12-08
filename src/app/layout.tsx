@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className}  flex items-center flex-col bg-gray-900`}>
         <div className="flex flex-col w-full min-h-screen max-w-[1250px] mx-auto  ">
           <Header />
-          <main className="flex-grow flex flex-col bg-slate-800">{children}</main>
+          <main className="flex-grow flex bg-gray-200 flex-col ">{children}</main>
           <Footer />
         </div>
       </body>

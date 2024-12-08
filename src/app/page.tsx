@@ -6,7 +6,7 @@ import axios from 'axios';
 
 async function fetchData() {
   const { data } = await axios.get<ApiResponse>(
-    'https://api.kinopoisk.dev/v1.4/movie?notNullFields=name&genres.name=!музыка&genres.name=!концерт&notNullFields=poster.url&notNullFields=ageRating',
+    'https://api.kinopoisk.dev/v1.4/movie?notNullFields=name&genres.name=!музыка&genres.name=!концерт&genres.name=!драма&genres.name=!биография&notNullFields=poster.url&notNullFields=ageRating',
     {
       headers: {
         'X-API-KEY': key,
@@ -25,17 +25,16 @@ async function fetchData() {
 
 export default async function Home() {
   const movie = await fetchData();
-
   return (
-    <div className="px-10  ">
+    <div className="px-10  bg-slate-800">
       <Date />
-      <div className="flex flex-wrap ">
+      <div className="flex  flex-wrap gap-x-8">
         {movie.map((item, id) => {
           if (!item) {
             return null;
           }
           return (
-            <div key={id} className="w-[265px] mr-4 mb-11 rounded-lg overflow-hidden bg-white">
+            <div key={id} className="w-[265px]  mb-11 rounded-lg overflow-hidden bg-white">
               <FilmItem
                 id={item.id}
                 image={item.poster.url}

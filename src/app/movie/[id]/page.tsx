@@ -29,7 +29,7 @@ export default async function Movie(props: { params: Promise<{ id: number }> }) 
   const params = await props.params;
   const movie = await fetchData(params.id);
   return (
-    <div className="bg-gray-200 flex-grow h-full">
+    <div className=" flex-grow h-full">
       <BtnBack />
       <div className="flex px-10">
         <img className="w-[265px] h-[374px] rounded-2xl" src={movie.poster.url} alt="картинка" />

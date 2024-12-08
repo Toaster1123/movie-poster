@@ -1,3 +1,3 @@
 export default function Seances() {
-  return <p>hello</p>;
+  return <div>sdsadas</div>;
 }

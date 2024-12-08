@@ -10,7 +10,7 @@ const hallArray = [
 export const date = new Date().getHours() * 60 + new Date().getMinutes();
 export const objHall = hallArray.map((item) =>
   item.filter((item) => {
-    return item >= date;
+    return item + 15 >= 1;
   }),
 );
 
