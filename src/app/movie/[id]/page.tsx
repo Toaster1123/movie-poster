@@ -28,6 +28,7 @@ async function fetchData(id: number) {
 export default async function Movie(props: { params: Promise<{ id: number }> }) {
   const params = await props.params;
   const movie = await fetchData(params.id);
+  console.log(movie);
   return (
     <div className=" flex-grow h-full">
       <BtnBack />

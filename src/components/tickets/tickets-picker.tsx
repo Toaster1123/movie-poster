@@ -1,16 +1,15 @@
 'use client';
-
 import { chooseHall, objHall, price } from './lib';
 
 export default function TicketsPicker({ age }: { age: number }) {
   const hall = chooseHall(age);
   return (
-    <div className="flex flex-wrap ">
+    <div className="flex flex-wrap gap-3">
       {objHall[hall].length > 0 ? (
         objHall[hall].map((item, id) => (
-          <div key={id} className={`py-3 h-[118px] w-[70.2px] ${(1 + id) % 3 != 0 && 'mr-3'} `}>
+          <div key={id} className={'py-3 h-[118px] w-[70.2px] '}>
             <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
-              {Math.floor(item / 60) + ':' + (item % 60 == 0 ? '00' : item % 60)}
+              {Math.floor(item / 60) + ':' + (item % 60 < 10 ? (item % 60) + '0' : item % 60)}
             </p>
             <div className="flex text-sm justify-around border-[1px] border-lime-600">
               <p>

@@ -1,27 +1,6 @@
-import { ApiResponse } from '@/@types/main-films';
 import Date from '@/components/date';
 import FilmItem from '@/components/film-item';
-import { key } from '@/store/key';
-import axios from 'axios';
-
-async function fetchData() {
-  const { data } = await axios.get<ApiResponse>(
-    'https://api.kinopoisk.dev/v1.4/movie?notNullFields=name&genres.name=!музыка&genres.name=!концерт&genres.name=!драма&genres.name=!биография&notNullFields=poster.url&notNullFields=ageRating',
-    {
-      headers: {
-        'X-API-KEY': key,
-        'Content-Type': 'application/json',
-      },
-      params: {
-        type: 'movie',
-        year: 2024,
-        limit: 12,
-        movieLength: '100-400',
-      },
-    },
-  );
-  return data.docs;
-}
+import { fetchData } from '@/lib/fetch-films';
 
 export default async function Home() {
   const movie = await fetchData();

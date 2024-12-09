@@ -5,10 +5,9 @@ export default function Contacts() {
         <strong className=" text-xl"> Кинотеатр Проекторий </strong>
       </div>
       <div className="h-[240px] w-full bg-gray-300 justify-center items-center flex ">Карта</div>
-      <div className="flex justify-between mt-8">
+      <div className="flex justify-between my-8 ">
         <div>
           <strong>Контакты</strong>
-
           <ul className=" pt-4">
             <li>Админитратор:</li>
             <li className=" pb-3">+7 (903) 636-02-52</li>
