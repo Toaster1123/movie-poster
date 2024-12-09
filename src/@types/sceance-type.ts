@@ -1,8 +1,8 @@
 export type CardType = {
-  title: string;
-  age: number;
-  genres: {
-    name: string;
-  }[];
   id: number;
+  title: string;
+  time: number;
+  hall: number;
+  genres: { name: string }[];
+  age: number;
 };

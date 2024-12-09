@@ -1,9 +1,10 @@
 import Date from '@/components/date';
 import SeanceCard from '@/components/seance-card';
 import { fetchData } from '@/lib/fetch-films';
+import { SetFilmHall } from '@/store/set-filmHall';
 
 export default async function Seances() {
-  const movie = await fetchData();
+  const movie = await SetFilmHall(await fetchData());
 
   return (
     <div className="bg-gray-100">
@@ -11,21 +12,15 @@ export default async function Seances() {
         <Date />
       </div>
       <div className="mx-10">
-        {[...Array(7)].map((item, id) => (
-          <div className={`${id > 0 && 'border-t-[1px]  border-slate-300'}`}>
+        {movie.map((item, id) => (
+          <div key={id} className={`${id > 0 && 'border-t-[1px]  border-slate-300'}`}>
             <SeanceCard
-              key={id}
-              id={6462565}
-              title={'Название'}
-              age={12}
-              genres={[
-                {
-                  name: 'приключения',
-                },
-                {
-                  name: 'мелодрама',
-                },
-              ]}
+              time={item.time}
+              id={item.id}
+              title={item.title}
+              age={item.age}
+              genres={item.genres}
+              hall={item.hall}
             />
           </div>
         ))}

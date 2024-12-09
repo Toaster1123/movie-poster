@@ -4,6 +4,7 @@ import { fetchData } from '@/lib/fetch-films';
 
 export default async function Home() {
   const movie = await fetchData();
+
   return (
     <div className="px-10  bg-slate-800">
       <Date />

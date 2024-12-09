@@ -1,13 +1,10 @@
 'use client';
 
 import { CardType } from '@/@types/sceance-type';
-import { chooseHall, price } from './tickets/lib';
+import { price } from './tickets/lib';
 import Link from 'next/link';
 
-export default function SeanceCard({ title, age, genres, id }: CardType) {
-  const hall = chooseHall(age);
-
-  const time = 800;
+export default function SeanceCard({ hall, time, title, age, genres, id }: CardType) {
   return (
     <Link href={'/movie/' + id}>
       <div className="flex  pb-3 mt-3 cursor-pointer ">
@@ -38,7 +35,7 @@ export default function SeanceCard({ title, age, genres, id }: CardType) {
               {' •'}
             </p>
             <p>
-              &nbsp;{price(age)}₽{' •'}
+              &nbsp;{price(time)}₽{' •'}
             </p>
             <p> &nbsp;Зал {hall + 1}</p>
           </div>
