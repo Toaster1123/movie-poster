@@ -1,27 +1,29 @@
 'use client';
-import { chooseHall, objHall, price } from './lib';
+import { CardType } from '@/@types/sceance-type';
+import { price } from '@/lib/set-film-hall.ts/constants';
 
-export default function TicketsPicker({ age }: { age: number }) {
-  const hall = chooseHall(age);
+export default function TicketsPicker({ tickets }: { tickets: CardType[] }) {
   return (
     <div className="flex flex-wrap gap-3">
-      {objHall[hall].length > 0 ? (
-        objHall[hall].map((item, id) => (
+      {tickets.length > 0 ? (
+        tickets.map((item, id) => (
           <div key={id} className={'py-3 h-[118px] w-[70.2px] '}>
             <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
-              {Math.floor(item / 60) + ':' + (item % 60 < 10 ? (item % 60) + '0' : item % 60)}
+              {Math.floor(item.time / 60) +
+                ':' +
+                (item.time % 60 < 10 ? (item.time % 60) + '0' : item.time % 60)}
             </p>
             <div className="flex text-sm justify-around border-[1px] border-lime-600">
               <p>
-                {(item >= 1260 && age > 12) ||
-                (item >= 1020 && age == 18) ||
-                (item >= 1020 && age == 16)
-                  ? '3D'
-                  : '2D'}
+                {(item.time >= 1260 && item.age > 12) ||
+                (item.time >= 1020 && item.age == 18) ||
+                (item.time >= 1020 && item.age == 16)
+                  ? '2D'
+                  : '3D'}
               </p>
-              <p>{price(item)}₽</p>
+              <p>{price(item.time)}₽</p>
             </div>
-            <p className="text-center pt-1 mb-2">Зал {hall + 1}</p>
+            <p className="text-center pt-1 mb-2">Зал {item.hall}</p>
           </div>
         ))
       ) : (

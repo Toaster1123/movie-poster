@@ -1,3 +1,5 @@
+import { CardType } from './sceance-type';
+
 export type FilmItemProps = {
   image: string;
   title: string;
@@ -6,4 +8,5 @@ export type FilmItemProps = {
   }[];
   age: number;
   id: number;
+  tickets: CardType[];
 };

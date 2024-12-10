@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="flex mt-auto   w-full p-7 pb-2 text-white text-xs bg-[#222629]">
@@ -14,8 +16,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="text-lg">
-          <p className="cursor-pointer">О нас</p>
-          <p className="cursor-pointer">Контакты</p>
+          <Link href={'/about'}>
+            <p className="hover:text-stone-300  text-white cursor-pointer">О нас</p>
+          </Link>
+          <Link href={'/contacts'}>
+            <p className="hover:text-stone-300  text-white cursor-pointer">Контакты</p>
+          </Link>
+
           <p className="cursor-pointer">+7 (903) 636-02-52</p>
         </div>
       </div>

@@ -6,16 +6,18 @@ import BtnBack from '@/components/film-page/btn-back';
 import Description from '@/components/film-page/description';
 import { FilmType } from '@/@types/film-by-id';
 import { key } from '@/store/key';
+import { SetFilmHall } from '@/lib/set-film-hall.ts';
+import { fetchData } from '@/lib/fetch-films';
 
 export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
   const params = await props.params;
-  const post = await fetchData(params.id);
+  const post = await fetchFilmData(params.id);
   return {
     title: post.name + ' — Кинотеатр «Проекторий»',
   };
 }
 
-async function fetchData(id: number) {
+async function fetchFilmData(id: number) {
   const { data } = await axios.get<FilmType>(`https://api.kinopoisk.dev/v1.4/movie/${id}`, {
     headers: {
       'X-API-KEY': key,
@@ -27,14 +29,15 @@ async function fetchData(id: number) {
 
 export default async function Movie(props: { params: Promise<{ id: number }> }) {
   const params = await props.params;
-  const movie = await fetchData(params.id);
-  console.log(movie);
+  const movie = await fetchFilmData(params.id);
+
+  const { tickets } = SetFilmHall(await fetchData());
+
   return (
     <div className=" flex-grow h-full">
       <BtnBack />
       <div className="flex px-10">
         <img className="w-[265px] h-[374px] rounded-2xl" src={movie.poster.url} alt="картинка" />
-
         <div className="ml-10">
           <ul className="h-[26px] flex space-x-2 text-gray-600">
             {movie.genres.map((genre, id) => (
@@ -44,7 +47,6 @@ export default async function Movie(props: { params: Promise<{ id: number }> }) 
               </li>
             ))}
           </ul>
-
           <div className="h-[44px] flex flex-col justify-center">
             <b className="text-4xl">{movie.name}</b>
           </div>
@@ -53,7 +55,7 @@ export default async function Movie(props: { params: Promise<{ id: number }> }) 
               <Date />
             </div>
           </div>
-          <TicketsPicker age={movie.ageRating} />
+          <TicketsPicker tickets={tickets(movie.name)} />
           <Description
             persons={movie.persons}
             movieLength={movie.movieLength}

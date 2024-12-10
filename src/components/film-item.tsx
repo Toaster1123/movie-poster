@@ -2,7 +2,7 @@ import Link from 'next/link';
 import TicketsPicker from './tickets/tickets-picker';
 import { FilmItemProps } from '@/@types/film-item';
 
-export default function FilmItem({ image, title, genres, age, id }: FilmItemProps) {
+export default function FilmItem({ image, title, genres, age, id, tickets }: FilmItemProps) {
   return (
     <div className="h-full  overflow-hidden">
       <Link href={'/movie/' + id}>
@@ -21,7 +21,7 @@ export default function FilmItem({ image, title, genres, age, id }: FilmItemProp
               );
             })}
           </div>
-          <TicketsPicker age={age} />
+          <TicketsPicker tickets={tickets} />
         </div>
       </Link>
     </div>

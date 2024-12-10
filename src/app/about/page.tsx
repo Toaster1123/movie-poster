@@ -9,7 +9,9 @@ export default function About() {
       </div>
       <div className="py-7 mx-10">
         <strong className="text-3xl  ">О кинотеатре</strong>
-        <img className=" h-[600px] w-[1200px] mt-4" src="/photo-cinema.jpg" alt="кинотеатр" />
+        <div className="h-[600px]">
+          <img className=" h-[600px] w-[1200px] mt-4" src="/photo-cinema.jpg" alt="кинотеатр" />
+        </div>
 
         <p className="my-4 ">
           Наш пятизальнй кинотеатр располагается на улице Ленина, рядом с парком Бывалых Купидонов.
@@ -20,7 +22,7 @@ export default function About() {
           вовсе имеют возможность посещать отдельные сеансы бесплатно. <br />
           Приходите к нам смотреть кино!
         </p>
-        <div className="flex justify-center">
+        <div className=" h-[532px] flex justify-center">
           <img
             className="my-4 h-[500px]"
             src="https://ai-previews.123rf.com/ai-txt2img/600nwm/7be3a471-3243-4755-bb62-4aae273f6df5.jpg"

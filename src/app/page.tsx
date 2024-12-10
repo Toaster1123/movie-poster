@@ -1,10 +1,11 @@
 import Date from '@/components/date';
 import FilmItem from '@/components/film-item';
 import { fetchData } from '@/lib/fetch-films';
+import { SetFilmHall } from '@/lib/set-film-hall.ts';
 
 export default async function Home() {
   const movie = await fetchData();
-
+  const { tickets } = SetFilmHall(movie);
   return (
     <div className="px-10  bg-slate-800">
       <Date />
@@ -13,6 +14,7 @@ export default async function Home() {
           if (!item) {
             return null;
           }
+
           return (
             <div key={id} className="w-[265px]  mb-11 rounded-lg overflow-hidden bg-white">
               <FilmItem
@@ -21,6 +23,7 @@ export default async function Home() {
                 title={item.name}
                 genres={item.genres}
                 age={item.ageRating}
+                tickets={tickets(item.name)}
               />
             </div>
           );

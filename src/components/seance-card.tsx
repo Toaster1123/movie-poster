@@ -1,7 +1,7 @@
 'use client';
 
 import { CardType } from '@/@types/sceance-type';
-import { price } from './tickets/lib';
+import { price } from '@/lib/set-film-hall.ts/constants';
 import Link from 'next/link';
 
 export default function SeanceCard({ hall, time, title, age, genres, id }: CardType) {
@@ -30,14 +30,14 @@ export default function SeanceCard({ hall, time, title, age, genres, id }: CardT
               {(time >= 1260 && age > 12) ||
               (time >= 1020 && age == 18) ||
               (time >= 1020 && age == 16)
-                ? '3D'
-                : '2D'}
+                ? '2D'
+                : '3D'}
               {' •'}
             </p>
             <p>
               &nbsp;{price(time)}₽{' •'}
             </p>
-            <p> &nbsp;Зал {hall + 1}</p>
+            <p> &nbsp;Зал {hall}</p>
           </div>
         </div>
       </div>

@@ -1,11 +1,10 @@
 import Date from '@/components/date';
 import SeanceCard from '@/components/seance-card';
 import { fetchData } from '@/lib/fetch-films';
-import { SetFilmHall } from '@/store/set-filmHall';
+import { SetFilmHall } from '@/lib/set-film-hall.ts';
 
 export default async function Seances() {
-  const movie = await SetFilmHall(await fetchData());
-
+  const movie = await SetFilmHall(await fetchData()).seansesArray;
   return (
     <div className="bg-gray-100">
       <div className="bg-gray-300 px-10">
