@@ -6,7 +6,3 @@ export type CardType = {
   genres: { name: string }[];
   age: number;
 };
-export type SetFilmHallType = {
-  seansesArray: CardType[];
-  tickets: (title: string) => CardType[];
-};

@@ -1,10 +1,8 @@
-'use client';
 import { FilmItemType } from '@/@types/main-films';
-import { CardType, SetFilmHallType } from '@/@types/sceance-type';
+import { CardType } from '@/@types/sceance-type';
 import { hallArray } from './constants';
-import { ChangeTicketsData } from '../../store/set-date';
-export function SetFilmHall(filmArray: FilmItemType[]): SetFilmHallType {
-  const date = ChangeTicketsData((state) => state.date);
+
+export function SetFilmHall(filmArray: FilmItemType[]) {
   const seansesArray: CardType[] = [];
   const timeLenght = hallArray.reduce((acc, curr) => acc + curr.times.length, 0);
   let arrayIndex = 0;
@@ -35,17 +33,15 @@ export function SetFilmHall(filmArray: FilmItemType[]): SetFilmHallType {
     }
   }
 
-  const newSeanseArray = seansesArray
-    .sort((a, b) => {
-      return a.time - b.time;
-    })
-    .filter((item) => {
-      return item.time + 10 >= date;
-    });
-  function tickets(title: string): CardType[] {
-    return newSeanseArray.filter((item) => {
-      return item.title === title;
-    });
-  }
-  return { seansesArray: newSeanseArray, tickets };
+  return seansesArray.sort((a, b) => {
+    return a.time - b.time;
+  });
+}
+
+export function TicketsSelect(seansesArray: CardType[], title: string, time: number): CardType[] {
+  return seansesArray.filter((item) => {
+    if (item.title === title && item.time + 10 >= time) {
+      return true;
+    }
+  });
 }

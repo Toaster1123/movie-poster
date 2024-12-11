@@ -38,7 +38,3 @@ export type FilmItemType = {
   isSeries: boolean;
   ticketsOnSale: boolean;
 };
-
-export type ApiResponse = {
-  docs: FilmItem[];
-};

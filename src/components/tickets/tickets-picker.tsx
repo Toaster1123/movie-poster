@@ -1,13 +1,29 @@
 'use client';
+
 import { CardType } from '@/@types/sceance-type';
 import { price } from '@/lib/set-film-hall.ts/constants';
+import React from 'react';
+import { ChangeTicketsData } from '@/store/set-date';
+import { ChangeSeanse } from '@/store/tickets';
+import { TicketsSelect } from '@/lib/set-film-hall.ts';
+import { activeDateSelector } from '@/store/active-date-selector';
 
-export default function TicketsPicker({ tickets }: { tickets: CardType[] }) {
+export default function TicketsPicker({ title }: { title: string }) {
+  const { seansesArray } = ChangeSeanse((state) => state);
+  const { setActive } = activeDateSelector((state) => state);
+
+  const { date, setNewDate } = ChangeTicketsData((state) => state);
+  const [tickets, setTickets] = React.useState<CardType[]>([]);
+
+  React.useEffect(() => {
+    setTickets(TicketsSelect(seansesArray, title, date));
+  }, [date, seansesArray]);
+
   return (
     <div className="flex flex-wrap gap-3">
       {tickets.length > 0 ? (
         tickets.map((item, id) => (
-          <div key={id} className={'py-3 h-[118px] w-[70.2px] '}>
+          <div key={id} className={'cursor-pointer py-3 h-[118px] w-[70.2px] '}>
             <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
               {Math.floor(item.time / 60) +
                 ':' +
@@ -28,7 +44,13 @@ export default function TicketsPicker({ tickets }: { tickets: CardType[] }) {
         ))
       ) : (
         <div className="cursor-pointer text-white my-5 rounded-xl py-1 px-3 bg-lime-600 hover:bg-lime-700">
-          <p>Сеансы на завтра</p>
+          <p
+            onClick={() => {
+              setNewDate(600);
+              setActive(1);
+            }}>
+            Сеансы на завтра
+          </p>
         </div>
       )}
     </div>
