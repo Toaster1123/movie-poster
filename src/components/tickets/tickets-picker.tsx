@@ -7,8 +7,11 @@ import { ChangeTicketsData } from '@/store/set-date';
 import { ChangeSeanse } from '@/store/tickets';
 import { TicketsSelect } from '@/lib/set-film-hall.ts';
 import { activeDateSelector } from '@/store/active-date-selector';
+import { HallPopup } from '@/store/hall-popup';
 
 export default function TicketsPicker({ title }: { title: string }) {
+  const { setOpened } = HallPopup((state) => state);
+
   const { seansesArray } = ChangeSeanse((state) => state);
   const { setActive } = activeDateSelector((state) => state);
 
@@ -23,7 +26,12 @@ export default function TicketsPicker({ title }: { title: string }) {
     <div className="flex flex-wrap gap-3">
       {tickets.length > 0 ? (
         tickets.map((item, id) => (
-          <div key={id} className={'cursor-pointer py-3 h-[118px] w-[70.2px] '}>
+          <div
+            onClick={() => {
+              setOpened(true);
+            }}
+            key={id}
+            className={'cursor-pointer py-3 h-[118px] w-[70.2px] '}>
             <p className="text-white py-1 px-3 bg-lime-600 font-black text-lg hover:bg-lime-700">
               {Math.floor(item.time / 60) +
                 ':' +

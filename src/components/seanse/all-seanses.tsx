@@ -9,21 +9,24 @@ import { activeDateSelector } from '@/store/active-date-selector';
 
 export default function AllSeanses() {
   const { seansesArray } = ChangeSeanse((state) => state);
+  const [isEmpty, setIsEmpty] = React.useState(true);
   const { date, setNewDate } = ChangeTicketsData((state) => state);
   const [films, setFilms] = React.useState<CardType[]>([]);
   const { setActive } = activeDateSelector((state) => state);
-
   React.useEffect(() => {
     setFilms(
       seansesArray.filter((item) => {
         return item.time + 10 >= date;
       }),
     );
+    if (seansesArray.length > 0) {
+      setIsEmpty(false);
+    }
   }, [date, seansesArray]);
 
   return (
     <>
-      {films.length === 0 ? (
+      {films.length === 0 && !isEmpty ? (
         <div className="my-5  text-white w-full flex flex-col justify-center items-center">
           <img src="https://plazakino.ru/img/no-seanses.svg" height={168} width={168} alt="" />
           <strong className="text-black text-xl my-3">Сеансов на сегодня нет</strong>

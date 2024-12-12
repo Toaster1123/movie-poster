@@ -7,6 +7,7 @@ import Description from '@/components/film-page/description';
 import { FilmType } from '@/@types/film-by-id';
 import TicketsWrapper from '@/components/tickets-wrapper';
 import { fetchData } from '@/lib/fetch-films';
+import { title } from 'process';
 
 export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
   const params = await props.params;
@@ -25,7 +26,6 @@ export default async function Movie(props: { params: Promise<{ id: number }> }) 
   const allMovie = await fetchData();
   const params = await props.params;
   const movie = await fetchFilmData(params.id);
-
   return (
     <TicketsWrapper movie={allMovie}>
       <div className=" flex-grow h-full">
@@ -46,7 +46,7 @@ export default async function Movie(props: { params: Promise<{ id: number }> }) 
             </div>
             <div className="bg-gray-300 rounded-3xl">
               <div className="ml-3 mb-5 mt-2">
-                <Date />
+                <Date title={movie.name} />
               </div>
             </div>
             <TicketsPicker title={movie.name} />
