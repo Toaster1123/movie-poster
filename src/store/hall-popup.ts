@@ -4,6 +4,6 @@ interface State {
   setOpened: (state: boolean) => void;
 }
 export const HallPopup = create<State>((set) => ({
-  opened: false,
+  opened: true,
   setOpened: (state) => set(() => ({ opened: state })),
 }));

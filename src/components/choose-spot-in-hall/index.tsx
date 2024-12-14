@@ -2,10 +2,10 @@
 import { HallPopup } from '@/store/hall-popup';
 import { X } from 'lucide-react';
 import React from 'react';
+import Canvas from './canvas';
 
 export default function ChooseSpotPopup() {
   const { opened, setOpened } = HallPopup((state) => state);
-  console.log(opened);
 
   const ref = React.useRef(null);
   return (
@@ -37,7 +37,7 @@ export default function ChooseSpotPopup() {
           </div>
         </div>
         <div className="border-b-2">
-          <canvas></canvas>
+          <Canvas />
           {/* <div>
             <div className="">
               <p>2D • 16+ • Зал 2</p>
