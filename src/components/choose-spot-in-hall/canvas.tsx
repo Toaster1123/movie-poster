@@ -1,4 +1,3 @@
-import { CliketSitsType } from '@/@types/canvas-types';
 import { useEffect, useRef } from 'react';
 import { drawHoverSit, drawAllSpots, drawScreen, width, height } from './functions';
 export const SpotsArray = [
@@ -6,7 +5,7 @@ export const SpotsArray = [
     {
       x: 243,
       y: 104,
-      occupied: false,
+      occupied: true,
     },
     {
       x: 287,
@@ -576,15 +575,13 @@ export const SpotsArray = [
     },
   ],
 ];
-let cliketSits: CliketSitsType = [];
-
-console.log(SpotsArray);
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+
     canvas.onmousemove = function (e: MouseEvent) {
       const x = e.offsetX;
       const y = e.offsetY;
@@ -594,14 +591,16 @@ export default function Canvas() {
       let row = 0;
       ctx.clearRect(0, 0, width, height);
       drawScreen(ctx);
-      drawAllSpots(cliketSits, SpotsArray, ctx);
+      drawAllSpots(SpotsArray, ctx);
+
       for (let counter_y = 0; counter_y < SpotsArray.length; counter_y++) {
         for (let counter_x = 0; counter_x < SpotsArray[counter_y].length; counter_x++) {
           if (
             x >= SpotsArray[counter_y][counter_x].x &&
             x < SpotsArray[counter_y][counter_x].x + 34 &&
             y >= SpotsArray[counter_y][counter_x].y &&
-            y < SpotsArray[counter_y][counter_x].y + 34
+            y < SpotsArray[counter_y][counter_x].y + 34 &&
+            !SpotsArray[counter_y][counter_x].occupied
           ) {
             draw_x = SpotsArray[counter_y][counter_x].x;
             draw_y = SpotsArray[counter_y][counter_x].y;
@@ -612,7 +611,7 @@ export default function Canvas() {
       }
       if (draw_x > 0) {
         canvas.classList.add('canvas-hover');
-        drawHoverSit(draw_x, draw_y, sit, row, ctx, canvas, cliketSits);
+        drawHoverSit(draw_x, draw_y, sit, row, ctx, canvas);
       } else {
         canvas.classList.remove('canvas-hover');
       }
@@ -642,7 +641,7 @@ export default function Canvas() {
     //   }
     // }
     drawScreen(ctx);
-    drawAllSpots(cliketSits, SpotsArray, ctx);
+    drawAllSpots(SpotsArray, ctx);
   }, []);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }

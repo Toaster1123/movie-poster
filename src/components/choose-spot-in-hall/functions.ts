@@ -1,13 +1,16 @@
-import { CliketSitsType, SpotsArrayType } from '@/@types/canvas-types';
+'use client';
+import { SpotsArrayType } from '@/@types/canvas-types';
 import { SpotsArray } from './canvas';
+import { UserTickets } from '@/store/user-tickets';
 
 export const height = 520;
 export const width = 960;
+const { cliketSits, setCliketSits } = UserTickets((state) => state);
 
 export function drawScreen(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
   ctx.lineCap = 'round';
-  ctx.fillStyle = '#cfcfcf';
+  ctx.fillStyle = '#d9d9d9';
   ctx.lineWidth = 3.7;
   ctx.moveTo(150, 50);
   ctx.quadraticCurveTo(480, 0, 810, 50);
@@ -18,7 +21,7 @@ export function drawScreen(ctx: CanvasRenderingContext2D) {
 
   ctx.beginPath();
   ctx.lineCap = 'round';
-  ctx.strokeStyle = '#adadad';
+  ctx.strokeStyle = '#bbb';
   ctx.lineWidth = 3.7;
   ctx.moveTo(152, 48);
   ctx.quadraticCurveTo(480, 0, 808, 48);
@@ -51,10 +54,17 @@ export function drawSit(x: number, y: number, ctx: CanvasRenderingContext2D, ove
   ctx.fill();
 }
 
-function CheckClickedSit(cliketSits: CliketSitsType, x: number, y: number) {
+function CheckClickedSit(x: number, y: number) {
   return cliketSits.some((item) => {
     return item.x === x && item.y === y;
   });
+}
+
+function drawOccupiedPlace(x: number, y: number, ctx) {
+  ctx.beginPath();
+  ctx.fillStyle = '#8a8a8a';
+  ctx.arc(x + 17, y + 17, 5, 0, Math.PI * 2, true);
+  ctx.fill();
 }
 
 function drawMessage(ctx, x: number, y: number, row: number, sit: number) {
@@ -83,36 +93,43 @@ function drawMessage(ctx, x: number, y: number, row: number, sit: number) {
   ctx.fillText(`${400} ₽`, x + 17, y - 38);
 }
 
-export function drawAllSpots(cliketSits: CliketSitsType, SpotsArray: SpotsArrayType, ctx) {
+export function drawAllSpots(SpotsArray: SpotsArrayType, ctx) {
   for (let counter_y = 0; counter_y < SpotsArray.length; counter_y++) {
     for (let counter_x = 0; counter_x < SpotsArray[counter_y].length; counter_x++) {
       const ifExist = CheckClickedSit(
-        cliketSits,
         SpotsArray[counter_y][counter_x].x,
         SpotsArray[counter_y][counter_x].y,
       );
-      if (ifExist) {
-        drawCircle(
-          SpotsArray[counter_y][counter_x].x,
-          SpotsArray[counter_y][counter_x].y,
-          counter_x + 1,
-          true,
-          ctx,
-        );
+      if (!SpotsArray[counter_y][counter_x].occupied) {
+        if (ifExist) {
+          drawCircle(
+            SpotsArray[counter_y][counter_x].x,
+            SpotsArray[counter_y][counter_x].y,
+            counter_x + 1,
+            true,
+            ctx,
+          );
+        } else {
+          drawSit(
+            SpotsArray[counter_y][counter_x].x,
+            SpotsArray[counter_y][counter_x].y,
+            ctx,
+            cliketSits.length === 5,
+          );
+        }
       } else {
-        drawSit(
+        drawOccupiedPlace(
           SpotsArray[counter_y][counter_x].x,
           SpotsArray[counter_y][counter_x].y,
           ctx,
-          cliketSits.length === 5,
         );
       }
     }
     ctx.beginPath();
     ctx.fillStyle = 'black';
     ctx.font = 'normal 18px Arial';
-    ctx.fillText(`${counter_y + 1}`, 120, (1 + counter_y) * 44 + 83);
-    ctx.fillText(`${counter_y + 1}`, 840, (1 + counter_y) * 44 + 83);
+    ctx.fillText(`${counter_y + 1}`, 120, (1 + counter_y) * 44 + 78);
+    ctx.fillText(`${counter_y + 1}`, 840, (1 + counter_y) * 44 + 78);
   }
 }
 
@@ -151,29 +168,34 @@ export function drawHoverSit(
   row: number,
   ctx: CanvasRenderingContext2D,
   canvas,
-  cliketSits: { x: number; y: number }[],
 ) {
-  canvas.onmousedown = function () {
-    ctx.clearRect(0, 0, width, height);
-    drawScreen(ctx);
-    drawAllSpots(cliketSits, SpotsArray, ctx);
+  canvas.onmousedown = function (e: MouseEvent) {
+    const clix_x = e.offsetX;
+    const clix_y = e.offsetY;
+    if (clix_x >= x && clix_y >= y && clix_x <= x + 44 && clix_y <= y + 44) {
+      ctx.clearRect(0, 0, width, height);
+      drawScreen(ctx);
 
-    const index = cliketSits.findIndex((item) => item.x == x && item.y == y);
-    if (index !== -1) {
-      cliketSits.splice(index, 1);
-    } else {
-      if (cliketSits.length < 5) {
-        cliketSits.push({
-          x: x,
-          y: y,
-        });
+      const index = cliketSits.findIndex((item) => item.x == x && item.y == y);
+      if (index !== -1) {
+        cliketSits.splice(index, 1);
+      } else {
+        if (cliketSits.length < 5) {
+          setCliketSits({
+            x: x,
+            y: y,
+            sit: sit,
+            row: row,
+          });
+        }
       }
+
+      drawAllSpots(SpotsArray, ctx);
+      drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
+      drawMessage(ctx, x, y, row, sit);
     }
-    console.log(cliketSits.length);
-    drawAllSpots(cliketSits, SpotsArray, ctx);
-    drawCircle(x, y, sit, CheckClickedSit(cliketSits, x, y), ctx);
-    drawMessage(ctx, x, y, row, sit);
   };
-  drawCircle(x, y, sit, CheckClickedSit(cliketSits, x, y), ctx);
+
+  drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
 }
