@@ -198,5 +198,4 @@ export function drawHoverSit(
   drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
 }
-
 export default cliketSits;
