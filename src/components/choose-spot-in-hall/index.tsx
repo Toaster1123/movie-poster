@@ -1,4 +1,5 @@
 'use client';
+import cliketSits from './functions';
 import { HallPopup } from '@/store/hall-popup';
 import { X } from 'lucide-react';
 import React from 'react';
@@ -38,22 +39,6 @@ export default function ChooseSpotPopup() {
         </div>
         <div className="border-b-2">
           <Canvas />
-          {/* <div>
-            <div className="">
-              <p>2D • 16+ • Зал 2</p>
-            </div>
-            <div>
-              <div className="">
-                <span></span>
-                <p>400₽</p>
-              </div>
-              <div className="">
-                <span></span>
-                <p>Занято</p>
-              </div>
-            </div>
-          </div>
-          <div></div> */}
         </div>
         <div className="flex justify-end">
           <div className="bg-gray-200 w-fit px-5 py-3 mr-6 my-3 rounded-lg text-gray-400">

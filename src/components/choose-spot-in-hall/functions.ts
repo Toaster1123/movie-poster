@@ -1,11 +1,9 @@
-'use client';
-import { SpotsArrayType } from '@/@types/canvas-types';
+import { CliketSitsType, SpotsArrayType } from '@/@types/canvas-types';
 import { SpotsArray } from './canvas';
-import { UserTickets } from '@/store/user-tickets';
 
 export const height = 520;
 export const width = 960;
-const { cliketSits, setCliketSits } = UserTickets((state) => state);
+let cliketSits: CliketSitsType[] = [];
 
 export function drawScreen(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
@@ -181,7 +179,7 @@ export function drawHoverSit(
         cliketSits.splice(index, 1);
       } else {
         if (cliketSits.length < 5) {
-          setCliketSits({
+          cliketSits.push({
             x: x,
             y: y,
             sit: sit,
@@ -190,6 +188,7 @@ export function drawHoverSit(
         }
       }
 
+      console.log(cliketSits);
       drawAllSpots(SpotsArray, ctx);
       drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
       drawMessage(ctx, x, y, row, sit);
@@ -199,3 +198,5 @@ export function drawHoverSit(
   drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
 }
+
+export default cliketSits;
