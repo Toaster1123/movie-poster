@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { drawHoverSit, drawAllSpots, drawScreen, width, height } from './functions';
+import { useTickets } from '@/hooks/useTickets';
 export const SpotsArray = [
   [
     {
@@ -577,6 +578,7 @@ export const SpotsArray = [
 ];
 
 export default function Canvas() {
+  const { clicketSits, changeTicketsArray } = useTickets();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -591,7 +593,7 @@ export default function Canvas() {
       let row = 0;
       ctx.clearRect(0, 0, width, height);
       drawScreen(ctx);
-      drawAllSpots(SpotsArray, ctx);
+      drawAllSpots(clicketSits, SpotsArray, ctx);
 
       for (let counter_y = 0; counter_y < SpotsArray.length; counter_y++) {
         for (let counter_x = 0; counter_x < SpotsArray[counter_y].length; counter_x++) {
@@ -611,37 +613,13 @@ export default function Canvas() {
       }
       if (draw_x > 0) {
         canvas.classList.add('canvas-hover');
-        drawHoverSit(draw_x, draw_y, sit, row, ctx, canvas);
+        drawHoverSit(changeTicketsArray, clicketSits, draw_x, draw_y, sit, row, ctx, canvas);
       } else {
         canvas.classList.remove('canvas-hover');
       }
     };
-    //shit
-    // for (let i = 0; i <= width; i++) {
-    //   if (i % 30 === 0) {
-    //     ctx.beginPath();
-    //     ctx.font = 'normal 12px Arial';
-    //     ctx.textAlign = 'center';
-    //     ctx.fillText(i, i, height - 2);
-    //     ctx.moveTo(i, 0);
-    //     ctx.lineTo(i, height);
-    //     ctx.strokeStyle = '#eaeaea';
-    //     ctx.stroke();
-    //   }
-    // }
-    // for (let i = 0; i <= height; i++) {
-    //   if (i % 30 === 0) {
-    //     ctx.beginPath();
-    //     ctx.font = 'normal 12px Arial';
-    //     ctx.fillText(i, 10, i + 5);
-    //     ctx.moveTo(0, i);
-    //     ctx.lineTo(width, i);
-    //     ctx.strokeStyle = '#eaeaea';
-    //     ctx.stroke();
-    //   }
-    // }
     drawScreen(ctx);
-    drawAllSpots(SpotsArray, ctx);
-  }, []);
+    drawAllSpots(clicketSits, SpotsArray, ctx);
+  }, [clicketSits]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }

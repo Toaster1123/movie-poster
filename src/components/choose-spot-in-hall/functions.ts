@@ -3,7 +3,6 @@ import { SpotsArray } from './canvas';
 
 export const height = 520;
 export const width = 960;
-let cliketSits: CliketSitsType[] = [];
 
 export function drawScreen(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
@@ -52,20 +51,26 @@ export function drawSit(x: number, y: number, ctx: CanvasRenderingContext2D, ove
   ctx.fill();
 }
 
-function CheckClickedSit(x: number, y: number) {
-  return cliketSits.some((item) => {
+function CheckClickedSit(clicketSits: CliketSitsType[], x: number, y: number) {
+  return clicketSits.some((item) => {
     return item.x === x && item.y === y;
   });
 }
 
-function drawOccupiedPlace(x: number, y: number, ctx) {
+function drawOccupiedPlace(x: number, y: number, ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
   ctx.fillStyle = '#8a8a8a';
   ctx.arc(x + 17, y + 17, 5, 0, Math.PI * 2, true);
   ctx.fill();
 }
 
-function drawMessage(ctx, x: number, y: number, row: number, sit: number) {
+export function drawMessage(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  row: number,
+  sit: number,
+) {
   //Отрисовка сообщения
   ctx.beginPath();
   ctx.fillStyle = 'rgba(23, 23, 23, 0.91)';
@@ -91,10 +96,15 @@ function drawMessage(ctx, x: number, y: number, row: number, sit: number) {
   ctx.fillText(`${400} ₽`, x + 17, y - 38);
 }
 
-export function drawAllSpots(SpotsArray: SpotsArrayType, ctx) {
+export function drawAllSpots(
+  clicketSits: CliketSitsType[],
+  SpotsArray: SpotsArrayType,
+  ctx: CanvasRenderingContext2D,
+) {
   for (let counter_y = 0; counter_y < SpotsArray.length; counter_y++) {
     for (let counter_x = 0; counter_x < SpotsArray[counter_y].length; counter_x++) {
       const ifExist = CheckClickedSit(
+        clicketSits,
         SpotsArray[counter_y][counter_x].x,
         SpotsArray[counter_y][counter_x].y,
       );
@@ -112,7 +122,7 @@ export function drawAllSpots(SpotsArray: SpotsArrayType, ctx) {
             SpotsArray[counter_y][counter_x].x,
             SpotsArray[counter_y][counter_x].y,
             ctx,
-            cliketSits.length === 5,
+            clicketSits.length === 5,
           );
         }
       } else {
@@ -131,7 +141,13 @@ export function drawAllSpots(SpotsArray: SpotsArrayType, ctx) {
   }
 }
 
-export function drawCircle(x: number, y: number, sit: number, isClicked: boolean, ctx) {
+export function drawCircle(
+  x: number,
+  y: number,
+  sit: number,
+  isClicked: boolean,
+  ctx: CanvasRenderingContext2D,
+) {
   //отрисовка бальшого белого второго круга
   ctx.beginPath();
   ctx.clearRect(x, y, 34, 34);
@@ -158,14 +174,15 @@ export function drawCircle(x: number, y: number, sit: number, isClicked: boolean
   ctx.font = 'normal 18px Arial';
   ctx.fillText(`${sit}`, sit > 9 ? x + 16 : x + 17, y + 18);
 }
-
 export function drawHoverSit(
+  changeTicketsArray: (index: number, x: number, y: number, sit: number, row: number) => void,
+  clicketSits: CliketSitsType[],
   x: number,
   y: number,
   sit: number,
   row: number,
   ctx: CanvasRenderingContext2D,
-  canvas,
+  canvas: HTMLCanvasElement,
 ) {
   canvas.onmousedown = function (e: MouseEvent) {
     const clix_x = e.offsetX;
@@ -174,28 +191,14 @@ export function drawHoverSit(
       ctx.clearRect(0, 0, width, height);
       drawScreen(ctx);
 
-      const index = cliketSits.findIndex((item) => item.x == x && item.y == y);
-      if (index !== -1) {
-        cliketSits.splice(index, 1);
-      } else {
-        if (cliketSits.length < 5) {
-          cliketSits.push({
-            x: x,
-            y: y,
-            sit: sit,
-            row: row,
-          });
-        }
-      }
-
-      console.log(cliketSits);
-      drawAllSpots(SpotsArray, ctx);
-      drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
+      const index = clicketSits.findIndex((item) => item.x == x && item.y == y);
+      changeTicketsArray(index, x, y, sit, row);
+      drawAllSpots(clicketSits, SpotsArray, ctx);
+      drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
       drawMessage(ctx, x, y, row, sit);
     }
   };
 
-  drawCircle(x, y, sit, CheckClickedSit(x, y), ctx);
+  drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
 }
-export default cliketSits;

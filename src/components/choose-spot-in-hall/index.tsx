@@ -1,9 +1,9 @@
 'use client';
-import cliketSits from './functions';
 import { HallPopup } from '@/store/hall-popup';
 import { X } from 'lucide-react';
 import React from 'react';
 import Canvas from './canvas';
+import DrawTickets from './draw-tickets';
 
 export default function ChooseSpotPopup() {
   const { opened, setOpened } = HallPopup((state) => state);
@@ -40,11 +40,7 @@ export default function ChooseSpotPopup() {
         <div className="border-b-2">
           <Canvas />
         </div>
-        <div className="flex justify-end">
-          <div className="bg-gray-200 w-fit px-5 py-3 mr-6 my-3 rounded-lg text-gray-400">
-            Места не выбраны
-          </div>
-        </div>
+        <DrawTickets price={400} />
       </div>
     </div>
   );
