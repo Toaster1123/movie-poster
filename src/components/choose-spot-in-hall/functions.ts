@@ -51,7 +51,7 @@ export function drawSit(x: number, y: number, ctx: CanvasRenderingContext2D, ove
   ctx.fill();
 }
 
-function CheckClickedSit(clicketSits: CliketSitsType[], x: number, y: number) {
+export function CheckClickedSit(clicketSits: CliketSitsType[], x: number, y: number) {
   return clicketSits.some((item) => {
     return item.x === x && item.y === y;
   });
@@ -175,7 +175,7 @@ export function drawCircle(
   ctx.fillText(`${sit}`, sit > 9 ? x + 16 : x + 17, y + 18);
 }
 export function drawHoverSit(
-  changeTicketsArray: (index: number, x: number, y: number, sit: number, row: number) => void,
+  setClicketSits: (state: CliketSitsType[]) => void,
   clicketSits: CliketSitsType[],
   x: number,
   y: number,
@@ -191,8 +191,20 @@ export function drawHoverSit(
       ctx.clearRect(0, 0, width, height);
       drawScreen(ctx);
 
-      const index = clicketSits.findIndex((item) => item.x == x && item.y == y);
-      changeTicketsArray(index, x, y, sit, row);
+      if (
+        clicketSits.find((item) => {
+          return item.x == x && item.y == y;
+        }) == undefined
+      ) {
+        if (clicketSits.length < 5) {
+          clicketSits.push({ x, y, sit, row });
+        }
+      } else {
+        clicketSits = clicketSits.filter((item) => {
+          return item.x !== x || item.y !== y;
+        });
+      }
+      setClicketSits(clicketSits);
       drawAllSpots(clicketSits, SpotsArray, ctx);
       drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
       drawMessage(ctx, x, y, row, sit);

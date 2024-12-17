@@ -1,10 +1,10 @@
 import { CliketSitsType } from '@/@types/canvas-types';
 import { create } from 'zustand';
-interface seanseType {
+interface TicketsType {
   clicketSits: CliketSitsType[] | [];
   setClicketSits: (state: CliketSitsType[]) => void;
 }
-export const ChangeSeanse = create<seanseType>((set) => ({
+export const ChangeUserTickets = create<TicketsType>((set) => ({
   clicketSits: [],
-  setClicketSits: (state) => set(() => ({ clicketSits: state })),
+  setClicketSits: (array) => set(() => ({ clicketSits: array })),
 }));

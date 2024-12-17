@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { drawHoverSit, drawAllSpots, drawScreen, width, height } from './functions';
-import { useTickets } from '@/hooks/useTickets';
+import { ChangeUserTickets } from '@/store/user-tickets';
 export const SpotsArray = [
   [
     {
@@ -578,12 +578,13 @@ export const SpotsArray = [
 ];
 
 export default function Canvas() {
-  const { clicketSits, changeTicketsArray } = useTickets();
+  const { clicketSits, setClicketSits } = ChangeUserTickets((state) => state);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isMount, setIsMount] = useState(true);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
-
     canvas.onmousemove = function (e: MouseEvent) {
       const x = e.offsetX;
       const y = e.offsetY;
@@ -613,13 +614,20 @@ export default function Canvas() {
       }
       if (draw_x > 0) {
         canvas.classList.add('canvas-hover');
-        drawHoverSit(changeTicketsArray, clicketSits, draw_x, draw_y, sit, row, ctx, canvas);
+        drawHoverSit(setClicketSits, clicketSits, draw_x, draw_y, sit, row, ctx, canvas);
       } else {
         canvas.classList.remove('canvas-hover');
       }
     };
-    drawScreen(ctx);
-    drawAllSpots(clicketSits, SpotsArray, ctx);
+
+    if (isMount) {
+      drawScreen(ctx);
+      drawAllSpots(clicketSits, SpotsArray, ctx);
+      setIsMount(false);
+    } else {
+      drawScreen(ctx);
+      drawAllSpots(clicketSits, SpotsArray, ctx);
+    }
   }, [clicketSits]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }
