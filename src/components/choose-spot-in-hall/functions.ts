@@ -3,7 +3,13 @@ import { SpotsArray } from './canvas';
 
 export const height = 520;
 export const width = 960;
-
+let cliked: {
+  x: number;
+  y: number;
+  sit: number;
+  row: number;
+  isClick: boolean;
+} = { x: 0, y: 0, sit: 0, row: 0, isClick: false };
 export function drawScreen(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
   ctx.lineCap = 'round';
@@ -200,6 +206,7 @@ export function drawHoverSit(
           clicketSits.push({ x, y, sit, row });
         }
       } else {
+        cliked = { x, y, row, sit, isClick: true };
         clicketSits = clicketSits.filter((item) => {
           return item.x !== x || item.y !== y;
         });
@@ -213,4 +220,20 @@ export function drawHoverSit(
 
   drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
+}
+export function onChangeTickets(ctx, clicketSits) {
+  ctx.clearRect(0, 0, width, height);
+  drawScreen(ctx);
+  drawAllSpots(clicketSits, SpotsArray, ctx);
+  if (cliked.isClick) {
+    drawCircle(
+      cliked.x,
+      cliked.y,
+      cliked.sit,
+      CheckClickedSit(clicketSits, cliked.x, cliked.y),
+      ctx,
+    );
+    drawMessage(ctx, cliked.x, cliked.y, cliked.row, cliked.sit);
+    cliked = { x: 0, y: 0, sit: 0, row: 0, isClick: false };
+  }
 }

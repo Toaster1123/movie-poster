@@ -2,12 +2,23 @@ import { ChangeUserTickets } from '@/store/user-tickets';
 import TicketsComponent from './ticket-component';
 
 import React from 'react';
+import { CliketSitsType } from '@/@types/canvas-types';
 export default function DrawTickets({ price }: { price: number }) {
   const { clicketSits } = ChangeUserTickets((state) => state);
+  const [ticketCloneForAnimation, setTicketCloneForAnimation] = React.useState<
+    [] | CliketSitsType[]
+  >([]);
+  console.log(ticketCloneForAnimation);
+  React.useEffect(() => {
+    setTimeout(() => {
+      console.log('object');
+      setTicketCloneForAnimation(clicketSits);
+    }, 300);
+  }, [clicketSits]);
   return (
     <div className={`relative flex justify-between mx-7 h-[72px] mt-1`}>
       <div className="flex items-end 4">
-        {clicketSits.map((item, id) => (
+        {ticketCloneForAnimation.map((item, id) => (
           <TicketsComponent key={id} row={item.row} sit={item.sit} />
         ))}
       </div>

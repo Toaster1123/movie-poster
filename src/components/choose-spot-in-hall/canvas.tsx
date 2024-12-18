@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { drawHoverSit, drawAllSpots, drawScreen, width, height } from './functions';
+import {
+  drawHoverSit,
+  drawAllSpots,
+  drawScreen,
+  width,
+  height,
+  drawMessage,
+  onChangeTickets,
+} from './functions';
 import { ChangeUserTickets } from '@/store/user-tickets';
 export const SpotsArray = [
   [
@@ -625,8 +633,7 @@ export default function Canvas() {
       drawAllSpots(clicketSits, SpotsArray, ctx);
       setIsMount(false);
     } else {
-      drawScreen(ctx);
-      drawAllSpots(clicketSits, SpotsArray, ctx);
+      onChangeTickets(ctx, clicketSits);
     }
   }, [clicketSits]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
