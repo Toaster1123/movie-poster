@@ -1,19 +1,41 @@
-import { ChangeUserTickets } from '@/store/user-tickets';
 import { CircleX } from 'lucide-react';
 import React from 'react';
+
+import { ChangeUserTickets } from '@/store/user-tickets';
 import styles from './ticket.module.scss';
 
 export default function TicketsComponent({ row, sit }: { row: number; sit: number }) {
-  const { clicketSits, setClicketSits } = ChangeUserTickets((state) => state);
-
+  const { clicketSits, setClicketSits, domClicketSits } = ChangeUserTickets((state) => state);
+  const [isDeleted, setIsDeleted] = React.useState(false);
+  const [animWhileDel, setAnimWhileDel] = React.useState(true);
+  const [delByClickX, setDelByClickX] = React.useState(false);
+  React.useEffect(() => {
+    if (clicketSits.length < domClicketSits.length) {
+      const deletedElem = domClicketSits.filter(
+        (item) => !clicketSits.some((sit) => sit.row === item.row && sit.sit === item.sit),
+      );
+      if (deletedElem[0].row == row && deletedElem[0].sit === sit) {
+        setIsDeleted(true);
+        setAnimWhileDel(false);
+        setTimeout(() => {
+          setDelByClickX(false);
+          setIsDeleted(false);
+        }, 300);
+      }
+    }
+  }, [clicketSits.length]);
   return (
-    <div className={`${styles.main}`}>
+    <div
+      className={`${styles.main} ${isDeleted && !delByClickX && styles.mainOnmount} ${
+        animWhileDel && styles.mainMount
+      } ${delByClickX && styles.mainOnmountHover}`}>
       <div className="flex justify-between">
         <p className="pr-2">
           Ряд {row}, Место {sit}
         </p>
         <div
           onClick={() => {
+            setDelByClickX(true);
             setClicketSits(
               clicketSits.filter((item) => {
                 return item.row !== row || item.sit !== sit;

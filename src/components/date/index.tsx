@@ -1,17 +1,14 @@
 'use client';
 import React from 'react';
-import { dayTwo } from './actual-date';
+import { getForwardData } from './actual-date';
 import { ChangeTicketsData } from '@/store/set-date';
 import { now } from './curent-date';
 import { activeDateSelector } from '@/store/active-date-selector';
-import { ChangeSeanse } from '@/store/tickets';
 
-const dateArray = ['Сегодня', 'Завтра', dayTwo];
-export default function Date({ title }: { title: string }) {
-  const { seansesArray } = ChangeSeanse((state) => state);
+const dateArray = ['Сегодня', 'Завтра', getForwardData(2)];
+export default function Date() {
+  const { setNewDate } = ChangeTicketsData((state) => state);
 
-  const { date, setNewDate } = ChangeTicketsData((state) => state);
-  const [mount, setMount] = React.useState(false);
   const [disabledBtn, setDisabledBtn] = React.useState<0 | null>(null);
   const { active, setActive } = activeDateSelector((state) => state);
   React.useEffect(() => {
@@ -23,15 +20,8 @@ export default function Date({ title }: { title: string }) {
   React.useEffect(() => {
     if (active === 0) {
       setNewDate(now.getHours() * 60 + now.getMinutes());
-      // setNewDate(1400);
     } else {
       setNewDate(600);
-    }
-    if (
-      seansesArray.filter((item) => {
-        return item.title === title && item.time >= date;
-      }).length > 0
-    ) {
     }
     setDisabledBtn(0);
   }, [active]);

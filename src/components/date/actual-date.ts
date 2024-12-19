@@ -8,8 +8,11 @@ const weekdays = [
   'Суббота',
 ];
 const month = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-const date = new Date();
-const curentDayPlusTwo = new Date(date.setDate(date.getDate() + 2));
-export const dayTwo = `${weekdays[curentDayPlusTwo.getDay()]}, ${curentDayPlusTwo.getDate()} ${
-  month[curentDayPlusTwo.getMonth()]
-}`;
+export function getForwardData(day: number) {
+  const date = new Date();
+  const curentDayPlusTwo = new Date(date.setDate(date.getDate() + day));
+  const dayTwo = `${weekdays[curentDayPlusTwo.getDay()]}, ${curentDayPlusTwo.getDate()} ${
+    month[curentDayPlusTwo.getMonth()]
+  }`;
+  return dayTwo;
+}

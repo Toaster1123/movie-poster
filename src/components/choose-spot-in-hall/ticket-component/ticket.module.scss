@@ -11,7 +11,6 @@
   opacity: 1;
   padding: 8px 8px 0 12px;
   height: 64px;
-  // animation: ticket-animation 0.3s;
   .remButton {
     cursor: pointer;
     opacity: 0;
@@ -25,12 +24,14 @@
     }
   }
 }
-
-.main-onmount-hover {
-  // animation: ticket-onmount-animation-hover 0.3s;
+.mainMount {
+  animation: ticket-animation 0.3s;
 }
-.main-onmount {
-  // animation: ticket-onmount-animation-hover 0.3s;
+.mainOnmountHover {
+  animation: ticket-onmount-animation-hover 0.34s;
+}
+.mainOnmount {
+  animation: ticket-onmount-animation 0.3s;
 }
 @keyframes ticket-animation {
   0% {

@@ -1,14 +1,41 @@
 'use client';
-import { HallPopup } from '@/store/hall-popup';
 import { X } from 'lucide-react';
+import { useClickAway } from 'react-use';
 import React from 'react';
+
+import { HallPopup } from '@/store/hall-popup';
 import Canvas from './canvas';
 import DrawTickets from './draw-tickets';
+import { ChangeUserTickets } from '@/store/user-tickets';
+import { CanvasData } from '@/store/canvas-data';
+import { convertTime } from '@/lib/convert-time';
 
 export default function ChooseSpotPopup() {
+  const { canvasData } = CanvasData((state) => state);
+
   const { opened, setOpened } = HallPopup((state) => state);
+  const { setClicketSits } = ChangeUserTickets((state) => state);
 
   const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!opened) {
+      setClicketSits([]);
+    }
+  }, [opened]);
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpened(false);
+      }
+    });
+  }, []);
+
+  useClickAway(ref, () => {
+    setOpened(false);
+  });
   return (
     <div
       className={`w-full h-full flex flex-col  justify-center items-center fixed top-0 left-0  ${
@@ -16,24 +43,29 @@ export default function ChooseSpotPopup() {
       } `}>
       <div ref={ref} className="bg-white w-full max-w-[960px] mx-10">
         <div className="w-full border-b-2 flex flex-col items-center text-center">
-          <div className="flex items-center w-full ">
-            <div className=" flex-grow relative  left-[23px] flex-shrink-0">
-              <div>Название</div>
-              <div className="text-gray-600 text-sm">12 декабря, Кинотеатр Проекторий</div>
+          <div className="flex items-center relative w-full ">
+            <div className=" flex-grow  flex-shrink-0">
+              <div>{canvasData.title}</div>
+              <div className="text-gray-600 text-sm">{canvasData.date}, Кинотеатр Проекторий</div>
             </div>
             <div
               onClick={() => {
                 setOpened(false);
-              }}>
-              <X className="cursor-pointer  mx-3 " size={23} strokeWidth={2.5} />
+              }}
+              className="cursor-pointer absolute right-0 p-3 ">
+              <X size={23} strokeWidth={2.5} />
             </div>
           </div>
-          <div className="w-fit mt-3">
-            <div className="bg-green-700 mb-1 rounded-2xl py-1 text-center px-3 text-white">
-              <b>20:40</b>
+          <div className="mt-3 flex  mb-3 items-center">
+            <div className="bg-green-700 rounded-2xl py-1 mr-1  text-center px-3 text-white">
+              <b>{convertTime(canvasData.time)}</b>
             </div>
-            <div className="text-center text-sm text-gray-600">
-              <p>400₽</p>
+            <div className="flex items-center text-center text-[13px] w-[120px] justify-around text-gray-600 ">
+              <p>{canvasData.dimension}</p>
+              <p className="text-[10px]">•</p>
+              <p>{canvasData.age}+ </p>
+              <p className="text-[10px]">•</p>
+              <p>{canvasData.price}₽</p>
             </div>
           </div>
         </div>

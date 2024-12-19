@@ -2,7 +2,7 @@
 import React from 'react';
 import { FilmItemType } from '@/@types/main-films';
 import { SetFilmHall } from '@/lib/set-film-hall.ts';
-import { ChangeSeanse } from '@/store/tickets';
+import { ChangeSeanse } from '@/store/seanses';
 export default function TicketsWrapper({
   children,
   movie,

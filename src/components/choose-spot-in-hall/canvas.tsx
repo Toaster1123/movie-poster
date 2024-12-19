@@ -5,7 +5,6 @@ import {
   drawScreen,
   width,
   height,
-  drawMessage,
   onChangeTickets,
 } from './functions';
 import { ChangeUserTickets } from '@/store/user-tickets';
@@ -586,13 +585,16 @@ export const SpotsArray = [
 ];
 
 export default function Canvas() {
-  const { clicketSits, setClicketSits } = ChangeUserTickets((state) => state);
+  const { clicketSits, setClicketSits, setDomClicketSits } = ChangeUserTickets((state) => state);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isMount, setIsMount] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+    if (canvas == null) throw new Error('Could not get context');
+    const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
+    if (ctx == null) throw new Error('Could not get context');
+
     canvas.onmousemove = function (e: MouseEvent) {
       const x = e.offsetX;
       const y = e.offsetY;
@@ -635,6 +637,7 @@ export default function Canvas() {
     } else {
       onChangeTickets(ctx, clicketSits);
     }
+    setDomClicketSits(clicketSits);
   }, [clicketSits]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }

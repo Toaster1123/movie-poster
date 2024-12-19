@@ -1,7 +1,8 @@
 'use client';
 
 import { CardType } from '@/@types/sceance-type';
-import { price } from '@/lib/set-film-hall.ts/constants';
+import { convertTime } from '@/lib/convert-time';
+import { price, selectDimension } from '@/lib/set-film-hall.ts/constants';
 import Link from 'next/link';
 
 export default function SeanceCard({ hall, time, title, age, genres, id }: CardType) {
@@ -10,7 +11,7 @@ export default function SeanceCard({ hall, time, title, age, genres, id }: CardT
       <div className="flex  pb-3 mt-3 cursor-pointer ">
         <div className={'py-1 w-[70.2px] mr-6'}>
           <p className="text-white py-1  px-3 rounded-lg bg-lime-600 font-black text-lg hover:bg-lime-700">
-            {Math.floor(time / 60) + ':' + (time % 60 < 10 ? (time % 60) + '0' : time % 60)}
+            {convertTime(time)}
           </p>
         </div>
         <div>
@@ -27,11 +28,7 @@ export default function SeanceCard({ hall, time, title, age, genres, id }: CardT
           </div>
           <div className="flex text-xs pt-3 text-gray-500">
             <p>
-              {(time >= 1260 && age > 12) ||
-              (time >= 1020 && age == 18) ||
-              (time >= 1020 && age == 16)
-                ? '2D'
-                : '3D'}
+              {selectDimension(time, age)}
               {' •'}
             </p>
             <p>

@@ -22,7 +22,6 @@ export default function FilmItem({ image, title, genres, age, id }: FilmItemProp
             );
           })}
         </div>
-
         <TicketsPicker title={title} />
       </div>
     </div>

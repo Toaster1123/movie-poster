@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeSeanse } from '@/store/tickets';
+import { ChangeSeanse } from '@/store/seanses';
 import SeanceCard from './seance-card';
 import { ChangeTicketsData } from '@/store/set-date';
 import React from 'react';

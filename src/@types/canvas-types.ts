@@ -10,3 +10,12 @@ export type SpotsArrayType = {
   y: number;
   occupied: boolean;
 }[][];
+
+export type CanvasDataType = {
+  title: string;
+  time: number;
+  dimension: string;
+  age: number;
+  date: string;
+  price: number;
+};
