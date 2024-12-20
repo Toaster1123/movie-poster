@@ -37,6 +37,7 @@ export default function TicketsPicker({ title }: { title: string }) {
                 time: item.time,
                 dimension: selectDimension(item.time, item.age),
                 age: item.age,
+                hall: item.hall,
                 date: getForwardData(active),
                 price: price(item.time),
               });

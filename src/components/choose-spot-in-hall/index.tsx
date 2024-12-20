@@ -72,7 +72,7 @@ export default function ChooseSpotPopup() {
         <div className="border-b-2">
           <Canvas />
         </div>
-        <DrawTickets price={400} />
+        <DrawTickets price={canvasData.price} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import './globals.scss';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import ChooseSpotPopup from '@/components/choose-spot-in-hall';
+import { Register } from '@/components/register';
 const inter = Inter({ subsets: ['latin'], weight: ['400'] });
 export const metadata: Metadata = {
   title: 'Афиша — Кинотеатр «Проекторий»',
@@ -25,6 +26,7 @@ export default function RootLayout({
         <div className="flex flex-col w-full min-h-screen max-w-[1250px] mx-auto  ">
           <NextTopLoader color="#65a30d" showSpinner={false} />
           <ChooseSpotPopup />
+          <Register />
 
           <Header />
           <main className="flex-grow flex bg-gray-200 flex-col ">{children}</main>

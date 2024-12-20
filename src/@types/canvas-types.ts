@@ -17,5 +17,10 @@ export type CanvasDataType = {
   dimension: string;
   age: number;
   date: string;
+  hall: number;
   price: number;
+};
+export type FetchHalls = {
+  id: number;
+  hall: SpotsArrayType;
 };

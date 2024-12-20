@@ -1,8 +1,6 @@
-import { CliketSitsType, SpotsArrayType } from '@/@types/canvas-types';
-import { SpotsArray } from './canvas';
+import { CliketSitsType, FetchHalls, SpotsArrayType } from '@/@types/canvas-types';
+import axios from 'axios';
 
-export const height = 520;
-export const width = 960;
 let cliked: {
   x: number;
   y: number;
@@ -10,6 +8,18 @@ let cliked: {
   row: number;
   isClick: boolean;
 } = { x: 0, y: 0, sit: 0, row: 0, isClick: false };
+
+export async function fetchHall(hall: number) {
+  const hallID = hall <= 3 ? 1 : 2;
+  const { data } = await axios.get<FetchHalls>(
+    'https://d1258192d0a72ca0.mokky.dev/movie-hals/' + hallID,
+  );
+  return data.hall;
+}
+export const spotsArray = await fetchHall(1);
+export const width = 960;
+export const height = 60 * spotsArray.length;
+
 export function drawScreen(ctx: CanvasRenderingContext2D) {
   ctx.beginPath();
   ctx.lineCap = 'round';
@@ -212,7 +222,7 @@ export function drawHoverSit(
         });
       }
       setClicketSits(clicketSits);
-      drawAllSpots(clicketSits, SpotsArray, ctx);
+      drawAllSpots(clicketSits, spotsArray, ctx);
       drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
       drawMessage(ctx, x, y, row, sit);
     }
@@ -221,10 +231,10 @@ export function drawHoverSit(
   drawCircle(x, y, sit, CheckClickedSit(clicketSits, x, y), ctx);
   drawMessage(ctx, x, y, row, sit);
 }
-export function onChangeTickets(ctx, clicketSits) {
+export function onChangeTickets(ctx: CanvasRenderingContext2D, clicketSits: CliketSitsType[]) {
   ctx.clearRect(0, 0, width, height);
   drawScreen(ctx);
-  drawAllSpots(clicketSits, SpotsArray, ctx);
+  drawAllSpots(clicketSits, spotsArray, ctx);
   if (cliked.isClick) {
     drawCircle(
       cliked.x,

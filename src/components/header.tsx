@@ -1,6 +1,8 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { RegisterPopup } from '@/store/register-opened';
+import { HallPopup } from '@/store/hall-popup';
 const categories = [
   { name: 'Афиша', link: '/' },
   { name: 'Сеансы', link: '/seances' },
@@ -8,6 +10,9 @@ const categories = [
   { name: 'Контакты', link: '/contacts' },
 ];
 export default function Header() {
+  const { setRegOpened } = RegisterPopup((state) => state);
+  const { setOpened } = HallPopup((state) => state);
+
   const path = usePathname();
   return (
     <header className="flex justify-between py-3 px-10 bg-[#222629]">
@@ -25,7 +30,12 @@ export default function Header() {
           );
         })}
       </div>
-      <div className="text-white text-sm p-1 px-3 cursor-pointer   rounded-lg bg-lime-600 hover:bg-lime-700">
+      <div
+        onClick={() => {
+          setOpened(false);
+          setRegOpened(true);
+        }}
+        className="text-white text-sm p-1 px-3 cursor-pointer   rounded-lg bg-lime-600 hover:bg-lime-700">
         Войти
       </div>
     </header>
