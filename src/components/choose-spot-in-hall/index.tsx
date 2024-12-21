@@ -9,12 +9,30 @@ import DrawTickets from './draw-tickets';
 import { ChangeUserTickets } from '@/store/user-tickets';
 import { CanvasData } from '@/store/canvas-data';
 import { convertTime } from '@/lib/convert-time';
+import { FetchHalls, SpotsArrayType } from '@/@types/canvas-types';
+import axios from 'axios';
 
 export default function ChooseSpotPopup() {
   const { canvasData } = CanvasData((state) => state);
-
   const { opened, setOpened } = HallPopup((state) => state);
   const { setClicketSits } = ChangeUserTickets((state) => state);
+
+  const [spotsArray, setSpotsArray] = React.useState<SpotsArrayType>([]);
+
+  React.useEffect(() => {
+    const fetchHall = async (id: number) => {
+      try {
+        const hallID = id <= 3 ? 1 : 2;
+        const { data } = await axios.get<FetchHalls>(
+          'https://d1258192d0a72ca0.mokky.dev/movie-hals/' + hallID,
+        );
+        setSpotsArray(data.hall);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchHall(canvasData.hall);
+  }, [canvasData.hall]);
 
   const ref = React.useRef(null);
 
@@ -70,7 +88,7 @@ export default function ChooseSpotPopup() {
           </div>
         </div>
         <div className="border-b-2">
-          <Canvas />
+          <Canvas spotsArray={spotsArray} />
         </div>
         <DrawTickets price={canvasData.price} />
       </div>

@@ -11,7 +11,9 @@ export default function FilmItem({ image, title, genres, age, id }: FilmItemProp
         </div>
       </Link>
       <div className="bg-white h-2/3  rounded-b-2xl px-3">
-        <p className="text-2xl font-black py-2 pr-2 hover:text-red-600">{title}</p>
+        <Link href={'/movie/' + id}>
+          <p className="text-2xl font-black py-2 pr-2 hover:text-red-600">{title}</p>
+        </Link>
         <div className=" flex flex-wrap">
           <div className="bg-gray-200 py-1 px-2 mt-1 mr-1 rounded-md ">{age}+</div>
           {genres.map((item, id) => {

@@ -1,21 +1,17 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  drawHoverSit,
-  drawAllSpots,
-  drawScreen,
-  width,
-  height,
-  onChangeTickets,
-  spotsArray,
-} from './functions';
+import { drawHoverSit, drawAllSpots, drawScreen, onChangeTickets, fetchHall } from './functions';
 import { ChangeUserTickets } from '@/store/user-tickets';
+import { SpotsArrayType } from '@/@types/canvas-types';
 
-export default function Canvas() {
+export default function Canvas({ spotsArray }: { spotsArray: SpotsArrayType }) {
   const { clicketSits, setClicketSits, setDomClicketSits } = ChangeUserTickets((state) => state);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isMount, setIsMount] = useState(true);
 
+  const width = 960;
+  const height = 60 * spotsArray.length;
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas == null) throw new Error('Could not get context');
@@ -51,7 +47,19 @@ export default function Canvas() {
       }
       if (draw_x > 0) {
         canvas.classList.add('canvas-hover');
-        drawHoverSit(setClicketSits, clicketSits, draw_x, draw_y, sit, row, ctx, canvas);
+        drawHoverSit(
+          setClicketSits,
+          clicketSits,
+          draw_x,
+          draw_y,
+          sit,
+          row,
+          ctx,
+          canvas,
+          width,
+          height,
+          spotsArray,
+        );
       } else {
         canvas.classList.remove('canvas-hover');
       }
@@ -61,9 +69,9 @@ export default function Canvas() {
       drawAllSpots(clicketSits, spotsArray, ctx);
       setIsMount(false);
     } else {
-      onChangeTickets(ctx, clicketSits);
+      onChangeTickets(ctx, clicketSits, width, height, spotsArray);
     }
     setDomClicketSits(clicketSits);
-  }, [clicketSits]);
+  }, [clicketSits, spotsArray]);
   return <canvas width={width} height={height} ref={canvasRef}></canvas>;
 }

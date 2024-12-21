@@ -19,6 +19,7 @@ export const Inputs = ({ enter }) => {
               className="text-[#2b2b2b] border-2 outline-none  border-white duration-200 focus:border-2 focus:border-black w-[260px] p-4 pl-3 rounded-2xl text-base  "
               type="text"
               placeholder="Укажите имя"
+              required
             />
           </div>
         </div>
@@ -27,6 +28,7 @@ export const Inputs = ({ enter }) => {
         <div className="flex justify-start mb-2 pl-3">Адрес электронной почты</div>
         <div>
           <input
+            required
             className="text-[#2b2b2b] border-2 outline-none  border-white duration-200 focus:border-2 focus:border-black w-[260px] p-4 pl-3 rounded-2xl text-base  "
             type="email"
             placeholder="Введиете адрес эл. почты"
@@ -37,6 +39,8 @@ export const Inputs = ({ enter }) => {
         <div className="flex justify-start mb-2 pl-3">Пароль</div>
         <div>
           <input
+            required
+            type="password"
             className="text-[#2b2b2b] border-2 outline-none  border-white duration-200 focus:border-2 focus:border-black w-[260px] p-4 pl-3 rounded-2xl text-base  "
             onChange={(event) => handleValue(event)}
             value={value}
