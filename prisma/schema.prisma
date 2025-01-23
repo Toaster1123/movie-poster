@@ -12,17 +12,18 @@ model User {
 
     firstName String
     lastName  String
-    email     String    @unique
+    email     String   @unique
     password  String
-    role      UserRole  @default(USER)
-    verified  DateTime?
+    role      UserRole @default(USER)
 
-    //    purchasedTIckets PurchasedTicket[]
-    // provider   String?
-    // providerId String?
+    purchasedTickets PurchasedTickets[]
 
-    // order            Order[]
-    // verificationCode VerificationCode?
+    provider   String?
+    providerId String?
+
+    // verified  DateTime?
+
+    verificationCode VerificationCode?
 
     createAt DateTime @default(now())
     updateAt DateTime @updatedAt
@@ -37,7 +38,6 @@ model Movie {
     movieLength Int?
     ageRating   Int?
     imageUrl    String
-    isRealised  Boolean
 
     persons   Person[]
     genres    Genre[]
@@ -72,7 +72,19 @@ model Country {
     movie Movie[]
 }
 
-model PurchasedTicket {
+model VerificationCode {
+    id Int @id @default(autoincrement())
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int  @unique
+
+    code     String
+    createAt DateTime @default(now())
+
+    @@unique([userId, code])
+}
+
+model PurchasedTickets {
     id Int @id @default(autoincrement())
 
     name     String
@@ -81,6 +93,12 @@ model PurchasedTicket {
     price Int
     hall  Int
     time  Int
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
+
+    orderStatus OrderStatus
+    paymentId   String?
 
     createAt DateTime @default(now())
     updateAt DateTime @updatedAt
@@ -94,10 +112,7 @@ model HallSchema {
 
     exceptions HallExceptions[]
     occupied   HallOccupied[]
-    seanses    Seanses[]
-
-    createAt DateTime @default(now())
-    updateAt DateTime @updatedAt
+    seanses    HallSeanses[]
 }
 
 model HallExceptions {
@@ -108,7 +123,7 @@ model HallExceptions {
     last_row   Int
     last_cols  Int
 
-    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
 }
 
@@ -120,17 +135,21 @@ model HallOccupied {
     email String
 
     createAt     DateTime   @default(now())
-    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
 }
 
-model Seanses {
+model HallSeanses {
     id Int @id @default(autoincrement())
 
-    time Int
+    time  Int
+    price Int
 
-    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
 }
 
 enum UserRole {
@@ -141,4 +160,10 @@ enum UserRole {
 enum ProfessionVariants {
     director
     actor
+}
+
+enum OrderStatus {
+    PENDING
+    SUCCESED
+    CANCELED
 }
