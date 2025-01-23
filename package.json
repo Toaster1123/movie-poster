@@ -6,14 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.8",
     "lucide-react": "^0.461.0",
     "next": "15.0.3",
     "nextjs-toploader": "^3.7.15",
+    "prisma": "^6.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-use": "^17.6.0",

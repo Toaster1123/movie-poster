@@ -1,6 +1,6 @@
-import Date from '@/components/date';
-import FilmItem from '@/components/film-item';
-import TicketsWrapper from '@/components/tickets-wrapper';
+import Date from '@/components/shared/date';
+import FilmItem from '@/components/shared/film-item';
+import TicketsWrapper from '@/components/shared/tickets-wrapper';
 import { fetchData } from '@/lib/fetch-films';
 export default async function Home() {
   const movie = await fetchData();

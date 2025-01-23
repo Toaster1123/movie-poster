@@ -1,0 +1,144 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id Int @id @default(autoincrement())
+
+    firstName String
+    lastName  String
+    email     String    @unique
+    password  String
+    role      UserRole  @default(USER)
+    verified  DateTime?
+
+    //    purchasedTIckets PurchasedTicket[]
+    // provider   String?
+    // providerId String?
+
+    // order            Order[]
+    // verificationCode VerificationCode?
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
+}
+
+model Movie {
+    id Int @id @default(autoincrement())
+
+    name        String
+    premierDate String
+    description String
+    movieLength Int?
+    ageRating   Int?
+    imageUrl    String
+    isRealised  Boolean
+
+    persons   Person[]
+    genres    Genre[]
+    countries Country[]
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
+}
+
+model Person {
+    id Int @id @default(autoincrement())
+
+    name       String
+    profession ProfessionVariants
+
+    movie Movie[]
+}
+
+model Genre {
+    id Int @id @default(autoincrement())
+
+    name String
+
+    movie Movie[]
+}
+
+model Country {
+    id Int @id @default(autoincrement())
+
+    name String
+
+    movie Movie[]
+}
+
+model PurchasedTicket {
+    id Int @id @default(autoincrement())
+
+    name     String
+    imageUrl String
+
+    price Int
+    hall  Int
+    time  Int
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
+}
+
+model HallSchema {
+    id Int @id @default(autoincrement())
+
+    rows Int
+    cols Int
+
+    exceptions HallExceptions[]
+    occupied   HallOccupied[]
+    seanses    Seanses[]
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
+}
+
+model HallExceptions {
+    id Int @id @default(autoincrement())
+
+    first_row  Int
+    first_cols Int
+    last_row   Int
+    last_cols  Int
+
+    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchemaId Int
+}
+
+model HallOccupied {
+    id Int @id @default(autoincrement())
+
+    row   Int
+    col   Int
+    email String
+
+    createAt     DateTime   @default(now())
+    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchemaId Int
+}
+
+model Seanses {
+    id Int @id @default(autoincrement())
+
+    time Int
+
+    HallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
+    hallSchemaId Int
+}
+
+enum UserRole {
+    ADMIN
+    USER
+}
+
+enum ProfessionVariants {
+    director
+    actor
+}

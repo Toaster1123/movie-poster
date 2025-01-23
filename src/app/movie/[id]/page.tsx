@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-import Date from '@/components/date';
-import TicketsPicker from '@/components/tickets/tickets-picker';
-import BtnBack from '@/components/film-page/btn-back';
-import Description from '@/components/film-page/description';
+import BtnBack from '@/components/shared/film-page/btn-back';
+import Description from '@/components/shared/film-page/description';
 import { FilmType } from '@/@types/film-by-id';
-import TicketsWrapper from '@/components/tickets-wrapper';
 import { fetchData } from '@/lib/fetch-films';
+import TicketsWrapper from '@/components/shared/tickets-wrapper';
+import TicketsPicker from '@/components/shared/tickets/tickets-picker';
+import Date from '@/components/shared/date';
 
 export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
   const params = await props.params;

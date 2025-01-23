@@ -1,6 +1,6 @@
-import Date from '@/components/date';
-import AllSeanses from '@/components/seanse/all-seanses';
-import TicketsWrapper from '@/components/tickets-wrapper';
+import Date from '@/components/shared/date';
+import AllSeanses from '@/components/shared/seanse/all-seanses';
+import TicketsWrapper from '@/components/shared/tickets-wrapper';
 import { fetchData } from '@/lib/fetch-films';
 
 export default async function Seances() {

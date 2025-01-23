@@ -1,17 +1,18 @@
 import NextTopLoader from 'nextjs-toploader';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.scss';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import ChooseSpotPopup from '@/components/choose-spot-in-hall';
-import { Register } from '@/components/register';
+import './globals.css';
+import ChooseSpotPopup from '@/components/shared/choose-spot-in-hall';
+import { Register } from '@/components/shared/register';
+import Header from '@/components/shared/header';
+import Footer from '@/components/shared/footer';
+
 const inter = Inter({ subsets: ['latin'], weight: ['400'] });
 export const metadata: Metadata = {
   title: 'Афиша — Кинотеатр «Проекторий»',
   description: 'The best place to watch movies',
   icons: {
-    icon: '/logo.svg',
+    icon: '/logo.png',
   },
 };
 
