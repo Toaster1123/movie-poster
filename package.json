@@ -8,13 +8,19 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:push": "prisma db push",
+    "prisma:generate": "prisma db generate",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "@react-google-maps/api": "^2.20.3",
+    "@types/bcrypt": "^5.0.2",
     "axios": "^1.7.8",
+    "bcrypt": "^5.1.1",
     "lucide-react": "^0.461.0",
     "next": "15.0.3",
     "nextjs-toploader": "^3.7.15",
@@ -23,6 +29,7 @@
     "react-dom": "^18.3.1",
     "react-use": "^17.6.0",
     "sass": "^1.81.0",
+    "ts-node": "^10.9.2",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

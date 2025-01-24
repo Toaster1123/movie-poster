@@ -21,7 +21,7 @@ model User {
     provider   String?
     providerId String?
 
-    // verified  DateTime?
+    verified DateTime?
 
     verificationCode VerificationCode?
 
