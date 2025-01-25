@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { drawHoverSit, drawAllSpots, drawScreen, onChangeTickets, fetchHall } from './functions';
-import { ChangeUserTickets } from '@/store/user-tickets';
+import { drawHoverSit, drawAllSpots, drawScreen, onChangeTickets } from './functions';
 import { SpotsArrayType } from '@/@types/canvas-types';
+import { ChangeUserTickets } from '../../../store/user-tickets';
 
 export default function Canvas({ spotsArray }: { spotsArray: SpotsArrayType }) {
   const { clicketSits, setClicketSits, setDomClicketSits } = ChangeUserTickets((state) => state);

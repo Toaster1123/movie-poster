@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import TicketsPicker from './tickets/tickets-picker';
+import TicketsPicker from './tickets-group';
 import { FilmItemProps } from '@/@types/film-item';
 
 export default function FilmItem({ image, title, genres, age, id }: FilmItemProps) {

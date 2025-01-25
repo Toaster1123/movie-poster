@@ -1,8 +1,8 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { RegisterPopup } from '@/store/register-opened';
-import { HallPopup } from '@/store/hall-popup';
+import { RegisterPopup } from '../../store/register-opened';
+import { HallPopup } from '../../store/hall-popup';
 const categories = [
   { name: 'Афиша', link: '/' },
   { name: 'Сеансы', link: '/seances' },

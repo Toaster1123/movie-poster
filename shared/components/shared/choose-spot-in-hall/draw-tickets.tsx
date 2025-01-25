@@ -1,4 +1,4 @@
-import { ChangeUserTickets } from '@/store/user-tickets';
+import { ChangeUserTickets } from '../../../store/user-tickets';
 import TicketsComponent from './ticket-component';
 
 import React from 'react';

@@ -5,7 +5,7 @@ import Description from '@/components/shared/film-page/description';
 import { FilmType } from '@/@types/film-by-id';
 import { fetchData } from '@/lib/fetch-films';
 import TicketsWrapper from '@/components/shared/tickets-wrapper';
-import TicketsPicker from '@/components/shared/tickets/tickets-picker';
+import TicketsPicker from '@/components/shared/tickets-group';
 import Date from '@/components/shared/date';
 
 export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
