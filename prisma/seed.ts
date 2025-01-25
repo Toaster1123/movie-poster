@@ -1,6 +1,18 @@
 import { hashSync } from 'bcrypt';
 import { prisma } from './prisma-client';
-import { Prisma } from '@prisma/client';
+import { ProfessionVariants } from '@prisma/client';
+import { countries, genres, hallSeanses, movies, persons, hallExceptions } from './constants';
+
+const generateSeanse = () => {
+  return hallSeanses
+    .map((seanse, id) =>
+      seanse.map((seanseData) => ({
+        ...seanseData,
+        hallSchemaId: id + 1,
+      })),
+    )
+    .flat();
+};
 
 async function up() {
   await prisma.user.createMany({
@@ -23,9 +35,89 @@ async function up() {
       },
     ],
   });
+
+  await prisma.person.createMany({
+    data: persons.map((person) => ({
+      ...person,
+      profession: person.profession as ProfessionVariants,
+    })),
+  });
+
+  await prisma.genre.createMany({
+    data: genres,
+  });
+
+  await prisma.country.createMany({
+    data: countries,
+  });
+
+  await Promise.all(
+    movies.map((movie) =>
+      prisma.movie.create({
+        data: {
+          name: movie.name,
+          premierDate: movie.premierDate,
+          description: movie.description,
+          movieLength: movie.movieLength,
+          ageRating: movie.ageRating,
+          imageUrl: movie.imageUrl,
+          persons: {
+            connect: movie.persons.map((id) => ({ id })),
+          },
+          genres: {
+            connect: movie.genres.map((id) => ({ id })),
+          },
+          countries: {
+            connect: movie.countries.map((id) => ({ id })),
+          },
+        },
+      }),
+    ),
+  );
+
+  await prisma.hallSchema.createMany({
+    data: [
+      {
+        rows: 9,
+        cols: 15,
+      },
+      {
+        rows: 9,
+        cols: 15,
+      },
+      {
+        rows: 9,
+        cols: 15,
+      },
+      {
+        rows: 9,
+        cols: 15,
+      },
+      {
+        rows: 7,
+        cols: 12,
+      },
+    ],
+  });
+
+  await prisma.hallExceptions.createMany({
+    data: hallExceptions,
+  });
+  await prisma.hallSeanses.createMany({
+    data: generateSeanse(),
+  });
 }
+
 async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Movie" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Person" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Genre" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Country" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "HallExceptions" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "HallOccupied" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "HallSeanses" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "HallSchema" RESTART IDENTITY CASCADE`;
 }
 async function main() {
   try {

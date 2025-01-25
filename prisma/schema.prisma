@@ -134,9 +134,10 @@ model HallOccupied {
     col   Int
     email String
 
-    createAt     DateTime   @default(now())
     hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
+
+    createAt DateTime @default(now())
 }
 
 model HallSeanses {
@@ -147,9 +148,6 @@ model HallSeanses {
 
     hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
-
-    createAt DateTime @default(now())
-    updateAt DateTime @updatedAt
 }
 
 enum UserRole {

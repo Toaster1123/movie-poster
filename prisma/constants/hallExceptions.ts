@@ -1,0 +1,51 @@
+export const hallExceptions = [
+  {
+    first_row: 1,
+    first_cols: 1,
+    last_row: 6,
+    last_cols: 2,
+    hallSchemaId: 1,
+  },
+  {
+    first_row: 1,
+    first_cols: 14,
+    last_row: 6,
+    last_cols: 15,
+    hallSchemaId: 1,
+  },
+  {
+    first_row: 1,
+    first_cols: 8,
+    last_row: 9,
+    last_cols: 8,
+    hallSchemaId: 2,
+  },
+  {
+    first_row: 1,
+    first_cols: 14,
+    last_row: 6,
+    last_cols: 15,
+    hallSchemaId: 3,
+  },
+  {
+    first_row: 3,
+    first_cols: 12,
+    last_row: 8,
+    last_cols: 13,
+    hallSchemaId: 3,
+  },
+  {
+    first_row: 1,
+    first_cols: 1,
+    last_row: 5,
+    last_cols: 2,
+    hallSchemaId: 5,
+  },
+  {
+    first_row: 1,
+    first_cols: 11,
+    last_row: 5,
+    last_cols: 12,
+    hallSchemaId: 5,
+  },
+];
