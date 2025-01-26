@@ -1,4 +1,4 @@
-export { countries } from './countries';
+export { countries } from './cuontries';
 export { genres } from './genres';
 export { hallExceptions } from './hallExceptions';
 export { hallSeanses } from './hallSeanses';

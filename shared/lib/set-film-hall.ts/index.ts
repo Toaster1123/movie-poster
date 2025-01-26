@@ -1,5 +1,3 @@
-import { FilmItemType } from '@/@types/main-films';
-import { CardType } from '@/@types/sceance-type';
 import { hallArray } from './constants';
 
 export function SetFilmHall(filmArray: FilmItemType[]) {

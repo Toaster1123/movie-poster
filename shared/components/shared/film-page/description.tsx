@@ -1,6 +1,4 @@
-import { FilmProps } from '@/@types/film-descripton';
-
-export default function Description({ persons, movieLength, country, year }: FilmProps) {
+export const Description = ({ persons, movieLength, country, year }: FilmProps) => {
   return (
     <div className="bg-gray-300 p-5 min-w-[828px] min-h-[248px] rounded-lg mt-4">
       {persons && (
@@ -66,4 +64,4 @@ export default function Description({ persons, movieLength, country, year }: Fil
       )}
     </div>
   );
-}
+};

@@ -36,7 +36,7 @@ model Movie {
     premierDate String
     description String
     movieLength Int?
-    ageRating   Int?
+    ageRating   Int
     imageUrl    String
 
     persons   Person[]

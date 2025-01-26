@@ -6,7 +6,7 @@ import { price, selectDimension } from '@/lib/set-film-hall.ts/constants';
 import { CanvasData } from '@/store/canvas-data';
 import { HallPopup } from '@/store/hall-popup';
 import Link from 'next/link';
-import { getForwardData } from '../date/actual-date';
+import { getForwardData } from '../select-date/actual-date';
 import { activeDateSelector } from '@/store/active-date-selector';
 
 export default function SeanceCard({ hall, time, title, age, genres, id }: CardType) {

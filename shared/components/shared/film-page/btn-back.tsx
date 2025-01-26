@@ -2,7 +2,7 @@
 import { CircleChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-export default function BtnBack() {
+export const BtnBack = () => {
   const router = useRouter();
   return (
     <div className="flex items-center">
@@ -16,4 +16,4 @@ export default function BtnBack() {
       </div>
     </div>
   );
-}
+};

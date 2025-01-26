@@ -1,9 +1,15 @@
-import { fetchData } from '@/lib/fetch-films';
 import { prisma } from '../prisma/prisma-client';
-import Date from '../shared/components/shared/date';
+import { FilmItem, SelectDate } from '../shared/components/shared';
 
 export default async function Home() {
+  const today = new Date().toISOString().split('T')[0];
+
   const movie = await prisma.movie.findMany({
+    where: {
+      premierDate: {
+        lte: today,
+      },
+    },
     include: {
       persons: true,
       genres: true,
@@ -12,23 +18,19 @@ export default async function Home() {
   });
   console.log(movie);
   return (
-    <div className="px-10  bg-slate-800">
-      {/* <Date /> */}
-      <div className="flex  flex-wrap gap-x-8">
+    <div className="px-6 bg-slate-800">
+      <SelectDate />
+      <div className="flex flex-wrap h-full gap-8 justify-center mb-10">
         {movie.map((item, id) => {
-          if (!item) {
-            return null;
-          }
           return (
-            <div key={id} className="w-[265px]  mb-11 rounded-lg overflow-hidden bg-white">
-              {/* <FilmItem
-                  id={item.id}
-                  image={item.poster.url}
-                  title={item.name}
-                  genres={item.genres}
-                  age={item.ageRating}
-                /> */}
-            </div>
+            <FilmItem
+              key={id}
+              id={item.id}
+              image={item.imageUrl}
+              title={item.name}
+              genres={item.genres}
+              age={item.ageRating}
+            />
           );
         })}
       </div>
