@@ -42,9 +42,7 @@ model Movie {
     persons   Person[]
     genres    Genre[]
     countries Country[]
-
-    createAt DateTime @default(now())
-    updateAt DateTime @updatedAt
+    seanses   HallSeanses[]
 }
 
 model Person {
@@ -148,6 +146,8 @@ model HallSeanses {
 
     hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])
     hallSchemaId Int
+    movie        Movie      @relation(fields: [movieId], references: [id])
+    movieId      Int
 }
 
 enum UserRole {

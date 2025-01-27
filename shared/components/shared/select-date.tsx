@@ -3,11 +3,11 @@ import React from 'react';
 import { cn, getForwardData } from '../../lib';
 
 const dateArray = ['Сегодня', 'Завтра', getForwardData(2)];
-export const SelectDate = () => {
+export const SelectDate = ({ className }: { className?: string }) => {
   const [active, setActive] = React.useState(0);
 
   return (
-    <div className="ml-[13px] flex py-5 gap-2">
+    <div className={cn('flex py-5 gap-2', className)}>
       {dateArray.map((item, id) => {
         return (
           <button

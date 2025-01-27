@@ -11,15 +11,13 @@ export default async function Home() {
       },
     },
     include: {
-      persons: true,
       genres: true,
-      countries: true,
     },
   });
-  console.log(movie);
+  const tickets = await prisma.hallSeanses.findMany();
   return (
     <div className="px-6 bg-slate-800">
-      <SelectDate />
+      <SelectDate className="ml-[13px] " />
       <div className="flex flex-wrap h-full gap-8 justify-center mb-10">
         {movie.map((item, id) => {
           return (
@@ -30,6 +28,7 @@ export default async function Home() {
               title={item.name}
               genres={item.genres}
               age={item.ageRating}
+              seanses={tickets.filter((ticket) => ticket.movieId === item.id)}
             />
           );
         })}

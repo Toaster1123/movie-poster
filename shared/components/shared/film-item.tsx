@@ -1,17 +1,24 @@
 import Link from 'next/link';
-import TicketsGroup from './tickets-group';
+import { TicketsGroup } from './tickets-group';
 
+export interface TSeanses {
+  id: number;
+  time: number;
+  price: number;
+  hallSchemaId: number;
+}
 interface Props {
   image: string;
   title: string;
   genres: {
     name: string;
   }[];
+  seanses: TSeanses[];
   age: number | null;
   id: number;
 }
 
-export const FilmItem = ({ image, title, genres, age, id }: Props) => {
+export const FilmItem = ({ image, title, genres, age, id, seanses }: Props) => {
   return (
     <div className=" w-[265px] flex flex-col rounded-lg overflow-hidden">
       <Link href={'/movie/' + id}>
@@ -35,7 +42,7 @@ export const FilmItem = ({ image, title, genres, age, id }: Props) => {
             })}
           </div>
         </div>
-        <TicketsGroup />
+        <TicketsGroup seanses={seanses} className="my-3 pl-[6px]" />
       </div>
     </div>
   );

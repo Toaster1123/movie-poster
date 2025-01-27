@@ -52,9 +52,10 @@ async function up() {
   });
 
   await Promise.all(
-    movies.map((movie) =>
+    movies.map((movie, id) =>
       prisma.movie.create({
         data: {
+          id: id + 1,
           name: movie.name,
           premierDate: movie.premierDate,
           description: movie.description,
