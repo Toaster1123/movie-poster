@@ -12,9 +12,10 @@ export default async function Home() {
     },
     include: {
       genres: true,
+      seanses: true,
     },
   });
-  const tickets = await prisma.hallSeanses.findMany();
+
   return (
     <div className="px-6 bg-slate-800">
       <SelectDate className="ml-[13px] " />
@@ -28,7 +29,7 @@ export default async function Home() {
               title={item.name}
               genres={item.genres}
               age={item.ageRating}
-              seanses={tickets.filter((ticket) => ticket.movieId === item.id)}
+              seanses={item.seanses}
             />
           );
         })}

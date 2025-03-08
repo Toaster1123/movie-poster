@@ -90,7 +90,7 @@ model PurchasedTickets {
 
     price Int
     hall  Int
-    time  Int
+    time  String
 
     user   User @relation(fields: [userId], references: [id])
     userId Int
@@ -141,7 +141,7 @@ model HallOccupied {
 model HallSeanses {
     id Int @id @default(autoincrement())
 
-    time  Int
+    time  String
     price Int
 
     hallSchema   HallSchema @relation(fields: [hallSchemaId], references: [id])

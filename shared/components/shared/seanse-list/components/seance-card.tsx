@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { convertTime } from '../../lib';
 
 interface Props {
   title: string;
-  time: number;
+  time: string;
   hall: number;
   age: number;
   genres: { name: string }[];
@@ -28,9 +27,7 @@ export const SeanceCard: React.FC<Props> = ({ hall, time, title, age, genres, id
         //   });
         // }}
         className={'py-1 w-[70.2px] mr-6'}>
-        <p className="text-white py-1  px-3 rounded-lg bg-lime-600 font-black text-lg">
-          {convertTime(time)}
-        </p>
+        <p className="text-white py-1  px-3 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
       </div>
       <Link href={'/movie/' + id}>
         <div>

@@ -3,7 +3,7 @@ import { TicketsGroup } from './tickets-group';
 
 export interface TSeanses {
   id: number;
-  time: number;
+  time: string;
   price: number;
   hallSchemaId: number;
 }
@@ -42,7 +42,7 @@ export const FilmItem = ({ image, title, genres, age, id, seanses }: Props) => {
             })}
           </div>
         </div>
-        <TicketsGroup seanses={seanses} className="my-3 pl-[6px]" />
+        <TicketsGroup seanses={seanses} />
       </div>
     </div>
   );
