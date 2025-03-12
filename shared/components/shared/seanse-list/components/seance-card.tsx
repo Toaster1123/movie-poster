@@ -26,8 +26,8 @@ export const SeanceCard: React.FC<Props> = ({ hall, time, title, age, genres, id
         //     price: price(time),
         //   });
         // }}
-        className={'py-1 w-[70.2px] mr-6'}>
-        <p className="text-white py-1  px-3 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
+        className={'py-1 w-[70px] text-center mr-6'}>
+        <p className="text-white py-1 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
       </div>
       <Link href={'/movie/' + id}>
         <div>

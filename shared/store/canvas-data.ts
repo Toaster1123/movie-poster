@@ -1,5 +1,5 @@
-import { CanvasDataType } from '@/@types/canvas-types';
 import { create } from 'zustand';
+import { CanvasDataType } from '../../@types/canvas-types';
 interface State {
   canvasData: CanvasDataType;
   setCanvasData: (state: CanvasDataType) => void;

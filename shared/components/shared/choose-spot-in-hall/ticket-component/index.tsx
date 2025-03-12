@@ -1,8 +1,8 @@
 import { CircleX } from 'lucide-react';
 import React from 'react';
 
-import { ChangeUserTickets } from '@/store/user-tickets';
 import styles from './ticket.module.scss';
+import { ChangeUserTickets } from '../../../../store/user-tickets';
 
 export default function TicketsComponent({ row, sit }: { row: number; sit: number }) {
   const { clicketSits, setClicketSits, domClicketSits } = ChangeUserTickets((state) => state);

@@ -1,20 +1,18 @@
 'use client';
 import { X } from 'lucide-react';
 import { useClickAway } from 'react-use';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { HallPopup } from '@/store/hall-popup';
 import Canvas from './canvas';
 import DrawTickets from './draw-tickets';
-import { ChangeUserTickets } from '@/store/user-tickets';
-import { CanvasData } from '@/store/canvas-data';
-import { convertTime } from '@/lib/convert-time';
-import { FetchHalls, SpotsArrayType } from '@/@types/canvas-types';
 import axios from 'axios';
+import { CanvasData } from '../../../store/canvas-data';
+import { ChangeUserTickets } from '../../../store/user-tickets';
+import { FetchHalls, SpotsArrayType } from '../../../../@types/canvas-types';
 
 export default function ChooseSpotPopup() {
   const { canvasData } = CanvasData((state) => state);
-  const { opened, setOpened } = HallPopup((state) => state);
+  const [opened, setOpened] = useState(false);
   const { setClicketSits } = ChangeUserTickets((state) => state);
 
   const [spotsArray, setSpotsArray] = React.useState<SpotsArrayType>([]);
@@ -76,7 +74,7 @@ export default function ChooseSpotPopup() {
           </div>
           <div className="mt-3 flex  mb-3 items-center">
             <div className="bg-green-700 rounded-2xl py-1 mr-1  text-center px-3 text-white">
-              <b>{convertTime(canvasData.time)}</b>
+              <b>{canvasData.time}</b>
             </div>
             <div className="flex items-center text-center text-[13px] w-[120px] justify-around text-gray-600 ">
               <p>{canvasData.dimension}</p>

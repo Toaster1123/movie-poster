@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TicketsGroup } from './tickets-group';
+import { TicketsGroup } from '../../ticket';
 
 export interface TSeanses {
   id: number;

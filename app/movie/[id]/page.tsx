@@ -59,7 +59,7 @@ export default async function Movie({ params }: { params: Promise<{ id: number }
               <SelectDate />
             </div>
           </div>
-          <TicketsGroup seanses={seanses} className="pl-3.5" />
+          <TicketsGroup seanses={seanses} />
           <Description
             persons={movieItem.persons}
             movieLength={movieItem.movieLength}

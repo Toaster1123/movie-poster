@@ -1,5 +1,5 @@
-import { CardType } from '@/@types/sceance-type';
 import { create } from 'zustand';
+import { CardType } from '../../@types/sceance-type';
 interface seanseType {
   seansesArray: CardType[] | [];
   setSeansesArray: (state: CardType[]) => void;

@@ -1,5 +1,5 @@
-import { CliketSitsType, FetchHalls, SpotsArrayType } from '@/@types/canvas-types';
 import axios from 'axios';
+import { CliketSitsType, FetchHalls, SpotsArrayType } from '../../../../@types/canvas-types';
 
 let cliked: {
   x: number;

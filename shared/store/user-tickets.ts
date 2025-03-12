@@ -1,5 +1,5 @@
-import { CliketSitsType } from '@/@types/canvas-types';
 import { create } from 'zustand';
+import { CliketSitsType } from '../../@types/canvas-types';
 interface TicketsType {
   clicketSits: CliketSitsType[] | [];
   setClicketSits: (state: CliketSitsType[]) => void;

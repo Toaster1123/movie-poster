@@ -6,8 +6,8 @@ import { useClickAway } from 'react-use';
 
 import { Inputs } from './input';
 
-import { RegisterPopup } from '@/store/register-opened';
 import axios from 'axios';
+import { RegisterPopup } from '../../../store/register-opened';
 export const Register = () => {
   const [enter, setEnter] = React.useState(false);
   const { regOpened, setRegOpened } = RegisterPopup((state) => state);

@@ -1,16 +1,11 @@
 'use client';
-import React from 'react';
 
 import { Ticket } from './ticket';
-import { TSeanses } from './film-item';
-import { cn, timeToMinutes } from '../../lib';
-import { currentTimeStore } from '../../store';
+import { cn, timeToMinutes } from '../../../lib';
+import { currentTimeStore } from '../../../store';
+import { TSeanses } from '../movie-list/components/film-item';
 
-interface Props {
-  seanses: TSeanses[];
-}
-
-export const TicketsGroup: React.FC<Props> = ({ seanses }) => {
+export const TicketsGroup = ({ seanses }: { seanses: TSeanses[] }) => {
   const { currentTime, setCurrentTime } = currentTimeStore((state) => state);
   const seansesArray = seanses.filter(
     (item) => timeToMinutes(item.time) >= timeToMinutes(currentTime),

@@ -1,7 +1,11 @@
-import { prisma } from '../../prisma/prisma-client';
+import { Genre, HallSeanses, Movie } from '@prisma/client';
 import { SeanseList, SelectDate } from '../../shared/components/shared';
 import { timeToMinutes } from '../../shared/lib';
-export interface Movie {
+interface ApiMovie extends Movie {
+  genres: Genre[];
+  seanses: HallSeanses[];
+}
+interface sortedMovies {
   id: number;
   name: string;
   time: string;
@@ -12,21 +16,12 @@ export interface Movie {
 }
 
 export default async function Seances() {
-  let sortedMovies: Movie[] = [];
-  const today = new Date().toISOString().split('T')[0];
+  let sortedMovies: sortedMovies[] = [];
 
-  const movies = await prisma.movie.findMany({
-    where: {
-      premierDate: {
-        lte: today,
-      },
-    },
-    include: {
-      seanses: true,
-      genres: true,
-    },
-  });
-
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies`,
+  );
+  const movies: ApiMovie[] = await res.json();
   movies.forEach((movie) => {
     movie.seanses.forEach((seanse) => {
       sortedMovies.push({
