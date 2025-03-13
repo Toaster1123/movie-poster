@@ -1,18 +1,16 @@
 'use client';
 import React from 'react';
 import { SeanceCard } from './components/seance-card';
-import { currentTimeStore } from '../../../store';
-import { Movie } from '../../../../app/seances/page';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'qs';
+import { sortedMovies } from '../../../../app/seances/page';
 
 interface Props {
-  sortedMovies: Movie[];
+  sortedMovies: sortedMovies[];
 }
 
 export const SeanseList: React.FC<Props> = ({ sortedMovies }) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const changeDay = () => {
     const query = qs.stringify(
@@ -25,8 +23,7 @@ export const SeanseList: React.FC<Props> = ({ sortedMovies }) => {
       scroll: false,
     });
   };
-  const { currentTime } = currentTimeStore((state) => state);
-  sortedMovies = sortedMovies.filter((item) => item.time >= currentTime);
+  sortedMovies = sortedMovies.filter((item) => item.time >= '10:00');
   return (
     <div className="mx-10 flex-grow flex flex-col justify-center">
       {sortedMovies.length === 0 ? (

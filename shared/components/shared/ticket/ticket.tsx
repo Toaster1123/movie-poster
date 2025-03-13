@@ -8,20 +8,7 @@ interface Props {
 
 export const Ticket: React.FC<Props> = ({ price, hall, time }) => {
   return (
-    <div
-      // onClick={() => {
-      //    setOpened(true);
-      //    setCanvasData({
-      //      title: title,
-      //      time: item.time,
-      //      dimension: selectDimension(item.time, item.age),
-      //      age: item.age,
-      //      hall: item.hall,
-      //      date: getForwardData(active),
-      //      price: price(item.time),
-      //    });
-      // }}
-      className="cursor-pointer text-center w-[70px] ">
+    <div className="cursor-pointer text-center w-[70px] ">
       <p className="text-white py-1 bg-lime-600 font-black text-lg hover:bg-lime-700">{time}</p>
       <div className="flex text-sm justify-around border-[1px] bg-white border-lime-600">
         <p>2D</p>

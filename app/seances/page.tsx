@@ -5,7 +5,7 @@ interface ApiMovie extends Movie {
   genres: Genre[];
   seanses: HallSeanses[];
 }
-interface sortedMovies {
+export interface sortedMovies {
   id: number;
   name: string;
   time: string;
