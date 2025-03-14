@@ -13,23 +13,10 @@ interface Props {
 export const SeanceCard: React.FC<Props> = ({ hall, time, title, age, genres, id, price }) => {
   return (
     <div className="flex  pb-3 mt-3 cursor-pointer ">
-      <div
-        // onClick={() => {
-        //   setOpened(true);
-        //   setCanvasData({
-        //     title: title,
-        //     time: time,
-        //     dimension: selectDimension(time, age),
-        //     age: age,
-        //     hall: hall,
-        //     date: getForwardData(active),
-        //     price: price(time),
-        //   });
-        // }}
-        className={'py-1 w-[70px] text-center mr-6'}>
+      <div className={'py-1 w-[70px] text-center mr-6'}>
         <p className="text-white py-1 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
       </div>
-      <Link href={'/movie/' + id}>
+      <Link href={'/movies/' + id}>
         <div>
           <strong>{title}</strong>
           <div className=" flex flex-wrap text-sm text-gray-700">

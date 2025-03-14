@@ -1,4 +1,5 @@
 import { Country, Person } from '@prisma/client';
+import { DescriptionItemsList } from './description-items-list';
 
 interface Props {
   persons: Person[];
@@ -8,40 +9,18 @@ interface Props {
 }
 
 export const Description: React.FC<Props> = ({ persons, movieLength, country, date }) => {
+  const actors = persons.filter((item) => item.profession == 'actor');
+  const directors = persons.filter((item) => item.profession == 'director');
   return (
     <div className="bg-gray-300 p-5 min-w-[828px] min-h-[248px] rounded-lg mt-4">
       <ul className="flex mb-4">
         <li className="w-72 text-gray-600">Режисёр:</li>
-        <li>
-          <ul className="flex">
-            {persons.map((item, id) => {
-              if (item.profession == 'director') {
-                return <li key={id}>{item.name}</li>;
-              }
-            })}
-          </ul>
-        </li>
+        <DescriptionItemsList items={directors} />
       </ul>
-      {persons && (
+      {actors.length > 0 && (
         <ul className="flex mb-4">
           <li className="w-72 text-gray-600">В ролях:</li>
-          <li>
-            <ul className="flex  max-w-[500px] flex-wrap">
-              {persons.map((item, id) => {
-                if (id > 5) {
-                  return null;
-                }
-                if (item.profession == 'actor') {
-                  return (
-                    <li key={id}>
-                      {item.name}
-                      {id < 5 && ', '}&nbsp;
-                    </li>
-                  );
-                }
-              })}
-            </ul>
-          </li>
+          <DescriptionItemsList items={actors} />
         </ul>
       )}
       {movieLength && (
@@ -53,13 +32,7 @@ export const Description: React.FC<Props> = ({ persons, movieLength, country, da
       {country && (
         <ul className="flex mb-4">
           <li className="w-72 text-gray-600">Страна:</li>
-          <li>
-            <ul>
-              {country.map((item, id) => (
-                <li key={id}>{item.name}</li>
-              ))}
-            </ul>
-          </li>
+          <DescriptionItemsList items={country} />
         </ul>
       )}
       {date && (

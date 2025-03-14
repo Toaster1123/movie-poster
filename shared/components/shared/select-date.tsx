@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
-import qs from 'qs';
-import { cn, getForwardData } from '../../lib';
+import { changeQuery, cn, getForwardData } from '../../lib';
 import { useSearchParams } from 'next/navigation';
 
 export const SelectDate = ({ className }: { className?: string }) => {
@@ -17,10 +16,8 @@ export const SelectDate = ({ className }: { className?: string }) => {
   }, [queryDay]);
 
   const onClick = (item: string) => {
-    const newActiveIndex = dateArray.findIndex((dateItem) => dateItem === item);
-    const query = qs.stringify({ day: dateArray[newActiveIndex]?.split(',')[0] });
-    window.history.replaceState(null, '', `?${query}`);
-    setActive(dateArray.indexOf(item));
+    const activeIndex = dateArray.findIndex((dateItem) => dateItem === item);
+    changeQuery(activeIndex);
   };
 
   return (

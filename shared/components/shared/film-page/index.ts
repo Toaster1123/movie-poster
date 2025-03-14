@@ -1,2 +1,3 @@
-export { BtnBack } from './btn-back';
-export { Description } from './description';
+export { FilmPage } from './film-page';
+
+export * from './components';
