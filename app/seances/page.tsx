@@ -1,18 +1,10 @@
 import { Genre, HallSeanses, Movie } from '@prisma/client';
 import { SeanseList, SelectDate } from '../../shared/components/shared';
 import { timeToMinutes } from '../../shared/lib';
+import { sortedMovies } from '../../@types';
 interface ApiMovie extends Movie {
   genres: Genre[];
   seanses: HallSeanses[];
-}
-export interface sortedMovies {
-  id: number;
-  name: string;
-  time: string;
-  age: number;
-  price: number;
-  hall: number;
-  genres: { name: string }[];
 }
 
 export default async function Seances() {

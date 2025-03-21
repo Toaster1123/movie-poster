@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { SeanceCard } from './components/seance-card';
-import { sortedMovies } from '../../../../app/seances/page';
 import { cn } from '../../../lib';
 import { useFilteredItems } from '../../../hooks';
+import { sortedMovies } from '../../../../@types';
 
 interface Props {
   sortedMovies: sortedMovies[];

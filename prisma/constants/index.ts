@@ -4,3 +4,4 @@ export { hallExceptions } from './hallExceptions';
 export { hallSeanses } from './hallSeanses';
 export { movies } from './movies';
 export { persons } from './persons';
+export { occupiedHalls } from './hallOcupied';

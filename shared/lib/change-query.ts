@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { getForwardData } from './get-forward-data';
+import { getForwardData } from './get-string-data';
 const dateArray = ['Сегодня', 'Завтра', getForwardData(2)];
 
 export const changeQuery = (day: number) => {

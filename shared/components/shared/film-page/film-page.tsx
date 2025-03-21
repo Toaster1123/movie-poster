@@ -36,7 +36,7 @@ export const FilmPage = async ({ id }: { id: number }) => {
             <SelectDate />
           </div>
         </div>
-        <TicketsGroup seanses={movie.seanses} />
+        <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
         <Description
           persons={movie.persons}
           movieLength={movie.movieLength}

@@ -3,16 +3,14 @@ import { prisma } from '../../../../prisma/prisma-client';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const id = Number((await params).id);
-  const movie = await prisma.movie.findFirst({
+  const hall = await prisma.hallSchema.findFirst({
     where: {
       id,
     },
     include: {
-      persons: true,
-      genres: true,
-      countries: true,
-      seanses: true,
+      exceptions: true,
+      occupied: true,
     },
   });
-  return NextResponse.json(movie);
+  return NextResponse.json(hall);
 }

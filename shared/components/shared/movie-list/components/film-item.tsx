@@ -6,6 +6,7 @@ export interface TSeanses {
   time: string;
   price: number;
   hallSchemaId: number;
+  movieId: number;
 }
 interface Props {
   image: string;
@@ -42,7 +43,7 @@ export const FilmItem = ({ image, title, genres, age, id, seanses }: Props) => {
             })}
           </div>
         </div>
-        <TicketsGroup seanses={seanses} />
+        <TicketsGroup seanses={seanses} title={title} age={age} />
       </div>
     </div>
   );

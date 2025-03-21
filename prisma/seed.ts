@@ -1,7 +1,15 @@
 import { hashSync } from 'bcrypt';
 import { prisma } from './prisma-client';
 import { ProfessionVariants } from '@prisma/client';
-import { countries, genres, hallSeanses, movies, persons, hallExceptions } from './constants';
+import {
+  countries,
+  genres,
+  hallSeanses,
+  movies,
+  persons,
+  hallExceptions,
+  occupiedHalls,
+} from './constants';
 
 const generateSeanse = () => {
   return hallSeanses
@@ -103,6 +111,9 @@ async function up() {
 
   await prisma.hallExceptions.createMany({
     data: hallExceptions,
+  });
+  await prisma.hallOccupied.createMany({
+    data: occupiedHalls,
   });
   await prisma.hallSeanses.createMany({
     data: generateSeanse(),

@@ -8,3 +8,4 @@ export { MovieList } from './movie-list';
 export * from './seanse-list';
 export * from './film-page';
 export * from './ticket';
+export * from './choose-spot-popup';
