@@ -23,14 +23,15 @@ export function drawAllSpots(
   height: number,
   width: number,
   price: number,
+  hoveredSeatRef: React.MutableRefObject<SeatsType | null>,
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
 ) {
   const spotLength = 34;
   const margin = 5;
   const step = spotLength + margin * 2;
-  const selectedSeat: { row: number; col: number }[] = [];
-  const { setSelectedSeats, removeSelectedSeats } = changeUserTickets.getState();
+
+  const { selectedSeat, setSelectedSeats, removeSelectedSeats } = changeUserTickets.getState();
   let seats: SeatsType[] = [];
   let hoveredSeat: SeatsType | null = null;
 
@@ -64,9 +65,11 @@ export function drawAllSpots(
           drawOccupiedPlace(shape_x, shape_y, ctx);
         } else {
           const selectedIndex = isSeatSelected(y + 1, x + 1, selectedSeat);
-          selectedIndex !== -1
-            ? drawCircle(shape_x, shape_y, colException, true, ctx)
-            : drawSit(shape_x, shape_y, false, ctx);
+          if (selectedIndex !== -1) {
+            drawCircle(shape_x, shape_y, colException, true, ctx);
+          } else {
+            drawSit(shape_x, shape_y, selectedSeat.length >= 5, ctx);
+          }
         }
 
         seats.push({ x: shape_x, y: shape_y, row: y + 1, col: x + 1, colException });
@@ -78,14 +81,11 @@ export function drawAllSpots(
     if (isClick) {
       const index = isSeatSelected(seat.row, seat.col, selectedSeat);
       if (index !== -1) {
-        selectedSeat.splice(index, 1);
         removeSelectedSeats(index);
       } else if (selectedSeat.length < 5) {
-        selectedSeat.push({ row: seat.row, col: seat.col });
-        setSelectedSeats({ row: seat.row, col: seat.col });
+        setSelectedSeats({ row: seat.row, col: seat.col, colException: seat.colException });
       }
     }
-
     renderSeats();
     drawCircle(
       seat.x,
@@ -94,6 +94,7 @@ export function drawAllSpots(
       isSeatSelected(seat.row, seat.col, selectedSeat) !== -1,
       ctx,
     );
+
     drawMessage(seat.x, seat.y, seat.row, seat.colException, price, ctx);
   }
 
@@ -112,6 +113,7 @@ export function drawAllSpots(
 
     if (newHoveredSeat !== hoveredSeat) {
       hoveredSeat = newHoveredSeat;
+      hoveredSeatRef.current = hoveredSeat;
       renderSeats();
       if (hoveredSeat) handleSeatInteraction(hoveredSeat);
     }
@@ -135,8 +137,15 @@ export function drawAllSpots(
   canvas.addEventListener('mousemove', (e) => requestAnimationFrame(() => handleMouseMove(e)));
   canvas.addEventListener('mouseleave', () => {
     hoveredSeat = null;
+    hoveredSeatRef.current = null;
     renderSeats();
   });
 
   renderSeats();
+
+  return () => {
+    canvas.removeEventListener('click', handleSeatClick);
+    canvas.removeEventListener('mousemove', handleMouseMove);
+    canvas.removeEventListener('mouseleave', renderSeats);
+  };
 }

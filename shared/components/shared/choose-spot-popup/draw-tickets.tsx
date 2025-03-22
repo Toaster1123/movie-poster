@@ -5,12 +5,11 @@ import TicketsComponent from './ticket-component';
 import React from 'react';
 export default function DrawTickets({ price }: { price: number }) {
   const { selectedSeat } = changeUserTickets((state) => state);
-  console.log(selectedSeat);
   return (
     <div className={`relative flex justify-between mx-7 h-[72px] mt-1`}>
       <div className="flex items-end 4">
         {selectedSeat.map((item, id) => (
-          <TicketsComponent key={id} row={item.row} sit={item.col} price={price} id={id} />
+          <TicketsComponent key={id} row={item.row} sit={item.colException} price={price} id={id} />
         ))}
       </div>
       <button
