@@ -2,10 +2,8 @@ import React from 'react';
 import { TSeanses } from '../movie-list/components/film-item';
 import { useClickAway } from 'react-use';
 import { handleKeyDown } from '../../../lib';
-import Canvas from './canvas';
-import { PopupHeader, PopupTopData } from './components';
+import { Canvas, DrawTickets, PopupHeader, PopupTopData } from './components';
 import { HallType } from '../../../../@types';
-import DrawTickets from './draw-tickets';
 
 interface Props {
   hallData: HallType;

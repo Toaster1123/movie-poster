@@ -1,3 +1,5 @@
-export { PopupHeader } from './popup-header';
-export { PopupTopData } from './popup-top-data';
-export { PopupHeaderItem } from './popup-header-item';
+export { Canvas } from './canvas';
+export { DrawTickets } from './draw-tickets';
+export { TicketItem } from './ticket-item';
+
+export * from './popup-header';

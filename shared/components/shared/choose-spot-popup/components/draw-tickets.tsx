@@ -1,15 +1,15 @@
 'use client';
-import { changeUserTickets } from '../../../store';
-import TicketsComponent from './ticket-component';
+import { changeUserTickets } from '../../../../store';
 
 import React from 'react';
-export default function DrawTickets({ price }: { price: number }) {
+import TicketItem from './ticket-item';
+export const DrawTickets = ({ price }: { price: number }) => {
   const { selectedSeat } = changeUserTickets((state) => state);
   return (
     <div className={`relative flex justify-between mx-7 h-[72px] mt-1`}>
       <div className="flex items-end 4">
         {selectedSeat.map((item, id) => (
-          <TicketsComponent key={id} row={item.row} sit={item.colException} price={price} id={id} />
+          <TicketItem key={id} row={item.row} sit={item.colException} price={price} id={id} />
         ))}
       </div>
       <button
@@ -23,4 +23,4 @@ export default function DrawTickets({ price }: { price: number }) {
       </button>
     </div>
   );
-}
+};

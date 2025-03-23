@@ -1,10 +1,10 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
-import { drawAllSpots, drawCircle, drawMessage } from '../../../lib';
-import { HallType } from '../../../../@types';
-import { changeUserTickets } from '../../../store';
+import { useEffect, useRef } from 'react';
+import { HallType } from '../../../../../@types';
+import { changeUserTickets } from '../../../../store';
+import { drawAllSpots } from '../../../../lib';
 
-export default function Canvas({ hallData, price }: { hallData: HallType; price: number }) {
+export const Canvas = ({ hallData, price }: { hallData: HallType; price: number }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hoveredSeatRef = useRef(null);
   const width = 960;
@@ -18,18 +18,11 @@ export default function Canvas({ hallData, price }: { hallData: HallType; price:
     if (ctx == null) return;
     canvas.width = width;
     canvas.height = height;
-
     const cleanUp = drawAllSpots(hallData, height, width, price, hoveredSeatRef, canvas, ctx);
-
-    if (hoveredSeatRef.current) {
-      const seat = hoveredSeatRef.current;
-      drawMessage(seat.x, seat.y, seat.row, seat.colException, price, ctx);
-    }
-
     return () => {
       cleanUp();
     };
   }, [selectedSeat]);
 
   return <canvas ref={canvasRef} />;
-}
+};

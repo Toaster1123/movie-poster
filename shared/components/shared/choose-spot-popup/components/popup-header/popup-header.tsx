@@ -1,5 +1,5 @@
 import React from 'react';
-import { dayToDate } from '../../../../lib';
+import { dayToDate } from '../../../../../lib';
 import { X } from 'lucide-react';
 
 interface Props {
