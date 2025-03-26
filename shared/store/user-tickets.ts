@@ -5,6 +5,7 @@ interface TicketsType {
   selectedSeat: SelectedSeatType[];
   setSelectedSeats: (seat: SelectedSeatType) => void;
   removeSelectedSeats: (seat: number) => void;
+  clearTicketSits: () => void;
 }
 
 export const changeUserTickets = create<TicketsType>((set) => ({
@@ -17,4 +18,5 @@ export const changeUserTickets = create<TicketsType>((set) => ({
     set((prev) => ({
       selectedSeat: prev.selectedSeat.filter((_, id) => id !== index),
     })),
+  clearTicketSits: () => set({ selectedSeat: [] }),
 }));

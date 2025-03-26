@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { ChooseSpotPopup } from '../choose-spot-popup';
 import { useSearchParams } from 'next/navigation';
 import { HallType } from '../../../../@types';
+import { changeUserTickets } from '../../../store';
 
 interface Props {
   age: number | null;
@@ -27,6 +28,8 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
     setHallData(await res.json());
     setItemData(item);
   };
+  const { clearTicketSits } = changeUserTickets.getState();
+
   return (
     <div className="my-3 pl-3">
       <div className="flex flex-wrap gap-3">
@@ -57,7 +60,10 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
           age={age}
           title={title}
           weekDay={weekDay}
-          onClose={() => setHallData(null)}
+          onClose={() => {
+            clearTicketSits();
+            setHallData(null);
+          }}
         />
       )}
     </div>
