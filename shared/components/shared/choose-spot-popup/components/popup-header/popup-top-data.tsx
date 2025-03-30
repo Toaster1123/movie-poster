@@ -1,5 +1,5 @@
 import React from 'react';
-import { PopupHeaderItem } from './popup-header-item';
+import { PopupHeaderItem } from '../../../popup-header-item';
 
 interface Props {
   time: string;

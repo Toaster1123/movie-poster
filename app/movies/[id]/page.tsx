@@ -18,9 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: numbe
 
 export default async function Movie({ params }: { params: Promise<{ id: number }> }) {
   return (
-    <div className="flex-grow h-full">
+    <div className="flex-grow h-full bg-gray-100">
       <BtnBack />
-      <FilmPage id={Number((await params).id)} />
+      <FilmPage id={(await params).id} />
     </div>
   );
 }

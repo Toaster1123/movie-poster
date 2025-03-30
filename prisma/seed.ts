@@ -1,4 +1,4 @@
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { prisma } from './prisma-client';
 import { ProfessionVariants } from '@prisma/client';
 import {

@@ -7,7 +7,7 @@ const weekdays = [
   'Пятница',
   'Суббота',
 ];
-const shortMonth = [
+const fullMonth = [
   'Января',
   'Февраля',
   'Марта',
@@ -25,7 +25,7 @@ export function getForwardData(day: number) {
   const date = new Date();
   const curentDayPlusTwo = new Date(date.setDate(date.getDate() + day));
   return `${weekdays[curentDayPlusTwo.getDay()]}, ${curentDayPlusTwo.getDate()} ${
-    shortMonth[curentDayPlusTwo.getMonth()]
+    fullMonth[curentDayPlusTwo.getMonth()]
   }`;
 }
 
@@ -39,4 +39,10 @@ export const dayToDate = (day: string) => {
     default:
       return getForwardData(2).split(',')[1];
   }
+};
+
+export const stringDateConvert = (date: string) => {
+  const [year, month, day] = date.split('-');
+
+  return `${day} ${fullMonth[Number(month) - 1]} ${year}`;
 };

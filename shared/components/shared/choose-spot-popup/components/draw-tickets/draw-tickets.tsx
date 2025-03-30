@@ -16,7 +16,6 @@ export const DrawTickets = ({ price }: { price: number }) => {
     const deletedSeat = prevSeats.findIndex(
       (seat) => !selectedSeat.some((prevSeat) => isSameObject(seat, prevSeat)),
     );
-    console.log(deletedSeat);
     setDeleteIndex(deletedSeat);
     setTimeout(() => {
       setPrevSeats(selectedSeat);

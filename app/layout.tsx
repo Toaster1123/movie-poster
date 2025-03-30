@@ -1,8 +1,7 @@
-import NextTopLoader from 'nextjs-toploader';
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 
-import { Footer, Header } from '../shared/components/shared';
+import { Footer, Header, Providers } from '../shared/components/shared';
 
 import './globals.css';
 
@@ -23,13 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex items-center flex-col bg-gray-900`}>
-        <div className="flex flex-col w-full min-h-screen max-w-[1250px] mx-auto  ">
-          <Header />
-
-          <NextTopLoader color="#65a30d" showSpinner={false} />
-          {/* <ChooseSpotPopup /> */}
-
-          <main className="flex-grow flex bg-gray-200 flex-col ">{children}</main>
+        <div className="flex flex-col w-full min-h-screen max-w-[1250px] mx-auto">
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
           <Footer />
         </div>
       </body>

@@ -1,11 +1,13 @@
+import {heroui} from '@heroui/theme';
 import type { Config } from 'tailwindcss';
 
 export default {
     darkMode: ['class'],
-    content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './shared/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./shared/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@heroui/theme/dist/components/spinner.js"
   ],
   theme: {
   	extend: {
@@ -58,5 +60,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),heroui()],
 } satisfies Config;

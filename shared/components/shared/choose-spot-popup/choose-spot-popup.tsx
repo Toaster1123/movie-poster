@@ -38,7 +38,7 @@ export const ChooseSpotPopup: React.FC<Props> = ({
     onClose();
   });
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/50">
+    <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
       <div ref={ref} className="bg-white w-full max-w-[960px]">
         <div className="w-full border-b-2 flex flex-col items-center text-center">
           <PopupHeader onClose={onClose} title={title} weekDay={weekDay} />

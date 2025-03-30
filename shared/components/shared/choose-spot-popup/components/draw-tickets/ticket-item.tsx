@@ -19,7 +19,6 @@ export const TicketItem = ({ row, sit, id, price, isDeletingItem }: Props) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      console.log(isDeletingItem);
       setItemHeight(isDeletingItem ? 0 : 64);
     }, 0);
 

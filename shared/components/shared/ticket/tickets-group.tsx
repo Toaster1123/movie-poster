@@ -8,6 +8,7 @@ import { ChooseSpotPopup } from '../choose-spot-popup';
 import { useSearchParams } from 'next/navigation';
 import { HallType } from '../../../../@types';
 import { changeUserTickets } from '../../../store';
+import { Spinner } from '@heroui/spinner';
 
 interface Props {
   age: number | null;
@@ -19,14 +20,22 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
   const { filteredItems: seansesArray } = useFilteredItems(seanses);
   const [hallData, setHallData] = useState<HallType | null>(null);
   const [itemData, setItemData] = useState<TSeanses | null>(null);
+  const [loading, setLoading] = useState(false);
   const weekDay = useSearchParams().get('day') || 'Сегодня';
 
-  const onClickTicket = async (item: TSeanses) => {
-    const res = await fetch(
+  const onClickTicket = (item: TSeanses) => {
+    setLoading(true);
+    fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/hallschema/${item.hallSchemaId}`,
-    );
-    setHallData(await res.json());
-    setItemData(item);
+    )
+      .then(async (res) => {
+        setHallData(await res.json());
+        setItemData(item);
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => setLoading(false));
   };
   const { clearTicketSits } = changeUserTickets.getState();
 
@@ -53,6 +62,11 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
           </div>
         )}
       </div>
+      {loading && (
+        <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
+          <Spinner variant="spinner" size="lg" color="white" className="scale-125" />
+        </div>
+      )}
       {hallData && itemData && (
         <ChooseSpotPopup
           hallData={hallData}
