@@ -17,6 +17,7 @@ export const FilmPage = async ({ id }: { id: number }) => {
     `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,
   );
   const movie: MovieProps = await res.json();
+
   return (
     <>
       <div className="flex px-10">

@@ -19,7 +19,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) {
-          return null;
+          throw new Error('Недостаточно данных');
         }
         const values = {
           email: credentials.email,
@@ -28,14 +28,14 @@ export const authOptions: AuthOptions = {
           where: values,
         });
         if (!findUser) {
-          return null;
+          throw new Error('Такая почта не зарегистрирована');
         }
         const isPasswordValid = await compare(credentials.password, findUser.password);
         if (!isPasswordValid) {
-          return null;
+          throw new Error('Неверный пароль');
         }
         if (!findUser.verified) {
-          return null;
+          throw new Error('Почта не подтверждена');
         }
         return {
           id: findUser.id,

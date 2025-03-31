@@ -1,14 +1,68 @@
 'use client';
-import { changeUserTickets } from '../../../../../store';
+import { authModalState, changeUserTickets } from '../../../../../store';
 import React from 'react';
 import { TicketItem } from './ticket-item';
 import { SelectedSeatType } from '../../../../../../@types';
+import { useSession } from 'next-auth/react';
+import { createOrder } from '../../../../../../app/actions';
+import { TSeanses } from '../../../movie-list/components/film-item';
+import { dateConvert } from '../../../../../lib';
+import toast from 'react-hot-toast';
+import { Button } from '../../../../ui';
 
-export const DrawTickets = ({ price }: { price: number }) => {
+interface Props {
+  itemData: TSeanses;
+  age: number | null;
+  weekDay: string;
+  onClose: () => void;
+}
+
+export const DrawTickets = ({ itemData, age, weekDay, onClose }: Props) => {
+  const setOpenModal = authModalState((state) => state.setOpenModal);
+  const [loading, setLoading] = React.useState(false);
   const [prevSeats, setPrevSeats] = React.useState<SelectedSeatType[]>([]);
   const { selectedSeat } = changeUserTickets((state) => state);
   const [deleteIndex, setDeleteIndex] = React.useState(-1);
+  const { data: session, status } = useSession();
 
+  const totalAmount = itemData.price * selectedSeat.length;
+  const handleClick = async () => {
+    if (status === 'authenticated') {
+      try {
+        setLoading(true);
+        const items = selectedSeat.map((item) => ({
+          row: item.row,
+          col: item.col,
+          date: dateConvert(weekDay),
+          time: itemData.time,
+          price: itemData.price,
+          hall: itemData.hallSchemaId,
+          age,
+        }));
+        const data = {
+          email: session.user.email,
+          totalAmount: totalAmount,
+          movieId: itemData.movieId,
+          items,
+        };
+        const url = await createOrder(data);
+        toast.success('Заказ успешно создан. Переход на оплату...');
+        setLoading(false);
+
+        if (url) {
+          location.href = url;
+        }
+      } catch (error) {
+        const err = error as Error;
+        return toast.error(`${err.message}`, {
+          icon: '❌',
+        });
+      }
+    } else {
+      onClose();
+      setOpenModal(true);
+    }
+  };
   React.useEffect(() => {
     const isSameObject = (a: SelectedSeatType, b: SelectedSeatType) =>
       a.row === b.row && a.colException === b.colException;
@@ -31,22 +85,22 @@ export const DrawTickets = ({ price }: { price: number }) => {
               key={id}
               row={item.row}
               sit={item.colException}
-              price={price}
+              price={itemData.price}
               id={id}
               isDeletingItem={deleteIndex === id && selectedSeat < prevSeats}
             />
           );
         })}
       </div>
-      <button
-        disabled={selectedSeat.length === 0}
+      <Button
+        loading={loading}
+        onClick={handleClick}
+        disabled={selectedSeat.length === 0 || loading}
         className={`w-fit text-sm px-5 py-3 my-3 rounded-lg ${
           selectedSeat.length > 0 ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-400'
         }`}>
-        {selectedSeat.length === 0
-          ? 'Места не выбраны'
-          : `Купить за ${price * selectedSeat.length} ₽`}
-      </button>
+        {selectedSeat.length === 0 ? 'Места не выбраны' : `Купить за ${totalAmount} ₽`}
+      </Button>
     </div>
   );
 };

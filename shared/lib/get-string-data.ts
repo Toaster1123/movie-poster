@@ -43,6 +43,11 @@ export const dayToDate = (day: string) => {
 
 export const stringDateConvert = (date: string) => {
   const [year, month, day] = date.split('-');
-
   return `${day} ${fullMonth[Number(month) - 1]} ${year}`;
+};
+
+export const dateConvert = (date: string) => {
+  const [_, day, month] = dayToDate(date).split(' ');
+  const currentMonth = fullMonth.findIndex((item) => item == month) + 1;
+  return `${new Date().getFullYear()}-${currentMonth > 9 ? currentMonth : `0${currentMonth}`}-${Number(day) > 9 ? day : `0${day}`}`;
 };

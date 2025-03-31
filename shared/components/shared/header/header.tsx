@@ -2,13 +2,14 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { headerLinks } from '../../../constants';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { AuthModal } from '../auth-modal';
 import { ProfileButton } from './components';
-import toast from 'react-hot-toast';
+import { authModalState } from '../../../store';
 
 export const Header = () => {
-  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const { openModal, setOpenModal } = authModalState((state) => state);
   const path = usePathname();
   const searchParams = useSearchParams();
 
@@ -47,8 +48,8 @@ export const Header = () => {
           );
         })}
       </div>
-      <AuthModal onClose={() => setOpenAuthModal(false)} open={openAuthModal} />
-      <ProfileButton openModal={() => setOpenAuthModal(true)} />
+      <AuthModal onClose={() => setOpenModal(false)} open={openModal} />
+      <ProfileButton openModal={() => setOpenModal(true)} />
     </header>
   );
 };

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { TSeanses } from '../movie-list/components/film-item';
 import { useClickAway } from 'react-use';
@@ -23,6 +24,7 @@ export const ChooseSpotPopup: React.FC<Props> = ({
   weekDay,
 }) => {
   const ref = React.useRef(null);
+
   React.useEffect(() => {
     document.addEventListener('keydown', (e) => {
       handleKeyDown(e, onClose);
@@ -37,6 +39,7 @@ export const ChooseSpotPopup: React.FC<Props> = ({
   useClickAway(ref, () => {
     onClose();
   });
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
       <div ref={ref} className="bg-white w-full max-w-[960px]">
@@ -52,7 +55,7 @@ export const ChooseSpotPopup: React.FC<Props> = ({
         <div className="border-b-2">
           <Canvas hallData={hallData} price={itemData.price} />
         </div>
-        <DrawTickets price={itemData.price} />
+        <DrawTickets itemData={itemData} age={age} weekDay={weekDay} onClose={onClose} />
       </div>
     </div>
   );

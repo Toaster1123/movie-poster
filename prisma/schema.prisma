@@ -16,17 +16,15 @@ model User {
     password  String
     role      UserRole @default(USER)
 
-    purchasedTickets PurchasedTickets[]
-
     provider   String?
     providerId String?
 
-    verified DateTime?
-
+    verified         DateTime?
     verificationCode VerificationCode?
 
     createAt DateTime @default(now())
     updateAt DateTime @updatedAt
+    Order    Order[]
 }
 
 model Movie {
@@ -43,6 +41,8 @@ model Movie {
     genres    Genre[]
     countries Country[]
     seanses   HallSeanses[]
+
+    Order Order[]
 }
 
 model Person {
@@ -81,26 +81,6 @@ model VerificationCode {
     expiresAt DateTime
 
     @@unique([userId, code])
-}
-
-model PurchasedTickets {
-    id Int @id @default(autoincrement())
-
-    name     String
-    imageUrl String
-
-    price Int
-    hall  Int
-    time  String
-
-    user   User @relation(fields: [userId], references: [id])
-    userId Int
-
-    orderStatus OrderStatus
-    paymentId   String?
-
-    createAt DateTime @default(now())
-    updateAt DateTime @updatedAt
 }
 
 model HallSchema {
@@ -149,6 +129,29 @@ model HallSeanses {
     hallSchemaId Int
     movie        Movie      @relation(fields: [movieId], references: [id])
     movieId      Int
+}
+
+model Order {
+    id Int @id @default(autoincrement())
+
+    user   User @relation(fields: [userId], references: [id])
+    userId Int
+
+    firstName String?
+    lastName  String?
+    email     String
+
+    totalAmount Int
+    items       Json
+    status      OrderStatus
+
+    movie   Movie @relation(fields: [movieId], references: [id])
+    movieId Int
+
+    paymentId String?
+
+    createAt DateTime @default(now())
+    updateAt DateTime @updatedAt
 }
 
 enum UserRole {

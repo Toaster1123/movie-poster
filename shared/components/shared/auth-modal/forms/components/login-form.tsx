@@ -28,13 +28,16 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
         redirect: false,
       });
       if (!resp?.ok) {
-        throw Error();
+        throw Error(`${resp?.error}`);
       }
       toast.success('Вы успешно вошли в аккаунт');
 
       onClose();
     } catch (error) {
-      toast.error('Не удалось войти в аккаунт');
+      const err = error as Error;
+      return toast.error(`${err.message}`, {
+        icon: '❌',
+      });
     }
   };
 
@@ -44,7 +47,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
         <div className="flex justify-between items-center">
           <div className="mr-2">
             <Title text="Вход в аккаунт" size="md" className="font-bold" />
-            <p className="text-gray-400">Чтобы купить билет необходимо зарегестрироваться</p>
+            <p className="text-gray-400">Чтобы купить билет необходимо зайти в аккаунт</p>
           </div>
         </div>
 
