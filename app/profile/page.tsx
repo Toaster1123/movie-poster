@@ -15,6 +15,8 @@ export default async function ProfilePage() {
   if (!user) {
     return redirect('/not-auth');
   }
+  const movies = await prisma.order.findMany({ where: { id: user.id } });
+  console.log(movies);
   const testArray = [...Array(0)];
   return (
     <div className="flex-grow h-full bg-gray-100 px-10">

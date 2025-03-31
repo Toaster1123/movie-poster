@@ -27,7 +27,7 @@ export async function createPayment(details: Props) {
         },
         confirmation: {
           type: 'redirect',
-          return_url: `${process.env.YOOMONEY_CALLBACK_URL}?order_id=${details.orderId}`,
+          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/checkout/callback?order_id=${details.orderId}`,
         },
         receipt: {
           items: [

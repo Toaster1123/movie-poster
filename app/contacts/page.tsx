@@ -1,6 +1,6 @@
 export default function Contacts() {
   return (
-    <div className="mx-10">
+    <div className="px-10 h-full flex-grow bg-gray-100">
       <div className="my-4">
         <strong className=" text-xl"> Кинотеатр Проекторий </strong>
       </div>

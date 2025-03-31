@@ -1,14 +1,14 @@
 export default function About() {
   return (
     <div>
-      <div className="py-1  bg-gray-300">
+      <div className="py-1 bg-gray-300">
         <div className=" bg-gray-200 mx-10 rounded-xl shadow-xl my-4 p-6">
           <strong className="text-xl"> Кинотеатр Проекторий </strong>
           <p>улица Ленина, 15/1</p>
         </div>
       </div>
-      <div className="py-7 mx-10">
-        <strong className="text-3xl  ">О кинотеатре</strong>
+      <div className="py-7 px-10 bg-gray-100">
+        <strong className="text-3xl">О кинотеатре</strong>
         <div className="h-[600px]">
           <img className=" h-[600px] w-[1200px] mt-4" src="/photo-cinema.jpg" alt="кинотеатр" />
         </div>
@@ -32,8 +32,8 @@ export default function About() {
         </div>
         <p>Будте счасливы вместе с нами!</p>
       </div>
-      <hr className="bg-black h-0.5  mx-10" />
-      <div className="text-[15px] my-2 mx-10">
+      <hr className="bg-black h-0.5 px-10" />
+      <div className="text-[15px]  pt-2 px-10 bg-gray-100">
         <strong>ООО "ТПК"</strong>
         <p>ИНН 4025460769</p>
         <p>КПП 402501001</p>
