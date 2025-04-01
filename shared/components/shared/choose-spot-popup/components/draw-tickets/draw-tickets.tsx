@@ -6,7 +6,6 @@ import { SelectedSeatType } from '../../../../../../@types';
 import { useSession } from 'next-auth/react';
 import { createOrder } from '../../../../../../app/actions';
 import { TSeanses } from '../../../movie-list/components/film-item';
-import { dateConvert } from '../../../../../lib';
 import toast from 'react-hot-toast';
 import { Button } from '../../../../ui';
 
@@ -33,7 +32,6 @@ export const DrawTickets = ({ itemData, age, weekDay, onClose }: Props) => {
         const items = selectedSeat.map((item) => ({
           row: item.row,
           col: item.col,
-          date: dateConvert(weekDay),
           time: itemData.time,
           price: itemData.price,
           hall: itemData.hallSchemaId,
