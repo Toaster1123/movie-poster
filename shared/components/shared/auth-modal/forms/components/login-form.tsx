@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
