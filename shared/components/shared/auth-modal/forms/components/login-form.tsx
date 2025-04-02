@@ -55,7 +55,10 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
         <FormInput name="email" label="E-Mail" required />
         <FormInput name="password" label="Пароль" type="password" required />
 
-        <Button loading={form.formState.isSubmitting} className="h-12 text-base" type="submit">
+        <Button
+          loading={form.formState.isSubmitting}
+          className="h-12 text-base bg-black rounded-xl text-white cursor-pointer hover:bg-black/90"
+          type="submit">
           Войти
         </Button>
       </form>
