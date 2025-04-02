@@ -8,8 +8,7 @@ import { ChooseSpotPopup } from '../choose-spot-popup';
 import { useSearchParams } from 'next/navigation';
 import { HallType } from '../../../../@types';
 import { changeUserTickets } from '../../../store';
-import { Spinner } from '@heroui/spinner';
-
+import { ClockLoader } from 'react-spinners';
 interface Props {
   age: number | null;
   title: string;
@@ -66,7 +65,7 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
       </div>
       {loading && (
         <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
-          <Spinner variant="spinner" size="lg" color="white" className="scale-125" />
+          <ClockLoader className="scale-200" loading={loading} color="white" size={30} />
         </div>
       )}
       {hallData && itemData && (

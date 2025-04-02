@@ -1,12 +1,10 @@
-import { heroui } from '@heroui/theme';
 import type { Config } from 'tailwindcss';
 
 export default {
   content: [
-    './aop/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './shared/components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@heroui/theme/dist/components/spinner.js',
   ],
   theme: {
     extend: {
@@ -59,6 +57,5 @@ export default {
       },
     },
   },
-  // plugins: [require('tailwindcss-animate'), heroui()],
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

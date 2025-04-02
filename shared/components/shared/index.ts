@@ -13,3 +13,4 @@ export * from './choose-spot-popup';
 export * from './auth-modal';
 export * from './email-templates';
 export * from './profile';
+export * from './confirm-email';

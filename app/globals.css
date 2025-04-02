@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @tailwind utilities;
 * {
   transition: all 0.2s ease-in-out;
@@ -11,6 +10,7 @@ a {
 .canvas-hover {
   cursor: pointer;
 }
+
 @layer base {
   :root {
     --background: 0 0% 100%;

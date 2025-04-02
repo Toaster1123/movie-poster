@@ -1,4 +1,6 @@
 {
+  "esModuleInterop": true,
+  "allowSyntheticDefaultImports": true,
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["esnext", "dom", "dom.iterable"],
@@ -19,8 +21,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./app/*"]
+    },
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",

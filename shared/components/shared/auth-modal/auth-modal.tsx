@@ -30,13 +30,17 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
         ) : (
           <RegisterForm onClose={handleClose} />
         )}
-        <div>
-          {type == 'login'
-            ? 'Если вы ещё не зарегестрированы на сайте, то '
-            : 'Если вы уже зарегистрированы, то '}
-          <span onClick={onSwitchType} className="text-blue-500 cursor-pointer hover:underline ">
-            {type == 'login' ? 'зарегистрируйтесь' : 'войдите'}
-          </span>
+        <div className="flex items-center flex-col">
+          <div>
+            <span>
+              {type == 'login'
+                ? 'Если вы ещё не зарегестрированы на сайте, то '
+                : 'Если вы уже зарегистрированы, то '}
+            </span>
+            <span onClick={onSwitchType} className="text-blue-500 cursor-pointer hover:underline ">
+              {type == 'login' ? 'зарегистрируйтесь' : 'войдите'}
+            </span>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

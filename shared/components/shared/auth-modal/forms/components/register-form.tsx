@@ -8,6 +8,7 @@ import { FormInput } from './form-input';
 import { Button, Title } from '../../../../ui';
 import { registerUser } from '../../../../../../app/actions';
 import toast from 'react-hot-toast';
+import { ConfirmEmail } from '../../../confirm-email';
 
 interface Props {
   onClose?: VoidFunction;
@@ -44,7 +45,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose }) => {
 
   return (
     <FormProvider {...form}>
-      <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
+      {/* <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex justify-between items-center">
           <div className="mr-2">
             <Title text="Регистрация" size="md" className="font-bold" />
@@ -61,7 +62,8 @@ export const RegisterForm: React.FC<Props> = ({ onClose }) => {
           type="submit">
           Зарегистрироваться
         </Button>
-      </form>
+      </form> */}
+      <ConfirmEmail mail={'test@mail.com'} />
     </FormProvider>
   );
 };

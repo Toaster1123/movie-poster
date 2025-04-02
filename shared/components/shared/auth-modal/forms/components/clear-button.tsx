@@ -1,6 +1,6 @@
-import { cn } from '@heroui/theme';
 import { X } from 'lucide-react';
 import React from 'react';
+import { cn } from '../../../../../lib';
 
 interface Props {
   className?: string;

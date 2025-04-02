@@ -1,0 +1,23 @@
+.character {
+  line-height: 50px;
+  font-size: 36px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid;
+  border-radius: 8px;
+}
+
+.inCorrect {
+  border: 2px solid #fb2c36;
+}
+
+.character:first-child {
+  margin-left: 0;
+}
+
+.character--inactive {
+  border: 2px solid black;
+}
+
+.character--selected {
+  border-color: transparent;
+}
