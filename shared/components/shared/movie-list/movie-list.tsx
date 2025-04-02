@@ -13,8 +13,10 @@ interface Props {
 }
 export const MovieList: React.FC<Props> = async ({ isReleased, exception, className }) => {
   try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=${isReleased ? 'lte' : 'gte'}`,
+      `${baseUrl}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=${isReleased ? 'lte' : 'gte'}`,
     );
 
     if (!res.ok) {

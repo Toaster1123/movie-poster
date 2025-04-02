@@ -8,6 +8,8 @@ interface Props {
   email: string;
 }
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
 export async function createPayment(details: Props) {
   try {
     const { data } = await axios.post<PaymentData>(
@@ -27,7 +29,7 @@ export async function createPayment(details: Props) {
         },
         confirmation: {
           type: 'redirect',
-          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/checkout/callback?order_id=${details.orderId}`,
+          return_url: `${baseUrl}${process.env.NEXT_PUBLIC_API_URL}/checkout/callback?order_id=${details.orderId}`,
         },
         receipt: {
           items: [

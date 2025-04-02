@@ -25,9 +25,9 @@ export const TicketsGroup: React.FC<Props> = ({ seanses, age, title }) => {
 
   const onClickTicket = (item: TSeanses) => {
     setLoading(true);
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/hallschema/${item.hallSchemaId}`,
-    )
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+    fetch(`${baseUrl}${process.env.NEXT_PUBLIC_API_URL}/hallschema/${item.hallSchemaId}`)
       .then(async (res) => {
         setHallData(await res.json());
         setItemData(item);

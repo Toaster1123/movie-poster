@@ -13,9 +13,9 @@ interface MovieProps extends Movie {
 }
 
 export const FilmPage = async ({ id }: { id: number }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`,
-  );
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`);
   const movie: MovieProps = await res.json();
 
   return (
@@ -41,8 +41,8 @@ export const FilmPage = async ({ id }: { id: number }) => {
                   <SelectDate />
                 </div>
               </div>
-                  <Suspense fallback={<div>Загрузка...</div>}>
-              <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
+              <Suspense fallback={<div>Загрузка...</div>}>
+                <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
               </Suspense>
             </>
           )}
