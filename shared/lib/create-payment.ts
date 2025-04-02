@@ -9,7 +9,9 @@ interface Props {
 }
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  `https://${process.env.VERCEL_URL}` ||
+  'http://localhost:3000';
 export async function createPayment(details: Props) {
   try {
     const { data } = await axios.post<PaymentData>(

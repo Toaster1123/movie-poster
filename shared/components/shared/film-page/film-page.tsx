@@ -14,7 +14,9 @@ interface MovieProps extends Movie {
 
 export const FilmPage = async ({ id }: { id: number }) => {
   const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    `https://${process.env.VERCEL_URL}` ||
+    'http://localhost:3000';
   const res = await fetch(`${baseUrl}/${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`);
   const movie: MovieProps = await res.json();
 
