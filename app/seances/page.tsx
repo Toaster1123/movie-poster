@@ -21,7 +21,7 @@ export default async function Seances() {
   }
   const movies: ApiMovie[] = await res.json();
   if (movies.length === 0) {
-    return NextResponse.json({ error: 'No movies found for the given criteria' }, { status: 404 });
+    return <div>No movies found</div>;
   }
   movies.forEach((movie) => {
     movie.seanses.forEach((seanse) => {
