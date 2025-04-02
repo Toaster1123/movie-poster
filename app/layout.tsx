@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Footer, Header, Providers } from '../shared/components/shared';
 
 import './globals.css';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'], weight: ['400'] });
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body className={`${inter.className} flex items-center flex-col bg-gray-900`}>
         <div className="flex flex-col w-full min-h-screen max-w-[1250px] mx-auto">
           <Providers>
+            <Suspense fallback={<div>Загрузка...</div>}>
             <Header />
+            </Suspense>
             {children}
           </Providers>
           <Footer />

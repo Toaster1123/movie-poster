@@ -2,6 +2,7 @@ import { Genre, HallSeanses, Movie } from '@prisma/client';
 import { SeanseList, SelectDate } from '../../shared/components/shared';
 import { timeToMinutes } from '../../shared/lib';
 import { sortedMovies } from '../../@types';
+import { Suspense } from 'react';
 interface ApiMovie extends Movie {
   genres: Genre[];
   seanses: HallSeanses[];
@@ -9,9 +10,8 @@ interface ApiMovie extends Movie {
 
 export default async function Seances() {
   let sortedMovies: sortedMovies[] = [];
-
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=lte`,
   );
   const movies: ApiMovie[] = await res.json();
   movies.forEach((movie) => {
@@ -32,10 +32,12 @@ export default async function Seances() {
 
   return (
     <div className="bg-gray-100 flex-grow flex flex-col">
-      <div className="bg-gray-300 px-10">
-        <SelectDate />
-      </div>
-      <SeanseList sortedMovies={sortedMovies} />
+      <Suspense>
+        <div className="bg-gray-300 px-10">
+          <SelectDate />
+        </div>
+        <SeanseList sortedMovies={sortedMovies} />
+      </Suspense>
     </div>
   );
 }

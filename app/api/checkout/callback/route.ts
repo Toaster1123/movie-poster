@@ -46,12 +46,13 @@ export async function GET(req: NextRequest) {
     await sendEmail(
       'arteeer.4er@gmail.com',
       'Проеторий / ваш заказ успешно оформлен! 🎉',
+       Promise.resolve(
       OrderSuccesTemplate({
         orderId: order.id,
         items,
         totalAmount: order.totalAmount,
         name: order.movie.name,
-      }),
+      })),
     );
     return NextResponse.redirect(new URL('/?paid', req.url));
   } catch (error) {

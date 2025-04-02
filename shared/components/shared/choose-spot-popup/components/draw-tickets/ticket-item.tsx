@@ -31,7 +31,7 @@ export const TicketItem = ({ row, sit, id, price, isDeletingItem }: Props) => {
       style={{ height: `${itemHeight}px`, opacity: isDeleting ? 0 : 1 }}
       onMouseOver={() => !isDeleting && setItemHeight(128)}
       onMouseLeave={() => !isDeleting && setItemHeight(64)}>
-      <div className="rounded-px h-full border bg-background rounded-t-xl text-sm border-gray-300 p-3 group">
+      <div className="rounded-px h-full border bg-white rounded-t-xl text-sm border-gray-300 p-3 group">
         <div className="flex justify-between">
           <p className="pr-2">
             Ряд {row}, Место {sit}

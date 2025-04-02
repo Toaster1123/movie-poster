@@ -56,11 +56,13 @@ export async function createOrder(body: TOrderData) {
     await sendEmail(
       'arteeer.4er@gmail.com',
       'Проекторий / оплатите покупку ' + order.id,
-      PayOrderTemplate({
-        orderId: order.id,
-        totalAmount: order.totalAmount,
-        paymentUrl,
-      }),
+       Promise.resolve(
+    PayOrderTemplate({
+      orderId: order.id,
+      totalAmount: order.totalAmount,
+      paymentUrl,
+    })
+  )
     );
     return paymentUrl;
   } catch (error) {
@@ -145,9 +147,10 @@ export async function registerUser(body: Prisma.UserCreateInput) {
     await sendEmail(
       createdUser.email,
       'Проекторий / 📝 Подтверждение регистрации',
+       Promise.resolve(
       VerificationUserTemplate({
         code,
-      }),
+      })),
     );
   } catch (err) {
     console.error('Error [CREATE_USER]', err);

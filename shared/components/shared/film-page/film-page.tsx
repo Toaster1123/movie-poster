@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { TicketsGroup } from '../ticket';
 import { SelectDate } from '../select-date';
 import { Description } from './components/description';
@@ -41,7 +41,9 @@ export const FilmPage = async ({ id }: { id: number }) => {
                   <SelectDate />
                 </div>
               </div>
+                  <Suspense fallback={<div>Загрузка...</div>}>
               <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
+              </Suspense>
             </>
           )}
 

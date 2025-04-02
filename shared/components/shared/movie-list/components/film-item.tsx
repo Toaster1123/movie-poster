@@ -3,6 +3,7 @@ import { TicketsGroup } from '../../ticket';
 import { cn } from '@heroui/theme';
 import { stringDateConvert } from '../../../../lib';
 import { FilmItemMain } from './film-item-main';
+import { Suspense } from 'react';
 
 export interface TSeanses {
   id: number;
@@ -55,7 +56,11 @@ export const FilmItem = ({
         )}>
         <FilmItemMain age={age} genres={genres} title={title} id={id} isReleased={isReleased} />
         {isReleased ? (
+                            <Suspense fallback={<div>Загрузка...</div>}>
+          
           <TicketsGroup seanses={seanses} title={title} age={age} />
+          </Suspense>
+
         ) : (
           <div className="text-gray-600 px-1 text-[13px] py-5">
             С {stringDateConvert(premierDate)}
