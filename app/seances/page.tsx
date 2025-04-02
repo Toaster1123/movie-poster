@@ -3,6 +3,7 @@ import { SeanseList, SelectDate } from '../../shared/components/shared';
 import { timeToMinutes } from '../../shared/lib';
 import { sortedMovies } from '../../@types';
 import { Suspense } from 'react';
+import { NextResponse } from 'next/server';
 interface ApiMovie extends Movie {
   genres: Genre[];
   seanses: HallSeanses[];
@@ -10,10 +11,15 @@ interface ApiMovie extends Movie {
 
 export default async function Seances() {
   let sortedMovies: sortedMovies[] = [];
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=lte`,
-  );
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    `https://${process.env.VERCEL_URL}` ||
+    'http://localhost:3000';
+  const res = await fetch(`${baseUrl}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=lte`);
   const movies: ApiMovie[] = await res.json();
+  if (movies.length === 0) {
+    return NextResponse.json({ error: 'No movies found for the given criteria' }, { status: 404 });
+  }
   movies.forEach((movie) => {
     movie.seanses.forEach((seanse) => {
       sortedMovies.push({
