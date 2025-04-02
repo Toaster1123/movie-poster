@@ -16,6 +16,9 @@ export default async function Seances() {
     `https://${process.env.VERCEL_URL}` ||
     'http://localhost:3000';
   const res = await fetch(`${baseUrl}${process.env.NEXT_PUBLIC_API_URL}/movies?comparison=lte`);
+  if (!res.ok) {
+    throw new Error(`API request failed with status ${res.status}`);
+  }
   const movies: ApiMovie[] = await res.json();
   if (movies.length === 0) {
     return NextResponse.json({ error: 'No movies found for the given criteria' }, { status: 404 });
