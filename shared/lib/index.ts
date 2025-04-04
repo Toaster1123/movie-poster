@@ -9,3 +9,4 @@ export * from './time-convert';
 export * from './mouse-events';
 export * from './canvas';
 export * from './profile-form';
+export * from './auth-handlers';

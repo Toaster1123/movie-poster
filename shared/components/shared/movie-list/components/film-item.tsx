@@ -42,7 +42,7 @@ export const FilmItem = ({
       <Link href={'/movies/' + id}>
         <div className={cn('overflow-hidden', !isReleased && 'rounded-2xl')}>
           <img
-            className={cn(' hover:scale-105', isReleased ? 'h-[374px]' : ' h-60')}
+            className={cn('w-full hover:scale-105', isReleased ? 'h-[374px]' : ' h-60')}
             src={image}
             alt="картинка"
           />

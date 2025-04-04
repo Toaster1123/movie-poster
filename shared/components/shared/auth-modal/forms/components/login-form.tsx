@@ -44,7 +44,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
 
   return (
     <FormProvider {...form}>
-      <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-5 px-10" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex justify-between items-center">
           <div className="mr-2">
             <Title text="Вход в аккаунт" size="md" className="font-bold" />
@@ -57,7 +57,7 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
 
         <Button
           loading={form.formState.isSubmitting}
-          className="h-12 text-base bg-black rounded-xl text-white cursor-pointer hover:bg-black/90"
+          className="h-12 text-base bg-black rounded-xl text-white cursor-pointer hover:bg-black/90 mb-6"
           type="submit">
           Войти
         </Button>

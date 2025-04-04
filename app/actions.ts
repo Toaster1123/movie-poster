@@ -1,7 +1,7 @@
 'use server';
 
 import { OrderStatus, Prisma } from '@prisma/client';
-import { hashSync } from 'bcryptjs';
+import { compare, hashSync } from 'bcryptjs';
 import { createPayment, getUserSession, sendEmail } from '../shared/lib';
 import { prisma } from '../prisma/prisma-client';
 import { PayOrderTemplate, VerificationUserTemplate } from '../shared/components/shared';
@@ -56,13 +56,13 @@ export async function createOrder(body: TOrderData) {
     await sendEmail(
       'arteeer.4er@gmail.com',
       'Проекторий / оплатите покупку ' + order.id,
-       Promise.resolve(
-    PayOrderTemplate({
-      orderId: order.id,
-      totalAmount: order.totalAmount,
-      paymentUrl,
-    })
-  )
+      Promise.resolve(
+        PayOrderTemplate({
+          orderId: order.id,
+          totalAmount: order.totalAmount,
+          paymentUrl,
+        }),
+      ),
     );
     return paymentUrl;
   } catch (error) {
@@ -111,6 +111,49 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   }
 }
 
+export async function createVerificationCode(email: string) {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+  if (!user) {
+    throw new Error('Такого пользователя не существует');
+  }
+  const existCode = await prisma.verificationCode.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+  if (existCode) {
+    await prisma.verificationCode.deleteMany({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  await prisma.verificationCode.create({
+    data: {
+      code: hashSync(code, 4),
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 300000),
+    },
+  });
+
+  await sendEmail(
+    'arteeer.4er@gmail.com',
+    'Проекторий / 📝 Подтверждение регистрации',
+    Promise.resolve(
+      VerificationUserTemplate({
+        code,
+        userId: user.id,
+      }),
+    ),
+  );
+}
+
 export async function registerUser(body: Prisma.UserCreateInput) {
   try {
     const user = await prisma.user.findFirst({
@@ -121,10 +164,14 @@ export async function registerUser(body: Prisma.UserCreateInput) {
 
     if (user) {
       if (!user.verified) {
-        throw new Error('Почта не подтверждена');
+        const isPasswordValid = await compare(body.password, user.password);
+        if (isPasswordValid) {
+          return { success: false, message: 'На вашу почту уже был отправлен код' };
+        } else {
+          return { success: false, message: 'Укажите вверный пароль для верификации' };
+        }
       }
-
-      throw new Error('Пользователь уже существует');
+      return { success: false, message: 'Пользователь уже существует' };
     }
 
     const createdUser = await prisma.user.create({
@@ -134,26 +181,57 @@ export async function registerUser(body: Prisma.UserCreateInput) {
       },
     });
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    createVerificationCode(createdUser.email);
+    return { success: true, message: 'Код регистрации отправлен на вашу почту📝' };
+  } catch (err) {
+    const error = err as Error;
+    return { success: false, message: error };
+  }
+}
 
-    await prisma.verificationCode.create({
-      data: {
-        code,
-        userId: createdUser.id,
-        expiresAt: new Date(Date.now() + 300000),
+export async function verifyEmail(body: { mail: string; verificationCode: string }) {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: body.mail,
+      },
+      include: {
+        verificationCode: true,
       },
     });
 
-    await sendEmail(
-      createdUser.email,
-      'Проекторий / 📝 Подтверждение регистрации',
-       Promise.resolve(
-      VerificationUserTemplate({
-        code,
-      })),
-    );
-  } catch (err) {
-    console.error('Error [CREATE_USER]', err);
-    throw err;
+    if (!user) {
+      return { success: false, message: 'Такой пользователь не найден' };
+    }
+
+    if (!user.verificationCode) {
+      return { success: false, message: 'Вы уже ввели код подтвержения' };
+    }
+
+    const isCodeValid = await compare(body.verificationCode, user.verificationCode.code);
+    console.log(body.verificationCode, user.verificationCode.code);
+
+    if (!isCodeValid) {
+      return { success: false, message: 'Неверный код' };
+    }
+
+    await prisma.user.update({
+      where: {
+        id: user.verificationCode.userId,
+      },
+      data: {
+        verified: new Date(),
+      },
+    });
+
+    await prisma.verificationCode.delete({
+      where: {
+        id: user.verificationCode.id,
+      },
+    });
+    return { success: true, message: 'Почта успешно подтверждена' };
+  } catch (error) {
+    const err = error as Error;
+    return { success: false, message: err.message };
   }
 }

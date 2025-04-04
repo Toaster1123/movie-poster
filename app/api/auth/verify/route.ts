@@ -1,24 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../prisma/prisma-client';
+import { compare } from 'bcryptjs';
 export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest) {
   try {
     const code = req.nextUrl.searchParams.get('code');
-    if (!code) {
-      return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
+    const userId = Number(req.nextUrl.searchParams.get('userId'));
+    if (!code || !userId) {
+      return NextResponse.redirect(new URL('/?verifiedError', req.url));
     }
     const verificationCode = await prisma.verificationCode.findFirst({
       where: {
-        code,
+        userId,
       },
     });
     if (!verificationCode) {
-      return NextResponse.json({ error: 'Неверный код' }, { status: 400 });
+      return NextResponse.redirect(new URL('/?verifiedError', req.url));
+    }
+    const isCodeValid = await compare(code, verificationCode.code);
+    if (!isCodeValid) {
+      return NextResponse.redirect(new URL('/?verifiedError', req.url));
     }
 
     await prisma.user.update({
       where: {
-        id: verificationCode.userId,
+        id: userId,
       },
       data: {
         verified: new Date(),

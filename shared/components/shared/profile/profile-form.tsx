@@ -43,7 +43,8 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
         });
       }
     } catch (error) {
-      return toast.error('Ошибка при обновлении данных', {
+      const err = error as Error;
+      return toast.error(`${err.message}`, {
         icon: '❌',
       });
     }
@@ -66,7 +67,10 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
             label="Повторите пароль"
             required={false}
           />
-          <Button disabled={form.formState.isSubmitting} className="text-base mt-10" type="submit">
+          <Button
+            disabled={form.formState.isSubmitting}
+            className="text-base mt-10 text-white cursor-pointer bg-black hover:bg-black/80"
+            type="submit">
             Сохранить
           </Button>
           <ExitButton isDisabled={form.formState.isSubmitting} />

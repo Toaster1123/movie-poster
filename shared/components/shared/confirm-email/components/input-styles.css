@@ -1,23 +1,50 @@
 .character {
+  border: none;
   line-height: 50px;
   font-size: 36px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid;
+  background-color: rgb(239, 247, 250);
   border-radius: 8px;
+  box-shadow: 0px 5px 7px -1px rgba(0, 0, 0, 0.58);
 }
 
 .inCorrect {
-  border: 2px solid #fb2c36;
+  outline: 2px solid #fb2c36;
+  color: #fb2c36;
+  border: nove;
+}
+.loading {
+  animation: pulse 2s infinite ease-in-out;
 }
 
 .character:first-child {
   margin-left: 0;
+  border: nove;
 }
 
 .character--inactive {
-  border: 2px solid black;
+  border: nove;
 }
 
 .character--selected {
-  border-color: transparent;
+  border: nove;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    background-color: rgb(229, 229, 229);
+    color: rgb(102, 102, 102);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    background-color: rgb(203, 203, 203);
+    color: rgb(134, 134, 134);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    background-color: rgb(229, 229, 229);
+    color: rgb(102, 102, 102);
+    opacity: 1;
+  }
 }

@@ -1,28 +1,41 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import VerificationInput from 'react-verification-input';
 import './input-styles.css';
 
 interface Props {
   correctValue: boolean;
-  setInputValue: any;
+  setInputValue: Dispatch<SetStateAction<string>>;
+  loading: boolean;
+  inputValue: string;
 }
-export const NumberInput: React.FC<Props> = ({ correctValue, setInputValue }) => {
+export const NumberInput: React.FC<Props> = ({
+  correctValue,
+  setInputValue,
+  loading,
+  inputValue,
+}) => {
   const onChangeInput = (e: string) => {
-    console.log(e);
     setInputValue(e);
+  };
+  const onFocusInput = () => {
+    if (!correctValue && !loading) {
+      setInputValue('');
+    }
   };
   return (
     <VerificationInput
+      value={inputValue}
       onChange={onChangeInput}
+      onFocus={onFocusInput}
       placeholder=" "
       validChars="0-9"
-      autoFocus={true}
+      inputProps={{
+        disabled: loading,
+      }}
       classNames={{
-        container: 'container',
-        character: `character ${!correctValue && 'inCorrect'}`,
-        characterInactive: ` ${correctValue ? 'character--inactive' : 'inCorrect'}`,
-        characterSelected: 'character--selected',
-        characterFilled: 'character--filled',
+        character: `character ${!correctValue && 'inCorrect'} ${loading && 'loading'}`,
+        characterInactive: `${correctValue ? 'character--inactive' : 'inCorrect'}`,
+        characterSelected: `${correctValue ? 'character--selected' : 'inCorrect'}`,
       }}
     />
   );

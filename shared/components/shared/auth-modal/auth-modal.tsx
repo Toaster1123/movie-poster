@@ -1,36 +1,44 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 
-import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog';
-import { LoginForm, RegisterForm } from './forms';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { LoginForm, RegisterComponent } from './forms';
+import { X } from 'lucide-react';
+import { useClickAway } from 'react-use';
 
 interface Props {
-  open: boolean;
   onClose: () => void;
 }
 
-export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
+export const AuthModal: React.FC<Props> = ({ onClose }) => {
+  const clickRef = React.useRef<HTMLDivElement>(null);
   const [type, setType] = React.useState<'login' | 'register'>('login');
 
   const onSwitchType = () => {
     setType(type == 'login' ? 'register' : 'login');
   };
-
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
   const handleClose = () => {
     onClose();
   };
+  useClickAway(clickRef, () => onClose());
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <VisuallyHidden>
-        <DialogTitle />
-      </VisuallyHidden>
-      <DialogContent className="w-[450px] bg-white p-10">
+    <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
+      <div ref={clickRef} className="absolute bg-gray-200 w-[450px] py-7 rounded-xl">
+        <X
+          onClick={handleClose}
+          className="absolute top-4 right-4 cursor-pointer h-6 w-6 text-center z-50"
+        />
         {type == 'login' ? (
           <LoginForm onClose={handleClose} />
         ) : (
-          <RegisterForm onClose={handleClose} />
+          <RegisterComponent onClose={handleClose} />
         )}
-        <div className="flex items-center flex-col">
+        <div className="flex items-center px-10 flex-col">
           <div>
             <span>
               {type == 'login'
@@ -42,7 +50,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
             </span>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };

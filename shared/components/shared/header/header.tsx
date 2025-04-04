@@ -22,6 +22,15 @@ export const Header = () => {
     if (searchParams.has('verified')) {
       toastMessage = 'Почта успешно подтверждена!';
     }
+    if (searchParams.has('verifiedError') && router) {
+      setTimeout(() => {
+        router.replace('/');
+        toast.error('Ошибка при верификации кода', {
+          duration: 3000,
+        });
+      }, 300);
+      return;
+    }
 
     if (toastMessage && router) {
       setTimeout(() => {
@@ -48,7 +57,7 @@ export const Header = () => {
           );
         })}
       </div>
-      <AuthModal onClose={() => setOpenModal(false)} open={openModal} />
+      {openModal && <AuthModal onClose={() => setOpenModal(false)} />}
       <ProfileButton openModal={() => setOpenModal(true)} />
     </header>
   );
