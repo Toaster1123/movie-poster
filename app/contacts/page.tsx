@@ -6,7 +6,7 @@ export default function Contacts() {
       </div>
       <div className="h-[240px] sm:h-[300px] md:h-[400px] w-full bg-gray-300 flex justify-center items-center overflow-hidden">
         <img
-          src="/5E4C8633-4C18-4A37-AFDE-886337350378.png"
+          src="{5E4C8633-4C18-4A37-AFDE-886337350378}.png"
           alt="Карта"
           className="object-cover h-full w-full"
         />
