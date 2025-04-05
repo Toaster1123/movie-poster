@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export default function About() {
   return (
     <div>
@@ -12,7 +10,7 @@ export default function About() {
       <div className="md:px-10 sm:px-6 px-3 py-7 bg-gray-100">
         <strong className="md:text-3xl sm:text-2xl text-xl">О кинотеатре</strong>
         <div className="sm:mt-4 w-full h-auto mt-2">
-          <Image src="/photo-cinema.jpg" alt="кинотеатр" fill className="object-cover" />
+          <img src="/photo-cinema.jpg" alt="кинотеатр" className="object-cover w-full h-full" />
         </div>
 
         <p className="my-4">
@@ -25,11 +23,10 @@ export default function About() {
           Приходите к нам смотреть кино!
         </p>
         <div className="sm:mt-4 w-full h-auto mt-2">
-          <Image
+          <img
             src="https://ai-previews.123rf.com/ai-txt2img/600nwm/7be3a471-3243-4755-bb62-4aae273f6df5.jpg"
             alt="Happy people"
-            fill
-            className="object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
         <p>Будте счасливы вместе с нами!</p>
