@@ -12,9 +12,11 @@ interface Props {
 
 export const PurchasedTickets: React.FC<Props> = ({ allTickets }) => {
   return (
-    <div className="flex-grow flex justify-center pl-10">
+    <div className="md:pl-10 max-md:mt-10 flex-grow flex justify-center">
       <div>
-        <h1 className="text-2xl text-center font-medium pb-7">Просмотренные фильмы</h1>
+        <h1 className="md:mt-10 max-md:text-xl md:text-center text-2xl font-medium">
+          Просмотренные фильмы
+        </h1>
         {allTickets.length > 0 ? (
           <PurchasedTicketsList tickets={allTickets} />
         ) : (

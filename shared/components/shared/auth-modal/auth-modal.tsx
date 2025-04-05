@@ -27,8 +27,8 @@ export const AuthModal: React.FC<Props> = ({ onClose }) => {
   };
   useClickAway(clickRef, () => onClose());
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center fixed top-0 left-0 bg-black/75">
-      <div ref={clickRef} className="absolute bg-gray-200 w-[450px] py-7 rounded-xl">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/75 z-50 px-4">
+      <div ref={clickRef} className="relative bg-gray-200 w-full max-w-[450px] rounded-xl py-7">
         <X
           onClick={handleClose}
           className="absolute top-4 right-4 cursor-pointer h-6 w-6 text-center z-50"
@@ -38,17 +38,15 @@ export const AuthModal: React.FC<Props> = ({ onClose }) => {
         ) : (
           <RegisterComponent onClose={handleClose} />
         )}
-        <div className="flex items-center px-10 flex-col">
-          <div>
-            <span>
-              {type == 'login'
-                ? 'Если вы ещё не зарегестрированы на сайте, то '
-                : 'Если вы уже зарегистрированы, то '}
-            </span>
-            <span onClick={onSwitchType} className="text-blue-500 cursor-pointer hover:underline ">
+        <div className="flex items-center flex-col pt-4 text-sm text-center">
+          <span>
+            {type == 'login'
+              ? 'Если вы ещё не зарегистрированы, '
+              : 'Если вы уже зарегистрированы, '}
+            <span onClick={onSwitchType} className="text-blue-500 cursor-pointer hover:underline">
               {type == 'login' ? 'зарегистрируйтесь' : 'войдите'}
             </span>
-          </div>
+          </span>
         </div>
       </div>
     </div>

@@ -1,19 +1,21 @@
+import Image from 'next/image';
+
 export default function About() {
   return (
     <div>
       <div className="py-1 bg-gray-300">
-        <div className=" bg-gray-200 mx-10 rounded-xl shadow-xl my-4 p-6">
-          <strong className="text-xl"> Кинотеатр Проекторий </strong>
+        <div className="md:mx-10 sm:mx-6 mx-3 bg-gray-200 rounded-xl shadow-xl my-4 p-6">
+          <strong className="sm:text-xl text-lg"> Кинотеатр Проекторий </strong>
           <p>улица Ленина, 15/1</p>
         </div>
       </div>
-      <div className="py-7 px-10 bg-gray-100">
-        <strong className="text-3xl">О кинотеатре</strong>
-        <div className="h-[600px]">
-          <img className=" h-[600px] w-[1200px] mt-4" src="/photo-cinema.jpg" alt="кинотеатр" />
+      <div className="md:px-10 sm:px-6 px-3 py-7 bg-gray-100">
+        <strong className="md:text-3xl sm:text-2xl text-xl">О кинотеатре</strong>
+        <div className="sm:mt-4 w-full h-auto mt-2">
+          <Image src="/photo-cinema.jpg" alt="кинотеатр" fill className="object-cover" />
         </div>
 
-        <p className="my-4 ">
+        <p className="my-4">
           Наш пятизальнй кинотеатр располагается на улице Ленина, рядом с парком Бывалых Купидонов.
           Здесь вы можете посмотреть не только популярные блокбастеры, но и постановки известных
           мировых театров. Наши вежливые бармены готовят для вас вкуснейший попкорн, а в ожидании
@@ -22,19 +24,20 @@ export default function About() {
           вовсе имеют возможность посещать отдельные сеансы бесплатно. <br />
           Приходите к нам смотреть кино!
         </p>
-        <div className=" h-[532px] flex justify-center">
-          <img
-            className="my-4 h-[500px]"
+        <div className="sm:mt-4 w-full h-auto mt-2">
+          <Image
             src="https://ai-previews.123rf.com/ai-txt2img/600nwm/7be3a471-3243-4755-bb62-4aae273f6df5.jpg"
             alt="Happy people"
+            fill
+            className="object-cover"
           />
-          {/* https://ai-previews.123rf.com/ai-txt2img/600nwm/630997ef-0a32-42cc-b427-15174fd648ef.jpg */}
         </div>
+        {/* https://ai-previews.123rf.com/ai-txt2img/600nwm/630997ef-0a32-42cc-b427-15174fd648ef.jpg */}
         <p>Будте счасливы вместе с нами!</p>
       </div>
-      <hr className="bg-black h-0.5 px-10" />
-      <div className="text-[15px]  pt-2 px-10 bg-gray-100">
-        <strong>ООО "ТПК"</strong>
+      <hr className="border-0 bg-gray-500 h-0.5 w-full" />
+      <div className="md:px-10 sm:px-6 px-3 text-[15px] pt-2 bg-gray-100">
+        <strong>ООО &quot;ТПК&quot;</strong>
         <p>ИНН 4025460769</p>
         <p>КПП 402501001</p>
         <p>ОГРН 1224000002676</p>

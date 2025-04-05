@@ -14,12 +14,12 @@ interface Props {
 
 export const FilmItemMain: React.FC<Props> = ({ genres, title, age, id, isReleased }) => {
   return (
-    <div className={cn(isReleased && 'px-3')}>
+    <div className={cn(isReleased && 'max-sm:px-2 px-3')}>
       <Link href={'/movies/' + id}>
         <p
           className={cn(
             'py-2 pr-2 hover:text-red-600',
-            isReleased ? 'text-2xl font-black' : 'font-medium',
+            isReleased ? 'max-sm:text-base text-2xl font-black' : 'font-medium',
           )}>
           {title}
         </p>
@@ -28,12 +28,12 @@ export const FilmItemMain: React.FC<Props> = ({ genres, title, age, id, isReleas
         <div
           className={cn(
             'rounded-md py-1 px-2',
-            isReleased ? 'bg-gray-200' : 'bg-gray-200/40 text-gray-600 text-sm',
+            isReleased ? 'max-sm:text-sm bg-gray-200' : 'bg-gray-200/40 text-gray-600 text-sm',
           )}>
           {age}+
         </div>
         {genres.map((item, id) => {
-          if (!isReleased && id >= 3) {
+          if (id >= 3 || !isReleased) {
             return;
           }
           return (
@@ -41,7 +41,9 @@ export const FilmItemMain: React.FC<Props> = ({ genres, title, age, id, isReleas
               key={id}
               className={cn(
                 'py-1 rounded-md',
-                isReleased ? 'bg-gray-200 px-3' : 'bg-gray-200/40 text-gray-600 text-sm px-2',
+                isReleased
+                  ? 'max-sm:text-sm bg-gray-200 px-3'
+                  : 'bg-gray-200/40 text-gray-600 text-xs px-2',
               )}>
               {item.name}
             </div>

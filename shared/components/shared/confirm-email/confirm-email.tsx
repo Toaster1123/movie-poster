@@ -12,6 +12,7 @@ interface Props {
   openReg: () => void;
   onClose: () => void;
   openConfirnEmail: boolean;
+  userPass: string;
   className?: string;
 }
 
@@ -20,6 +21,7 @@ export const ConfirmEmail: React.FC<Props> = ({
   openReg,
   onClose,
   openConfirnEmail,
+  userPass,
   className,
 }) => {
   const [inputValue, setInputValue] = useState('');
@@ -33,12 +35,13 @@ export const ConfirmEmail: React.FC<Props> = ({
   );
 
   useEffect(() => {
+    if (!openConfirnEmail) return;
     if (inputValue.length !== 6) {
       setIsCorrect(true);
       return;
     }
 
-    handlerSubmit({ mail, inputValue, setIsCorrect, onClose, setLoadingSubmit });
+    handlerSubmit({ mail, inputValue, setIsCorrect, onClose, setLoadingSubmit, userPass });
   }, [inputValue, mail]);
 
   return (
@@ -49,9 +52,9 @@ export const ConfirmEmail: React.FC<Props> = ({
         <Image width={100} height={100} src="/logo.png" alt="logo" />
       </div>
       <div className="flex flex-col gap-10">
-        <div className="flex flex-col items-center">
-          <span className="text-3xl font-semibold">Введите код с почты</span>
-          <span className="text-center pt-1">Отправили на {mail}</span>
+        <div className="flex flex-col text-center items-center">
+          <span className="max-sm:text-[24px] text-3xl font-semibold">Введите код с почты</span>
+          <span className="max-sm:text-sm text-center pt-1">Отправили на {mail}</span>
         </div>
         <div className="flex flex-col items-center  gap-3">
           <NumberInput

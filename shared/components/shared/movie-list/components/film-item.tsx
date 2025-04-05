@@ -37,12 +37,12 @@ export const FilmItem = ({
     <div
       className={cn(
         'flex flex-col overflow-hidden',
-        isReleased ? 'w-[265px] rounded-lg ' : 'w-40',
+        isReleased ? 'max-sm:w-40 w-[265px] rounded-lg' : 'w-40',
       )}>
       <Link href={'/movies/' + id}>
         <div className={cn('overflow-hidden', !isReleased && 'rounded-2xl')}>
           <img
-            className={cn('w-full hover:scale-105', isReleased ? 'h-[374px]' : ' h-60')}
+            className={cn('w-full hover:scale-105', isReleased ? 'max-sm:h-60 h-[374px]' : ' h-60')}
             src={image}
             alt="картинка"
           />

@@ -6,24 +6,17 @@ import { authSubmit } from 'shared/lib';
 import { UseFormReturn } from 'react-hook-form';
 
 interface Props {
-  form: UseFormReturn<
-    {
-      email: string;
-      password: string;
-      confirmPassword: string;
-    },
-    {
-      email: string;
-      password: string;
-      confirmPassword: string;
-    }
-  >;
+  form: UseFormReturn<{
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }>;
   setOpenConfirnEmail: (value: React.SetStateAction<boolean>) => void;
 }
 
 export const RegisterForm: React.FC<Props> = ({ form, setOpenConfirnEmail }) => {
   const onSubmit = async (data: TFormRegisterValues) => {
-    authSubmit(data, () => setOpenConfirnEmail(true));
+    return await authSubmit(data, () => setOpenConfirnEmail(true));
   };
 
   return (

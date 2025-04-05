@@ -12,7 +12,12 @@ export async function GET(req: NextRequest) {
       { status: 400 },
     );
   }
-  const whereCondition: Record<string, any> = {};
+  const whereCondition: {
+    premierDate?: {
+      gte?: string;
+      lte?: string;
+    };
+  } = {};
   if (comparison === 'gte') {
     whereCondition.premierDate = { gte: today };
   } else {

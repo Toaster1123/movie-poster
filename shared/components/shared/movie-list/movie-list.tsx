@@ -28,7 +28,7 @@ export const MovieList: React.FC<Props> = async ({ isReleased, exception, classN
     const movies: ApiMovie[] = await res.json();
 
     return (
-      <div className={cn('flex flex-wrap h-full gap-8 mb-10', className)}>
+      <div className={cn('max-sm:gap-4 max-sm:px-3 flex flex-wrap h-full gap-8 mb-10', className)}>
         {movies.map((item) =>
           item.id === exception ? null : (
             <FilmItem

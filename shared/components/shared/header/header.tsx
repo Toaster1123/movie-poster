@@ -1,62 +1,43 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { headerLinks } from '../../../constants';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { AuthModal } from '../auth-modal';
-import { ProfileButton } from './components';
+import { LinkItem, ProfileButton } from './components';
 import { authModalState } from '../../../store';
+import { useHeaderNotifications } from 'shared/hooks';
+import { useEffect, useState } from 'react';
+import { AlignJustify } from 'lucide-react';
 
 export const Header = () => {
   const { openModal, setOpenModal } = authModalState((state) => state);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const path = usePathname();
-  const searchParams = useSearchParams();
-
-  const router = useRouter();
   useEffect(() => {
-    let toastMessage = '';
-    if (searchParams.has('paid')) {
-      toastMessage = 'Заказ успешно оплачен! Информация отправленна на почту';
-    }
-    if (searchParams.has('verified')) {
-      toastMessage = 'Почта успешно подтверждена!';
-    }
-    if (searchParams.has('verifiedError') && router) {
-      setTimeout(() => {
-        router.replace('/');
-        toast.error('Ошибка при верификации кода', {
-          duration: 3000,
-        });
-      }, 300);
-      return;
-    }
+    setIsMenuOpen(false);
+  }, [path]);
 
-    if (toastMessage && router) {
-      setTimeout(() => {
-        router.replace('/');
-        toast.success(toastMessage, {
-          duration: 3000,
-        });
-      }, 300);
-    }
-  }, []);
+  useHeaderNotifications();
   return (
-    <header className="flex justify-between py-3 px-10 bg-[#222629]">
-      <div className="flex-row flex">
-        {headerLinks.map((name, id) => {
-          return (
-            <Link key={id} href={name.link}>
-              <div
-                className={`mr-4  text-white  text-lg border-b-[4px] border-transparent hover:border-b-lime-500 ${
-                  name.link == path && 'border-b-lime-500'
-                } `}>
-                {name.name}
-              </div>
-            </Link>
-          );
-        })}
+    <header className="flex justify-between py-3 sm:px-10 px-3 bg-[#222629]">
+      <div className="sm:hidden">
+        <AlignJustify
+          size={32}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-white text-2xl focus:outline-none"
+        />
       </div>
+      <div className="sm:flex sm:gap-4 hidden flex-row">
+        {headerLinks.map((item, id) => (
+          <LinkItem key={id} link={item.link} name={item.name} path={path} />
+        ))}
+      </div>
+      {isMenuOpen && (
+        <div className="max-sm:block hidden absolute top-14 left-0 w-1/2 bg-[#222629] z-50 gap-4">
+          {headerLinks.map(({ name, link }, id) => (
+            <LinkItem key={id} link={link} name={name} path={path} />
+          ))}
+        </div>
+      )}
       {openModal && <AuthModal onClose={() => setOpenModal(false)} />}
       <ProfileButton openModal={() => setOpenModal(true)} />
     </header>

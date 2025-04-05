@@ -14,9 +14,9 @@ interface Props {
 export const SeanceCard: React.FC<Props> = ({ hall, time, title, age, genres, id, price }) => {
   return (
     <Link href={'/movies/' + id}>
-      <div className="flex pb-3 mt-3 cursor-pointer ">
-        <div className={'py-1 w-[70px] text-center mr-6'}>
-          <p className="text-white py-1 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
+      <div className="flex pb-3 gap-6 mt-3 cursor-pointer ">
+        <div className={'py-1 text-center'}>
+          <p className="text-white py-1 px-3 rounded-lg bg-lime-600 font-black text-lg">{time}</p>
         </div>
         <div>
           <strong>{title}</strong>

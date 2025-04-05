@@ -12,6 +12,9 @@ export const Canvas = ({ hallData, price }: { hallData: HallType; price: number 
   const { selectedSeat } = changeUserTickets((state) => state);
 
   useEffect(() => {
+    if (!width) {
+      return;
+    }
     const canvas = canvasRef.current;
     if (canvas == null) return;
     const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');

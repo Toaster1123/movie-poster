@@ -22,28 +22,41 @@ export const FilmPage = async ({ id }: { id: number }) => {
 
   return (
     <>
-      <div className="flex px-10">
-        <img className="w-[265px] h-[374px] rounded-2xl" src={movie.imageUrl} alt="картинка" />
-        <div className="ml-10">
-          <ul className="h-[26px] flex space-x-2 text-gray-600">
-            {movie.genres.map((genre, id) => (
-              <li key={id}>
-                {genre.name}
-                {id < movie.genres.length - 1 && ','}
-              </li>
-            ))}
-          </ul>
-          <div className="flex flex-col justify-center">
-            <b className="text-4xl">{movie.name}</b>
+      <div className="lg:gap-6 md:gap-4 max-sm:flex-col gap-2 flex">
+        <img
+          className="max-sm:hidden lg:w-[265px] lg:h-[374px] w-52 h-60 mt-2 rounded-2xl"
+          src={movie.imageUrl}
+          alt="картинка"
+        />
+        <div className="w-full">
+          <div className="max-sm:gap-3 flex">
+            <img
+              className="sm:hidden w-36 h-full max-lg:rounded-lg mt-1"
+              src={movie.imageUrl}
+              alt="картинка"
+            />
+            <div className="">
+              <ul className="max-sm:text-sm flex space-x-2 text-gray-600 flex-wrap">
+                {movie.genres.map((genre, id) => (
+                  <li key={id}>
+                    {genre.name}
+                    {id < movie.genres.length - 1 && ','}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex w-fit flex-col justify-center">
+                <b className="lg:text-4xl max-sm:text-lg text-2xl">{movie.name}</b>
+              </div>
+            </div>
           </div>
           {movie.movieLength && (
             <>
-              <div className="bg-gray-300 rounded-3xl">
-                <div className="ml-3 mb-5 mt-2">
-                  <SelectDate />
-                </div>
-              </div>
               <Suspense fallback={<div>Загрузка...</div>}>
+                <div className="max-[350px]:rounded-none bg-gray-300 rounded-3xl">
+                  <div className="sm:ml-3 mb-5 mt-2">
+                    <SelectDate className="max-[350px]:m-0 lg:py-5 py-3" />
+                  </div>
+                </div>
                 <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
               </Suspense>
             </>
@@ -55,12 +68,15 @@ export const FilmPage = async ({ id }: { id: number }) => {
             country={movie.countries}
             date={movie.premierDate}
           />
-          <p className="my-6 max-w-[820px]">{movie.description}</p>
+          <div className="my-6 w-full">
+            <p className="max-sm:text-lg text-gray-500">Сюжет</p>
+            <p>{movie.description}</p>
+          </div>
         </div>
       </div>
-      <div className="mx-10 mt-10">
+      <div className="lg:mx-10 md:mx-4 mt-10">
         <h1 className="text-3xl mb-6 font-medium">Скоро в кино</h1>
-        <MovieList isReleased={false} exception={movie.id} />
+        <MovieList isReleased={false} exception={movie.id} className="max-sm:p-0" />
       </div>
     </>
   );

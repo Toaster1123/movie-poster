@@ -72,27 +72,42 @@ export async function createOrder(body: TOrderData) {
 
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   try {
-    const currentUser = await getUserSession();
+    if (!body.email) {
+      return { success: false, message: 'Укажите почту' };
+    }
 
+    const currentUser = await getUserSession();
     if (!currentUser) {
-      throw new Error('User not found');
+      return { success: false, message: 'Пользователь не найден' };
     }
-    if (body.email) {
-      const existingUser = await prisma.user.findFirst({
-        where: {
-          email: body.email as string,
-          NOT: { id: currentUser.id },
-        },
-      });
-      if (existingUser) {
-        throw new Error('Этот email уже используется другим пользователем');
-      }
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: body.email as string,
+        NOT: { id: currentUser.id },
+      },
+    });
+
+    if (existingUser) {
+      return { success: false, message: 'Этот email уже используется другим пользователем' };
     }
+
     const findUser = await prisma.user.findFirst({
       where: {
         id: Number(currentUser.id),
       },
     });
+
+    if (!findUser) {
+      return { success: false, message: 'Пользователь не найден' };
+    }
+
+    if (body.password && typeof body.password === 'string') {
+      const isSamePassword = await compare(body.password, findUser.password || '');
+      if (isSamePassword) {
+        return { success: false, message: 'Вы не поменяли пароль' };
+      }
+    }
 
     await prisma.user.update({
       where: {
@@ -102,12 +117,14 @@ export async function updateUserInfo(body: Prisma.UserUpdateInput) {
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
-        password: body.password ? hashSync(body.password as string, 10) : findUser?.password,
+        password: body.password ? hashSync(body.password as string, 10) : findUser.password,
       },
     });
+
+    return { success: true, message: 'Пользователь успешно обновлён' };
   } catch (error) {
     console.error(error);
-    throw error;
+    return { success: false, message: 'Ошибка при обновлении данных пользователя' };
   }
 }
 
@@ -209,7 +226,6 @@ export async function verifyEmail(body: { mail: string; verificationCode: string
     }
 
     const isCodeValid = await compare(body.verificationCode, user.verificationCode.code);
-    console.log(body.verificationCode, user.verificationCode.code);
 
     if (!isCodeValid) {
       return { success: false, message: 'Неверный код' };

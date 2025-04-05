@@ -36,14 +36,14 @@ export default async function ProfilePage() {
   });
 
   return (
-    <div className="flex-grow h-full bg-gray-100 px-10">
-      <div className="flex justify-between my-10">
+    <div className="md:px-10 sm:px-6 px-3 flex-grow h-full bg-gray-100">
+      <div className="flex flex-wrap justify-between my-10">
         <ProfileForm data={user} />
         <PurchasedTickets allTickets={tickets} />
       </div>
-      <div className="mt-20">
+      <div className="lg:mx-10 md:mx-4 mt-10">
         <h1 className="text-3xl mb-6 font-medium">Скоро в кино</h1>
-        <MovieList isReleased={false} />
+        <MovieList isReleased={false} className="max-sm:p-0 max-sm:justify-center " />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { verifyEmail } from '@/actions';
+import { signIn } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 
@@ -8,6 +9,7 @@ interface Props {
   setIsCorrect: Dispatch<SetStateAction<boolean>>;
   onClose: () => void;
   setLoadingSubmit: (value: SetStateAction<boolean>) => void;
+  userPass: string;
 }
 
 export const handlerSubmit = async ({
@@ -16,6 +18,7 @@ export const handlerSubmit = async ({
   setIsCorrect,
   onClose,
   setLoadingSubmit,
+  userPass,
 }: Props) => {
   try {
     setLoadingSubmit(true);
@@ -31,8 +34,18 @@ export const handlerSubmit = async ({
         icon: '❌',
       });
     } else {
-      setIsCorrect(true);
-      onClose();
+      const signInResp = await signIn('credentials', {
+        redirect: false,
+        email: mail,
+        password: userPass,
+      });
+      if (signInResp?.ok) {
+        setIsCorrect(true);
+        onClose?.();
+      } else {
+        setIsCorrect(false);
+        return toast.error('Ошибка при авторизации');
+      }
       return toast.success(resp.message);
     }
   } catch (error) {

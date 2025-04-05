@@ -30,15 +30,30 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
   const onSubmit = async (data: TFormUpdateValues) => {
     try {
       const changedFields = getChangedFields(form.formState.defaultValues, data);
-      const isNotChanged = Object.keys(changedFields).length === 0;
-      if (isNotChanged) {
-        toast.error('Вы не изменили данные!', { icon: '⚠️' });
-        return;
+      const hasChanges = (fields: Record<string, { old: string; new: string }>): boolean => {
+        for (const key in fields) {
+          if (fields['password'] && fields['password'].new.length < 4) {
+            return false;
+          }
+          if (fields[key].old !== fields[key].new) {
+            return true;
+          }
+        }
+        return false;
+      };
+      if (!hasChanges(changedFields)) {
+        return toast.error('Вы не изменили данные!', { icon: '⚠️' });
       } else {
-        await updateUserInfo(data);
-        form.resetField('password');
-        form.resetField('confirmPassword');
-        toast.error('Данные обновлены 📝', {
+        const resp = await updateUserInfo(data);
+        if (resp && !resp.success) {
+          return toast.error(resp.message, { icon: '⚠️' });
+        }
+        form.reset({
+          ...data,
+          password: '',
+          confirmPassword: '',
+        });
+        toast.success('Данные обновлены 📝', {
           icon: '✅',
         });
       }
@@ -54,7 +69,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
     <div>
       <Title text="Личные данные" size="md" className="font-medium text-center" />
       <FormProvider {...form}>
-        <form className="flex flex-col gap-3 w-96 mt-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-3 w-full mt-3" onSubmit={form.handleSubmit(onSubmit)}>
           <FormInput name="email" label="E-Mail" required={false} />
           <div className="flex gap-4">
             <FormInput name="firstName" label="Ваше имя" required={false} />
@@ -68,7 +83,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
             required={false}
           />
           <Button
-            disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
             className="text-base mt-10 text-white cursor-pointer bg-black hover:bg-black/80"
             type="submit">
             Сохранить

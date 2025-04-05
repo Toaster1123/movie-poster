@@ -26,23 +26,25 @@ export const RegisterComponent: React.FC<Props> = ({ onClose }) => {
 
   return (
     <FormProvider {...form}>
-      <div className="relative overflow-hidden w-[450px] h-auto">
-        <div
-          className={cn(
-            'flex transition-transform duration-500 ease-in-out',
-            openConfirnEmail ? '-translate-x-[450px]' : 'translate-x-0',
-          )}>
-          <div className="w-[450px] px-10 shrink-0">
-            <RegisterForm form={form} setOpenConfirnEmail={setOpenConfirnEmail} />
-          </div>
-
-          <div className="w-[450px] shrink-0">
-            <ConfirmEmail
-              mail={form.getValues('email')}
-              openReg={() => setOpenConfirnEmail(false)}
-              openConfirnEmail={openConfirnEmail}
-              onClose={onClose}
-            />
+      <div className="w-full h-full flex items-center justify-center py-4">
+        <div className="relative overflow-hidden w-full max-w-[450px]">
+          <div
+            className={cn(
+              'flex transition-transform duration-500 ease-in-out w-[200%]',
+              openConfirnEmail ? '-translate-x-1/2' : 'translate-x-0',
+            )}>
+            <div className="w-1/2 px-5 sm:px-10 shrink-0">
+              <RegisterForm form={form} setOpenConfirnEmail={setOpenConfirnEmail} />
+            </div>
+            <div className="w-1/2 px-5 sm:px-10 shrink-0">
+              <ConfirmEmail
+                mail={form.getValues('email')}
+                openReg={() => setOpenConfirnEmail(false)}
+                openConfirnEmail={openConfirnEmail}
+                onClose={onClose}
+                userPass={form.getValues('password')}
+              />
+            </div>
           </div>
         </div>
       </div>

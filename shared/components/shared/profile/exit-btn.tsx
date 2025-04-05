@@ -16,7 +16,7 @@ export const ExitButton: React.FC<Props> = ({ isDisabled }) => {
   return (
     <Button
       onClick={onClickSignOut}
-      variant="secondary"
+      variant="outline"
       disabled={isDisabled}
       className="cursor-pointer hover:text-white hover:bg-black/85"
       type="button">
