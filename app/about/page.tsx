@@ -32,7 +32,6 @@ export default function About() {
             className="object-cover"
           />
         </div>
-        {/* https://ai-previews.123rf.com/ai-txt2img/600nwm/630997ef-0a32-42cc-b427-15174fd648ef.jpg */}
         <p>Будте счасливы вместе с нами!</p>
       </div>
       <hr className="border-0 bg-gray-500 h-0.5 w-full" />

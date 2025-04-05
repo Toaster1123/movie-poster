@@ -42,10 +42,12 @@ export default async function Seances() {
 
     return (
       <div className="bg-gray-100 flex-grow flex flex-col">
-        <Suspense>
-          <div className="md:px-10 sm:px-4 px-2 bg-gray-300">
+        <div className="md:px-10 sm:px-4 px-2 bg-gray-300">
+          <Suspense>
             <SelectDate className="md:py-5 py-3" />
-          </div>
+          </Suspense>
+        </div>
+        <Suspense>
           <SeanseList sortedMovies={sortedMovies} />
         </Suspense>
       </div>

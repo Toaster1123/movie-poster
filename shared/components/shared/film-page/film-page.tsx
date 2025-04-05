@@ -51,12 +51,14 @@ export const FilmPage = async ({ id }: { id: number }) => {
           </div>
           {movie.movieLength && (
             <>
-              <Suspense fallback={<div>Загрузка...</div>}>
-                <div className="max-[350px]:rounded-none bg-gray-300 rounded-3xl">
-                  <div className="sm:ml-3 mb-5 mt-2">
+              <div className="max-[350px]:rounded-none bg-gray-300 rounded-3xl">
+                <div className="sm:ml-3 mb-5 mt-2">
+                  <Suspense fallback={<div>Загрузка...</div>}>
                     <SelectDate className="max-[350px]:m-0 lg:py-5 py-3" />
-                  </div>
+                  </Suspense>
                 </div>
+              </div>
+              <Suspense fallback={<div>Загрузка...</div>}>
                 <TicketsGroup seanses={movie.seanses} age={movie.ageRating} title={movie.name} />
               </Suspense>
             </>
