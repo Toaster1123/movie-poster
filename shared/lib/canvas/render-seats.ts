@@ -23,7 +23,7 @@ export const renderSeats = (
 ) => {
   const selectedSeat = changeUserTickets.getState().selectedSeat;
 
-  let seats: SeatsType[] = [];
+  const seats: SeatsType[] = [];
   ctx.clearRect(0, 0, width, height);
   drawScreen(width, ctx);
 

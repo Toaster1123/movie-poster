@@ -18,7 +18,7 @@ export const Header = () => {
 
   useHeaderNotifications();
   return (
-    <header className="flex justify-between py-3 sm:px-10 px-3 bg-[#222629]">
+    <header className="flex justify-between py-5 sm:px-10 px-3 bg-[#222629]">
       <div className="sm:hidden">
         <AlignJustify
           size={32}
