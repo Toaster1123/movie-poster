@@ -14,3 +14,4 @@ export * from './auth-modal';
 export * from './email-templates';
 export * from './profile';
 export * from './confirm-email';
+export * from './yandex-map';
